@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "standards": "Zahlungsstandards",
+    "api": "API",
+    "pricing": "Preise"
+  },
+  "home": {
+    "title": "Der globale QR-Zahlungscode Hub",
+    "subtitle": "Erstelle QR-Zahlungscodes für jedes Land in Sekunden",
+    "searchPlaceholder": "Land oder Zahlungsstandard suchen...",
+    "detectedRegion": "Empfohlen für deine Region"
+  },
+  "standards": {
+    "available": "Verfügbar",
+    "comingSoon": "Demnächst",
+    "recommendedForYou": "Empfohlen für dich",
+    "searchPlaceholder": "Land oder Zahlungsstandard suchen...",
+    "filterAll": "Alle",
+    "filterEurope": "Europa",
+    "filterAsia": "Asien",
+    "filterLatam": "Lateinamerika",
+    "filterAfrica": "Afrika",
+    "filterMiddleEast": "Naher Osten",
+    "filterOceania": "Ozeanien"
+  },
+  "girocode": {
+    "title": "GiroCode Generator",
+    "description": "Kostenlose SEPA QR-Zahlungscodes für europäische Überweisungen erstellen",
+    "ibanLabel": "IBAN",
+    "ibanPlaceholder": "DE89 3704 0044 0532 0130 00",
+    "nameLabel": "Empfänger",
+    "namePlaceholder": "Max Mustermann",
+    "amountLabel": "Betrag (EUR)",
+    "referenceLabel": "Verwendungszweck",
+    "referencePlaceholder": "Rechnung 2026-001",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "bicLabel": "BIC (optional)",
+    "downloadPng": "PNG herunterladen",
+    "copyClipboard": "In Zwischenablage kopieren",
+    "copied": "Kopiert!",
+    "qrPreview": "QR-Code Vorschau",
+    "fillForm": "IBAN und Name eingeben um QR-Code zu generieren"
+  },
+  "footer": {
+    "tagline": "Der globale QR-Zahlungscode Hub",
+    "privacy": "Datenschutz",
+    "imprint": "Impressum",
+    "contact": "Kontakt"
+  }
+}
