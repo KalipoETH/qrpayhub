@@ -42,6 +42,27 @@
     "qrPreview": "QR Code Preview",
     "fillForm": "Fill in IBAN and name to generate QR code"
   },
+  "swissQr": {
+    "title": "Swiss QR Code Generator",
+    "description": "Generate Swiss QR Codes for invoices and payments",
+    "ibanLabel": "Swiss IBAN (CH/LI)",
+    "ibanPlaceholder": "CH56 0483 5012 3456 7800 9",
+    "creditorNameLabel": "Your Name / Company",
+    "creditorCityLabel": "City",
+    "creditorCountryLabel": "Country",
+    "amountLabel": "Amount (optional)",
+    "currencyLabel": "Currency",
+    "referenceTypeLabel": "Reference Type",
+    "referenceLabel": "Reference Number",
+    "messageLabel": "Additional Message",
+    "debtorSection": "Add Payer Info (optional)",
+    "debtorNameLabel": "Payer Name",
+    "debtorCityLabel": "Payer City",
+    "swissQrNote": "For official invoices, a full payment slip (Zahlteil) is required.",
+    "downloadPng": "Download PNG",
+    "copyClipboard": "Copy Payload",
+    "copied": "Copied!"
+  },
   "footer": {
     "tagline": "The Global QR Payment Code Hub",
     "privacy": "Privacy Policy",

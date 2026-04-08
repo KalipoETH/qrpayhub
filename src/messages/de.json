@@ -42,6 +42,27 @@
     "qrPreview": "QR-Code Vorschau",
     "fillForm": "IBAN und Name eingeben um QR-Code zu generieren"
   },
+  "swissQr": {
+    "title": "Swiss QR Code Generator",
+    "description": "Swiss QR Codes für Rechnungen und Zahlungen erstellen",
+    "ibanLabel": "Schweizer IBAN (CH/LI)",
+    "ibanPlaceholder": "CH56 0483 5012 3456 7800 9",
+    "creditorNameLabel": "Ihr Name / Firma",
+    "creditorCityLabel": "Ort",
+    "creditorCountryLabel": "Land",
+    "amountLabel": "Betrag (optional)",
+    "currencyLabel": "Währung",
+    "referenceTypeLabel": "Referenztyp",
+    "referenceLabel": "Referenznummer",
+    "messageLabel": "Zusätzliche Mitteilung",
+    "debtorSection": "Zahlungspflichtigen hinzufügen (optional)",
+    "debtorNameLabel": "Name Zahlungspflichtiger",
+    "debtorCityLabel": "Ort Zahlungspflichtiger",
+    "swissQrNote": "Für offizielle Rechnungen wird ein vollständiger Zahlteil (A4) benötigt.",
+    "downloadPng": "PNG herunterladen",
+    "copyClipboard": "Payload kopieren",
+    "copied": "Kopiert!"
+  },
   "footer": {
     "tagline": "Der globale QR-Zahlungscode Hub",
     "privacy": "Datenschutz",

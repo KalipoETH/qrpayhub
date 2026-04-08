@@ -22,8 +22,9 @@ const PAGES: PageDef[] = [
   { path: '/girocode/guide',       priority: 0.7, changeFrequency: 'monthly' },
   { path: '/girocode/faq',         priority: 0.7, changeFrequency: 'monthly' },
 
-  // Swiss QR (Phase 1 – generator coming)
+  // Swiss QR (Phase 1 – live)
   { path: '/swiss-qr',             priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/swiss-qr/generator',   priority: 0.9, changeFrequency: 'weekly' },
 
   // UPI (Phase 1)
   { path: '/upi',                  priority: 0.8, changeFrequency: 'weekly' },
