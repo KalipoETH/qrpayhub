@@ -19,9 +19,11 @@ export function validateIBAN(iban: string): IBANValidationResult {
     String(ch.charCodeAt(0) - 55),
   );
 
-  // BigInt mod-97 (the numeric string can be >15 digits, too large for Number)
-  const remainder = BigInt(numeric) % 97n;
-  if (remainder !== 1n) return { valid: false, error: 'Invalid IBAN checksum' };
+  // Digit-by-digit mod-97 — safe for arbitrarily long strings without BigInt
+  const remainder = numeric
+    .split('')
+    .reduce((acc, ch) => (acc * 10 + parseInt(ch, 10)) % 97, 0);
+  if (remainder !== 1) return { valid: false, error: 'Invalid IBAN checksum' };
 
   return { valid: true };
 }

@@ -145,7 +145,7 @@ function PageContent() {
               can scan it.
             </p>
             <p>
-              The payload encodes all data needed for a SEPA Credit Transfer: the beneficiary's
+              The payload encodes all data needed for a SEPA Credit Transfer: the beneficiary&apos;s
               name, IBAN, an optional BIC, an optional amount, and an optional payment reference.
               When scanned, the banking app pre-fills the transfer form — the payer just reviews
               and confirms.

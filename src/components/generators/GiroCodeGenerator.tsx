@@ -190,7 +190,7 @@ export default function GiroCodeGenerator() {
             onBlur={() => handleBlur('name')}
             placeholder={t('namePlaceholder')}
             maxLength={70}
-            className={inputClass(touched.name && !!errors.name)}
+            className={inputClass(!!touched.name && !!errors.name)}
           />
         </FormField>
 
@@ -212,7 +212,7 @@ export default function GiroCodeGenerator() {
               min="0.01"
               max="999999999.99"
               step="0.01"
-              className={`${inputClass(touched.amount && !!errors.amount)} pl-7`}
+              className={`${inputClass(!!touched.amount && !!errors.amount)} pl-7`}
             />
           </div>
         </FormField>
@@ -234,7 +234,7 @@ export default function GiroCodeGenerator() {
             onBlur={() => handleBlur('reference')}
             placeholder={t('referencePlaceholder')}
             maxLength={140}
-            className={inputClass(touched.reference && !!errors.reference)}
+            className={inputClass(!!touched.reference && !!errors.reference)}
           />
         </FormField>
 

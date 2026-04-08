@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Home",
+    "standards": "Payment Standards",
+    "api": "API",
+    "pricing": "Pricing"
+  },
+  "home": {
+    "title": "The Global QR Payment Code Hub",
+    "subtitle": "Generate QR payment codes for any country in seconds",
+    "searchPlaceholder": "Search country or payment standard...",
+    "detectedRegion": "Recommended for your region"
+  },
+  "standards": {
+    "available": "Available",
+    "comingSoon": "Coming Soon",
+    "recommendedForYou": "Recommended for you",
+    "searchPlaceholder": "Search country or payment standard...",
+    "filterAll": "All",
+    "filterEurope": "Europe",
+    "filterAsia": "Asia",
+    "filterLatam": "Latin America",
+    "filterAfrica": "Africa",
+    "filterMiddleEast": "Middle East",
+    "filterOceania": "Oceania"
+  },
+  "girocode": {
+    "title": "GiroCode Generator",
+    "description": "Generate free SEPA QR payment codes for European bank transfers",
+    "ibanLabel": "IBAN",
+    "ibanPlaceholder": "DE89 3704 0044 0532 0130 00",
+    "nameLabel": "Recipient Name",
+    "namePlaceholder": "Max Mustermann",
+    "amountLabel": "Amount (EUR)",
+    "referenceLabel": "Payment Reference",
+    "referencePlaceholder": "Invoice 2026-001",
+    "advancedSettings": "Advanced Settings",
+    "bicLabel": "BIC (optional)",
+    "downloadPng": "Download PNG",
+    "copyClipboard": "Copy to Clipboard",
+    "copied": "Copied!",
+    "qrPreview": "QR Code Preview",
+    "fillForm": "Fill in IBAN and name to generate QR code"
+  },
+  "footer": {
+    "tagline": "The Global QR Payment Code Hub",
+    "privacy": "Privacy Policy",
+    "imprint": "Imprint",
+    "contact": "Contact"
+  }
+}
