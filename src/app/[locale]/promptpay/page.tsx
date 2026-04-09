@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import SubPageGrid from '@/components/ui/SubPageGrid';
+import type { SubPage } from '@/components/ui/SubPageGrid';
 
 export const metadata: Metadata = {
   title: "PromptPay QR Code Generator – Free | QRPayHub",
@@ -17,20 +19,24 @@ const QUICK_FACTS = [
   { icon: '📅', value: 'Since 2017', label: 'Established' },
 ];
 
-const SUB_PAGES = [
+const SUB_PAGES: SubPage[] = [
   {
-    href: '/promptpay/generator',
     icon: '⚡',
     title: 'PromptPay QR Generator',
-    desc: 'Create PromptPay QR codes instantly — works with all Thai banking apps',
-    soon: false,
+    description: 'Create PromptPay QR codes instantly — works with all Thai banking apps',
+    href: '/promptpay/generator',
   },
   {
-    href: '/promptpay/guide',
     icon: '📖',
     title: 'Technical Guide',
-    desc: 'EMV TLV payload spec, CRC16, key types, Bank of Thailand documentation',
-    soon: true,
+    description: 'EMV TLV payload spec, CRC16, key types, Bank of Thailand documentation',
+    comingSoon: true,
+  },
+  {
+    icon: '❓',
+    title: 'FAQ',
+    description: 'All questions about PromptPay QR codes answered',
+    comingSoon: true,
   },
 ];
 
@@ -194,41 +200,9 @@ function PageContent() {
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
           PromptPay Tools
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {SUB_PAGES.map(({ href, icon, title, desc, soon }) => (
-            <div key={href} className="relative">
-              {soon ? (
-                <div className="block bg-white border border-slate-100 rounded-2xl p-5 shadow-sm opacity-60 select-none">
-                  <SubPageCardInner icon={icon} title={title} desc={desc} />
-                  <span className="absolute top-3 right-3 text-xs font-medium bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">
-                    Coming Soon
-                  </span>
-                </div>
-              ) : (
-                <Link
-                  href={href as `/${string}`}
-                  className="block bg-white border border-slate-100 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-blue-100 hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  <SubPageCardInner icon={icon} title={title} desc={desc} />
-                </Link>
-              )}
-            </div>
-          ))}
-        </div>
+        <SubPageGrid pages={SUB_PAGES} />
       </section>
 
-    </div>
-  );
-}
-
-function SubPageCardInner({ icon, title, desc }: { icon: string; title: string; desc: string }) {
-  return (
-    <div className="flex items-start gap-3">
-      <span className="text-2xl flex-shrink-0">{icon}</span>
-      <div>
-        <h3 className="font-semibold text-slate-900">{title}</h3>
-        <p className="text-sm text-slate-500 mt-0.5">{desc}</p>
-      </div>
     </div>
   );
 }

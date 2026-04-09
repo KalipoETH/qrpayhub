@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import SubPageGrid from '@/components/ui/SubPageGrid';
+import type { SubPage } from '@/components/ui/SubPageGrid';
 
 export const metadata: Metadata = {
   title: "UPI QR Code – India's Universal Payment Interface | QRPayHub",
@@ -17,20 +19,24 @@ const QUICK_FACTS = [
   { icon: '✅', value: 'Free', label: 'Zero Charges' },
 ];
 
-const SUB_PAGES = [
+const SUB_PAGES: SubPage[] = [
   {
-    href: '/upi/generator',
     icon: '⚡',
     title: 'UPI QR Generator',
-    desc: 'Create UPI QR codes instantly — works with all UPI apps',
-    soon: false,
+    description: 'Create UPI QR codes instantly — works with all UPI apps',
+    href: '/upi/generator',
   },
   {
-    href: '/upi/guide',
     icon: '📖',
     title: 'Integration Guide',
-    desc: 'Technical deep-link spec, VPA validation, merchant flows',
-    soon: true,
+    description: 'Technical deep-link spec, VPA validation, merchant flows',
+    comingSoon: true,
+  },
+  {
+    icon: '❓',
+    title: 'FAQ',
+    description: 'All questions about UPI QR codes answered',
+    comingSoon: true,
   },
 ];
 
@@ -194,41 +200,9 @@ function PageContent() {
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
           UPI Tools
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {SUB_PAGES.map(({ href, icon, title, desc, soon }) => (
-            <div key={href} className="relative">
-              {soon ? (
-                <div className="block bg-white border border-slate-100 rounded-2xl p-5 shadow-sm opacity-60 select-none">
-                  <SubPageCardInner icon={icon} title={title} desc={desc} />
-                  <span className="absolute top-3 right-3 text-xs font-medium bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">
-                    Coming Soon
-                  </span>
-                </div>
-              ) : (
-                <Link
-                  href={href as `/${string}`}
-                  className="block bg-white border border-slate-100 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-orange-100 hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  <SubPageCardInner icon={icon} title={title} desc={desc} />
-                </Link>
-              )}
-            </div>
-          ))}
-        </div>
+        <SubPageGrid pages={SUB_PAGES} />
       </section>
 
-    </div>
-  );
-}
-
-function SubPageCardInner({ icon, title, desc }: { icon: string; title: string; desc: string }) {
-  return (
-    <div className="flex items-start gap-3">
-      <span className="text-2xl flex-shrink-0">{icon}</span>
-      <div>
-        <h3 className="font-semibold text-slate-900">{title}</h3>
-        <p className="text-sm text-slate-500 mt-0.5">{desc}</p>
-      </div>
     </div>
   );
 }

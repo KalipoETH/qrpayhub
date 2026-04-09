@@ -4,6 +4,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import Accordion from '@/components/ui/Accordion';
 import RelatedToolCard from '@/components/ui/RelatedToolCard';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 import { FAQ_ITEMS } from '@/lib/standards/girocode-faq';
 
 export const metadata: Metadata = {
@@ -57,30 +58,13 @@ function PageContent() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
 
       {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb">
-        <ol className="flex items-center flex-wrap gap-1 text-sm text-slate-400">
-          {[
-            { label: 'Home', href: '/' as const },
-            { label: 'GiroCode', href: '/girocode' as const },
-            { label: 'FAQ', href: undefined },
-          ].map((item, i) => (
-            <li key={i} className="flex items-center gap-1">
-              {i > 0 && (
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              )}
-              {item.href ? (
-                <Link href={item.href} className="hover:text-slate-600 transition-colors">
-                  {item.label}
-                </Link>
-              ) : (
-                <span className="text-slate-900 font-semibold">{item.label}</span>
-              )}
-            </li>
-          ))}
-        </ol>
-      </nav>
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'GiroCode', href: '/girocode' },
+          { label: 'FAQ' },
+        ]}
+      />
 
       {/* Header */}
       <header className="space-y-3">

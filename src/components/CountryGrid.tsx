@@ -186,7 +186,10 @@ function StandardCard({ standard: s }: { standard: PaymentStandard }) {
   const visibleCountries = s.countries.slice(0, 3);
   const hiddenCount = s.countries.length - visibleCountries.length;
 
-  const cardContent = (
+  const hubHref = `/${s.id}` as `/${string}`;
+  const genHref = `/${s.id}/generator` as `/${string}`;
+
+  const cardInner = (
     <div
       className={`relative bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col h-full transition-all duration-200 ${
         s.available
@@ -195,37 +198,21 @@ function StandardCard({ standard: s }: { standard: PaymentStandard }) {
       }`}
     >
       {/* Accent top border */}
-      <div
-        className="h-1 w-full flex-shrink-0"
-        style={{ backgroundColor: s.color }}
-      />
+      <div className="h-1 w-full flex-shrink-0" style={{ backgroundColor: s.color }} />
 
       <div className="flex flex-col items-center gap-2 p-5 flex-1">
-        {/* Flag */}
-        <span
-          className="text-5xl leading-none select-none"
-          role="img"
-          aria-label={s.name}
-        >
+        <span className="text-5xl leading-none select-none" role="img" aria-label={s.name}>
           {s.flag}
         </span>
-
-        {/* Name */}
-        <p className="text-sm font-bold text-slate-900 text-center leading-snug">
-          {s.name}
-        </p>
-
-        {/* Country list */}
+        <p className="text-sm font-bold text-slate-900 text-center leading-snug">{s.name}</p>
         <p className="text-xs text-slate-400 text-center">
           {visibleCountries.join(', ')}
-          {hiddenCount > 0 && (
-            <span className="text-slate-300"> +{hiddenCount} more</span>
-          )}
+          {hiddenCount > 0 && <span className="text-slate-300"> +{hiddenCount} more</span>}
         </p>
       </div>
 
-      {/* Badge */}
-      <div className="px-5 pb-4 flex justify-center">
+      {/* Badge row */}
+      <div className="px-5 pb-4 flex items-center justify-between">
         {s.available ? (
           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -242,19 +229,30 @@ function StandardCard({ standard: s }: { standard: PaymentStandard }) {
             {t('comingSoon')}
           </span>
         )}
+        {/* invisible spacer to hold room for the absolute Generate button */}
+        {s.available && <span className="invisible text-xs px-2.5 py-1">Generate →</span>}
       </div>
     </div>
   );
 
   if (s.available) {
-    // Each available standard links to its generator sub-page
-    const href = `/${s.id}/generator` as `/${string}`;
     return (
-      <Link href={href} className="block h-full">
-        {cardContent}
-      </Link>
+      <div className="relative h-full">
+        {/* Hub-page link covers the entire card */}
+        <Link href={hubHref} className="block h-full">
+          {cardInner}
+        </Link>
+        {/* Generate button sits above the card link, sibling (not nested) */}
+        <Link
+          href={genHref}
+          className="absolute bottom-4 right-5 z-10 inline-flex items-center px-2.5 py-1 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-sm"
+          onClick={(e) => e.stopPropagation()}
+        >
+          Generate →
+        </Link>
+      </div>
     );
   }
 
-  return <div className="h-full">{cardContent}</div>;
+  return <div className="h-full">{cardInner}</div>;
 }

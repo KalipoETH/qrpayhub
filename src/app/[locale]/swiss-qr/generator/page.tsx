@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
 import SwissQRGenerator from '@/components/generators/SwissQRGenerator';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Swiss QR Code Generator – Free | QRPayHub',
@@ -24,33 +24,13 @@ function PageContent() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
 
       {/* ── Breadcrumb ───────────────────────────────────────────────────── */}
-      <nav aria-label="Breadcrumb">
-        <ol className="flex items-center gap-1.5 text-sm text-slate-400">
-          <li>
-            <Link href="/" className="hover:text-slate-600 transition-colors">
-              Home
-            </Link>
-          </li>
-          <li>
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </li>
-          <li>
-            <Link href="/swiss-qr" className="hover:text-slate-600 transition-colors">
-              Swiss QR Code
-            </Link>
-          </li>
-          <li>
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </li>
-          <li>
-            <span className="text-slate-900 font-semibold">Generator</span>
-          </li>
-        </ol>
-      </nav>
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Swiss QR Code', href: '/swiss-qr' },
+          { label: 'Generator' },
+        ]}
+      />
 
       {/* ── Header ───────────────────────────────────────────────────────── */}
       <div className="flex items-start gap-4">
