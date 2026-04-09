@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import RelatedToolCard from '@/components/ui/RelatedToolCard';
 
 export const metadata: Metadata = {
   title: 'GiroCode / EPC QR Code – Complete Guide | QRPayHub',
@@ -283,6 +284,21 @@ function PageContent() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* ── Also useful ──────────────────────────────────────────────────── */}
+      <section className="space-y-4">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
+          Also useful:
+        </h2>
+        <RelatedToolCard
+          icon="🧾"
+          name="GiroCode Generator"
+          url="https://www.girocodegenerator.com"
+          description="The specialized GiroCode tool for freelancers – generate invoices with embedded GiroCode QR codes in one click."
+          badge="Recommended for invoices"
+          visitLabel="Visit Tool →"
+        />
       </section>
 
     </div>

@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import Accordion from '@/components/ui/Accordion';
+import RelatedToolCard from '@/components/ui/RelatedToolCard';
 import { FAQ_ITEMS } from '@/lib/standards/girocode-faq';
 
 export const metadata: Metadata = {
@@ -109,6 +110,30 @@ function PageContent() {
           Open Generator →
         </Link>
       </div>
+
+      {/* Related Tools */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold text-slate-900">Related Tools</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <RelatedToolCard
+            icon="🧾"
+            name="GiroCode Generator"
+            url="https://www.girocodegenerator.com"
+            description="Specialized GiroCode tool for freelancers and small businesses. Generate professional invoice PDFs with embedded GiroCode QR codes – free, no registration required."
+            badge="Free"
+            visitLabel="Visit Tool →"
+          />
+          <RelatedToolCard
+            icon="⚡"
+            name="QRPayHub Generator"
+            url="/girocode/generator"
+            description="Quick GiroCode generation without invoice PDF. Also supports 15+ other payment standards worldwide."
+            badge="Free"
+            visitLabel="Visit Tool →"
+            external={false}
+          />
+        </div>
+      </section>
     </div>
   );
 }

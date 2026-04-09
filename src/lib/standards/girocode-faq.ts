@@ -29,7 +29,7 @@ export const FAQ_ITEMS: AccordionItem[] = [
     id: 'logo-in-qr',
     question: 'Can I include a logo in my GiroCode?',
     answer:
-      'The EPC standard does not officially support embedded logos. Some third-party generators allow adding logos by using a higher error correction level (Level Q or H), which reserves part of the code for the logo. However, this is not part of the official specification and may cause compatibility issues with some banking apps. For professional use, we recommend sticking to the standard format.',
+      'The EPC standard does not officially support embedded logos. Some third-party generators allow adding logos by using a higher error correction level (Level Q or H), which reserves part of the code for the logo. However, this is not part of the official specification and may cause compatibility issues with some banking apps. For professional use, we recommend sticking to the standard format. girocodegenerator.com supports logo upload directly in the invoice PDF generator.',
   },
   {
     id: 'max-amount',
@@ -120,5 +120,65 @@ export const FAQ_ITEMS: AccordionItem[] = [
     question: 'Can GiroCode be used with currencies other than EUR?',
     answer:
       'Technically, the EPC specification allows other SEPA currencies (e.g. CHF for Swiss transfers within Switzerland). However, in practice, GiroCode is almost exclusively used for EUR transfers. The Swiss QR Code standard is the preferred format for CHF transfers in Switzerland.',
+  },
+  {
+    id: 'full-invoice-pdf',
+    question: 'Can I create a full invoice with a GiroCode embedded?',
+    answer:
+      'Yes! For a complete invoice PDF with an embedded GiroCode, check out girocodegenerator.com – a free tool specifically designed for freelancers and small businesses that generates professional invoices with GiroCode QR codes included.',
+  },
+  {
+    id: 'qrpayhub-vs-girocodegenerator',
+    question: 'What is the difference between qrpayhub.com and girocodegenerator.com?',
+    answer:
+      'qrpayhub.com covers all global QR payment standards (UPI, PIX, Swiss QR, PromptPay and more). girocodegenerator.com is a specialized tool focused exclusively on GiroCode/EPC for SEPA payments – it also offers invoice PDF generation with embedded GiroCode, which qrpayhub.com does not yet support.',
+  },
+  {
+    id: 'which-tool-sepa-invoices',
+    question: 'Which tool should I use for my SEPA invoices?',
+    answer:
+      'If you only need GiroCode for European SEPA invoices and want a full invoice PDF, girocodegenerator.com is the better choice. If you need QR payment codes for multiple countries or standards, use qrpayhub.com.',
+  },
+  {
+    id: 'girocode-mandatory-germany',
+    question: 'Is GiroCode mandatory on invoices in Germany?',
+    answer:
+      'No, GiroCode is not legally mandatory on invoices in Germany. However, it is strongly recommended as it significantly reduces payment errors and speeds up the transfer process for your clients.',
+  },
+  {
+    id: 'girocode-word-excel',
+    question: 'How do I add a GiroCode to my invoice in Word or Excel?',
+    answer:
+      'Generate the GiroCode QR code here, download it as PNG, and insert it into your Word or Excel document. For a fully automated invoice with embedded GiroCode, use girocodegenerator.com which handles the entire process in one step.',
+  },
+  {
+    id: 'recurring-payments',
+    question: 'Can I use GiroCode for recurring payments?',
+    answer:
+      'GiroCode is designed for single credit transfers (SCT). For recurring payments, SEPA Direct Debit (SDD) is more appropriate. However, you can generate a new GiroCode for each invoice.',
+  },
+  {
+    id: 'girocode-vs-sepa-instant',
+    question: 'What is the difference between GiroCode and SEPA Instant?',
+    answer:
+      'GiroCode is a QR code format that encodes payment data for easy scanning. SEPA Instant is a transfer speed standard (funds arrive within 10 seconds). They are complementary – a GiroCode can initiate a SEPA Instant transfer if the bank supports it.',
+  },
+  {
+    id: 'online-banking-support',
+    question: 'Does GiroCode work with online banking?',
+    answer:
+      'Most online banking portals in SEPA countries support uploading or scanning a GiroCode. However, the scan feature is more commonly available in mobile banking apps.',
+  },
+  {
+    id: 'bulk-generation',
+    question: 'Can I generate GiroCodes in bulk for multiple invoices?',
+    answer:
+      'qrpayhub.com currently supports single code generation. For bulk generation, the Pro plan (coming soon) will support CSV upload. girocodegenerator.com also focuses on single invoice generation.',
+  },
+  {
+    id: 'girocode-api',
+    question: 'Is there an API for GiroCode generation?',
+    answer:
+      'qrpayhub.com will offer a REST API for GiroCode and all other payment standards as part of the API plan (coming soon). This allows you to integrate QR code generation directly into your invoicing software or ERP system.',
   },
 ];

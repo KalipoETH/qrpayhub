@@ -132,5 +132,12 @@
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "contact": "Contact"
+  },
+  "common": {
+    "relatedTools": "Related Tools",
+    "visitTool": "Visit Tool →",
+    "recommendedForInvoices": "Recommended for invoices",
+    "invoiceBannerText": "Need a full invoice PDF with GiroCode?",
+    "invoiceBannerLink": "Try girocodegenerator.com →"
   }
 }

@@ -88,6 +88,35 @@ function PageContent() {
           entry required.
         </p>
       </div>
+
+      {/* ── Invoice Banner ───────────────────────────────────────────────── */}
+      <div className="flex items-center gap-3 bg-sky-50 border border-sky-200 rounded-xl px-5 py-3.5">
+        <svg
+          className="w-5 h-5 text-sky-600 flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <p className="text-sm text-sky-800">
+          Need a full invoice PDF with GiroCode?{' '}
+          <a
+            href="https://www.girocodegenerator.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold underline underline-offset-2 hover:text-sky-950 transition-colors"
+          >
+            Try girocodegenerator.com →
+          </a>
+        </p>
+      </div>
     </div>
   );
 }
