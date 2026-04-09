@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
 import GiroCodeGenerator from '@/components/generators/GiroCodeGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 
