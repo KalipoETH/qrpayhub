@@ -30,8 +30,9 @@ const PAGES: PageDef[] = [
   { path: '/upi',                  priority: 0.8, changeFrequency: 'weekly' },
   { path: '/upi/generator',        priority: 0.9, changeFrequency: 'weekly' },
 
-  // PIX (Phase 1)
+  // PIX (Phase 1 – live)
   { path: '/pix',                  priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/pix/generator',        priority: 0.9, changeFrequency: 'weekly' },
 
   // PromptPay (Phase 1)
   { path: '/promptpay',            priority: 0.8, changeFrequency: 'weekly' },

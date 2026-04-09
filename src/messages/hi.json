@@ -42,6 +42,31 @@
     "qrPreview": "QR Code Preview",
     "fillForm": "Fill in IBAN and name to generate QR code"
   },
+  "pix": {
+    "title": "PIX QR Code Generator",
+    "description": "Generate PIX QR codes for Brazilian payments",
+    "pixKeyLabel": "PIX Key",
+    "pixKeyPlaceholder": "CPF, CNPJ, phone +55, email or random key",
+    "pixKeyDetected": "Detected",
+    "merchantNameLabel": "Recipient Name",
+    "merchantNameHelp": "Appears on the payer's screen (max 25 chars)",
+    "merchantCityLabel": "City",
+    "amountLabel": "Amount (BRL)",
+    "descriptionLabel": "Description",
+    "transactionIdLabel": "Transaction ID",
+    "advancedSettings": "Advanced Settings",
+    "scanWith": "Scan with any PIX-enabled banking app",
+    "downloadPng": "Download PNG",
+    "copyPayload": "Copy PIX Payload",
+    "copied": "Copied!",
+    "keyTypes": {
+      "cpf": "CPF",
+      "cnpj": "CNPJ",
+      "phone": "Phone",
+      "email": "Email",
+      "random": "Random Key"
+    }
+  },
   "upi": {
     "title": "UPI QR Code Generator",
     "description": "Generate UPI QR codes for Indian payments",

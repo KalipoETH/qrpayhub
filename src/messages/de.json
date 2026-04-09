@@ -42,6 +42,31 @@
     "qrPreview": "QR-Code Vorschau",
     "fillForm": "IBAN und Name eingeben um QR-Code zu generieren"
   },
+  "pix": {
+    "title": "PIX QR-Code Generator",
+    "description": "PIX QR-Codes für brasilianische Zahlungen erstellen",
+    "pixKeyLabel": "PIX-Schlüssel",
+    "pixKeyPlaceholder": "CPF, CNPJ, Telefon +55, E-Mail oder Zufallsschlüssel",
+    "pixKeyDetected": "Erkannt",
+    "merchantNameLabel": "Empfänger",
+    "merchantNameHelp": "Erscheint auf dem Bildschirm des Zahlers (max 25 Zeichen)",
+    "merchantCityLabel": "Stadt",
+    "amountLabel": "Betrag (BRL)",
+    "descriptionLabel": "Beschreibung",
+    "transactionIdLabel": "Transaktions-ID",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "scanWith": "Mit jeder PIX-fähigen Banking-App scannen",
+    "downloadPng": "PNG herunterladen",
+    "copyPayload": "PIX-Payload kopieren",
+    "copied": "Kopiert!",
+    "keyTypes": {
+      "cpf": "CPF",
+      "cnpj": "CNPJ",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "random": "Zufallsschlüssel"
+    }
+  },
   "upi": {
     "title": "UPI QR-Code Generator",
     "description": "UPI QR-Codes für indische Zahlungen erstellen",
