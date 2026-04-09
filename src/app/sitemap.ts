@@ -26,8 +26,9 @@ const PAGES: PageDef[] = [
   { path: '/swiss-qr',             priority: 0.8, changeFrequency: 'weekly' },
   { path: '/swiss-qr/generator',   priority: 0.9, changeFrequency: 'weekly' },
 
-  // UPI (Phase 1)
+  // UPI (Phase 1 – live)
   { path: '/upi',                  priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/upi/generator',        priority: 0.9, changeFrequency: 'weekly' },
 
   // PIX (Phase 1)
   { path: '/pix',                  priority: 0.8, changeFrequency: 'weekly' },

@@ -42,6 +42,24 @@
     "qrPreview": "QR-Code Vorschau",
     "fillForm": "IBAN und Name eingeben um QR-Code zu generieren"
   },
+  "upi": {
+    "title": "UPI QR-Code Generator",
+    "description": "UPI QR-Codes für indische Zahlungen erstellen",
+    "upiIdLabel": "UPI ID",
+    "upiIdPlaceholder": "name@bankhandle",
+    "upiIdHelp": "z.B. john@okicici, 9876543210@paytm",
+    "payeeNameLabel": "Empfänger",
+    "amountLabel": "Betrag (INR)",
+    "noteLabel": "Verwendungszweck",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "merchantCodeLabel": "Händler-Kategoriecode",
+    "transactionRefLabel": "Transaktionsreferenz",
+    "openInApp": "In UPI-App öffnen",
+    "scanWith": "Mit jeder UPI-App scannen: PhonePe, Google Pay, Paytm, BHIM",
+    "downloadPng": "PNG herunterladen",
+    "copyLink": "UPI-Link kopieren",
+    "copied": "Kopiert!"
+  },
   "swissQr": {
     "title": "Swiss QR Code Generator",
     "description": "Swiss QR Codes für Rechnungen und Zahlungen erstellen",
