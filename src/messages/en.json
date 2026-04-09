@@ -106,6 +106,27 @@
     "copyClipboard": "Copy Payload",
     "copied": "Copied!"
   },
+  "promptpay": {
+    "title": "PromptPay QR Code Generator",
+    "description": "Generate PromptPay QR codes for Thai payments",
+    "keyLabel": "PromptPay Key",
+    "keyPlaceholder": "Phone: 0812345678 or National ID: 1234567890123",
+    "keyHelp": "Thai phone number or 13-digit National ID / Tax ID",
+    "keyDetected": "Detected",
+    "amountLabel": "Amount (THB)",
+    "refLabel": "Reference",
+    "advancedSettings": "Advanced Settings",
+    "scanWith": "Scan with any Thai banking app",
+    "downloadPng": "Download PNG",
+    "copyPayload": "Copy Payload",
+    "copied": "Copied!",
+    "keyTypes": {
+      "phone": "Phone Number",
+      "nationalId": "National ID",
+      "taxId": "Tax ID",
+      "ewallet": "E-Wallet"
+    }
+  },
   "footer": {
     "tagline": "The Global QR Payment Code Hub",
     "privacy": "Privacy Policy",

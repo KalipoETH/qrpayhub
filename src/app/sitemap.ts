@@ -34,8 +34,9 @@ const PAGES: PageDef[] = [
   { path: '/pix',                  priority: 0.8, changeFrequency: 'weekly' },
   { path: '/pix/generator',        priority: 0.9, changeFrequency: 'weekly' },
 
-  // PromptPay (Phase 1)
+  // PromptPay (Phase 1 – live)
   { path: '/promptpay',            priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/promptpay/generator',  priority: 0.9, changeFrequency: 'weekly' },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
