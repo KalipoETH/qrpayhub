@@ -28,15 +28,15 @@ const SUB_PAGES: SubPage[] = [
   },
   {
     icon: '📖',
-    title: 'Integration Guide',
-    description: 'Technical deep-link spec, VPA validation, merchant flows',
-    comingSoon: true,
+    title: 'Guide',
+    description: "Complete guide to India's payment revolution: UPI IDs, QR format and global expansion",
+    href: '/upi/guide',
   },
   {
     icon: '❓',
     title: 'FAQ',
-    description: 'All questions about UPI QR codes answered',
-    comingSoon: true,
+    description: '25 questions about UPI answered',
+    href: '/upi/faq',
   },
 ];
 

@@ -83,7 +83,11 @@
     "scanWith": "Scan with any UPI app: PhonePe, Google Pay, Paytm, BHIM",
     "downloadPng": "Download PNG",
     "copyLink": "Copy UPI Link",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "guideTitle": "How UPI Works",
+    "guideDescription": "Complete guide to India's payment revolution",
+    "faqTitle": "UPI FAQ",
+    "faqDescription": "25 questions about UPI answered"
   },
   "swissQr": {
     "title": "Swiss QR Code Generator",

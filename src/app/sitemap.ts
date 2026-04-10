@@ -31,6 +31,8 @@ const PAGES: PageDef[] = [
   // UPI (Phase 1 – live)
   { path: '/upi',                  priority: 0.8, changeFrequency: 'weekly' },
   { path: '/upi/generator',        priority: 0.9, changeFrequency: 'weekly' },
+  { path: '/upi/guide',            priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/upi/faq',              priority: 0.7, changeFrequency: 'monthly' },
 
   // PIX (Phase 1 – live)
   { path: '/pix',                  priority: 0.8, changeFrequency: 'weekly' },
