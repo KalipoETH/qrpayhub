@@ -104,7 +104,11 @@
     "swissQrNote": "For official invoices, a full payment slip (Zahlteil) is required.",
     "downloadPng": "Download PNG",
     "copyClipboard": "Copy Payload",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "guideTitle": "How Swiss QR Code Works",
+    "guideDescription": "Complete guide: history, Zahlteil, reference types and technical structure",
+    "faqTitle": "Swiss QR Code FAQ",
+    "faqDescription": "25 questions answered about Swiss QR Code"
   },
   "promptpay": {
     "title": "PromptPay QR Code Generator",

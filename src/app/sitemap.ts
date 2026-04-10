@@ -25,6 +25,8 @@ const PAGES: PageDef[] = [
   // Swiss QR (Phase 1 – live)
   { path: '/swiss-qr',             priority: 0.8, changeFrequency: 'weekly' },
   { path: '/swiss-qr/generator',   priority: 0.9, changeFrequency: 'weekly' },
+  { path: '/swiss-qr/guide',       priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/swiss-qr/faq',         priority: 0.7, changeFrequency: 'monthly' },
 
   // UPI (Phase 1 – live)
   { path: '/upi',                  priority: 0.8, changeFrequency: 'weekly' },

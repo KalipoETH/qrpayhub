@@ -28,15 +28,15 @@ const SUB_PAGES: SubPage[] = [
   },
   {
     icon: '📖',
-    title: 'Integration Guide',
-    description: 'Technical guide: payload structure, validation rules, Zahlteil format',
-    comingSoon: true,
+    title: 'Guide',
+    description: 'Complete guide: history, Zahlteil, reference types and technical structure',
+    href: '/swiss-qr/guide',
   },
   {
     icon: '❓',
     title: 'FAQ',
-    description: 'All questions about Swiss QR Code answered',
-    comingSoon: true,
+    description: '25 questions about Swiss QR Code answered',
+    href: '/swiss-qr/faq',
   },
 ];
 

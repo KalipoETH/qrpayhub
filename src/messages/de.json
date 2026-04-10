@@ -104,7 +104,11 @@
     "swissQrNote": "Für offizielle Rechnungen wird ein vollständiger Zahlteil (A4) benötigt.",
     "downloadPng": "PNG herunterladen",
     "copyClipboard": "Payload kopieren",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "guideTitle": "Wie Swiss QR Code funktioniert",
+    "guideDescription": "Vollständiger Guide: Geschichte, Zahlteil, Referenztypen und technische Struktur",
+    "faqTitle": "Swiss QR Code FAQ",
+    "faqDescription": "25 Fragen zu Swiss QR Code beantwortet"
   },
   "promptpay": {
     "title": "PromptPay QR-Code Generator",
