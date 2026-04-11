@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 
-const BASE_URL = 'https://qrpayhub.com';
+const BASE_URL = 'https://www.qrpayhub.com';
 const LOCALES = routing.locales;
 
 type SitemapEntry = MetadataRoute.Sitemap[number];
@@ -58,9 +58,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: page.changeFrequency,
         priority: page.priority,
         alternates: {
-          languages: Object.fromEntries(
-            LOCALES.map((l) => [l, `${BASE_URL}/${l}${page.path}`]),
-          ),
+          languages: {
+            'x-default': `${BASE_URL}/en${page.path}`,
+            ...Object.fromEntries(
+              LOCALES.map((l) => [l, `${BASE_URL}/${l}${page.path}`]),
+            ),
+          },
         },
       });
     }
