@@ -45,6 +45,10 @@
   "pix": {
     "title": "PIX QR Code Generator",
     "description": "Generate PIX QR codes for Brazilian payments",
+    "guideTitle": "How PIX Works",
+    "guideDescription": "Complete guide to Brazil's instant payment system",
+    "faqTitle": "PIX FAQ",
+    "faqDescription": "25 questions about PIX answered",
     "pixKeyLabel": "PIX Key",
     "pixKeyPlaceholder": "CPF, CNPJ, phone +55, email or random key",
     "pixKeyDetected": "Detected",
@@ -117,6 +121,10 @@
   "promptpay": {
     "title": "PromptPay QR Code Generator",
     "description": "Generate PromptPay QR codes for Thai payments",
+    "guideTitle": "How PromptPay Works",
+    "guideDescription": "Complete guide to Thailand's payment system",
+    "faqTitle": "PromptPay FAQ",
+    "faqDescription": "25 questions about PromptPay answered",
     "keyLabel": "PromptPay Key",
     "keyPlaceholder": "Phone: 0812345678 or National ID: 1234567890123",
     "keyHelp": "Thai phone number or 13-digit National ID / Tax ID",

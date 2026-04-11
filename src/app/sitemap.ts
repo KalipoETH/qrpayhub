@@ -37,10 +37,14 @@ const PAGES: PageDef[] = [
   // PIX (Phase 1 – live)
   { path: '/pix',                  priority: 0.8, changeFrequency: 'weekly' },
   { path: '/pix/generator',        priority: 0.9, changeFrequency: 'weekly' },
+  { path: '/pix/guide',            priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/pix/faq',              priority: 0.7, changeFrequency: 'monthly' },
 
   // PromptPay (Phase 1 – live)
   { path: '/promptpay',            priority: 0.8, changeFrequency: 'weekly' },
   { path: '/promptpay/generator',  priority: 0.9, changeFrequency: 'weekly' },
+  { path: '/promptpay/guide',      priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/promptpay/faq',        priority: 0.7, changeFrequency: 'monthly' },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

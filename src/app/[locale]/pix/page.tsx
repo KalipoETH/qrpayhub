@@ -30,13 +30,13 @@ const SUB_PAGES: SubPage[] = [
     icon: '📖',
     title: 'Technical Guide',
     description: 'EMV TLV payload spec, CRC16, key types, BCB integration docs',
-    comingSoon: true,
+    href: '/pix/guide',
   },
   {
     icon: '❓',
     title: 'FAQ',
     description: 'All questions about PIX QR codes answered',
-    comingSoon: true,
+    href: '/pix/faq',
   },
 ];
 

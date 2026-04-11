@@ -45,6 +45,10 @@
   "pix": {
     "title": "PIX QR-Code Generator",
     "description": "PIX QR-Codes für brasilianische Zahlungen erstellen",
+    "guideTitle": "Wie PIX funktioniert",
+    "guideDescription": "Vollständiger Guide zu Brasiliens Echtzeit-Zahlungssystem",
+    "faqTitle": "PIX FAQ",
+    "faqDescription": "25 Fragen zu PIX beantwortet",
     "pixKeyLabel": "PIX-Schlüssel",
     "pixKeyPlaceholder": "CPF, CNPJ, Telefon +55, E-Mail oder Zufallsschlüssel",
     "pixKeyDetected": "Erkannt",
@@ -117,6 +121,10 @@
   "promptpay": {
     "title": "PromptPay QR-Code Generator",
     "description": "PromptPay QR-Codes für thailändische Zahlungen erstellen",
+    "guideTitle": "Wie PromptPay funktioniert",
+    "guideDescription": "Vollständiger Guide zum thailändischen Zahlungssystem",
+    "faqTitle": "PromptPay FAQ",
+    "faqDescription": "25 Fragen zu PromptPay beantwortet",
     "keyLabel": "PromptPay-Schlüssel",
     "keyPlaceholder": "Telefon: 0812345678 oder Ausweis-Nr.: 1234567890123",
     "keyHelp": "Thailändische Telefonnummer oder 13-stellige Ausweis-Nr.",

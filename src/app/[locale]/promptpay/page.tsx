@@ -30,13 +30,13 @@ const SUB_PAGES: SubPage[] = [
     icon: '📖',
     title: 'Technical Guide',
     description: 'EMV TLV payload spec, CRC16, key types, Bank of Thailand documentation',
-    comingSoon: true,
+    href: '/promptpay/guide',
   },
   {
     icon: '❓',
     title: 'FAQ',
     description: 'All questions about PromptPay QR codes answered',
-    comingSoon: true,
+    href: '/promptpay/faq',
   },
 ];
 
