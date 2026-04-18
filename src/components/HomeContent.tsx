@@ -5,22 +5,60 @@ import { useTranslations } from 'next-intl';
 import CountryGrid from '@/components/CountryGrid';
 import { PAYMENT_STANDARDS } from '@/lib/standards';
 
-type GeoData = {
+const GEO_CACHE_KEY = 'qrpayhub_geo';
+const GEO_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 Stunden in ms
+
+type GeoCache = {
   country: string | null;
   region: string | null;
+  timestamp: number;
 };
 
 export default function HomeContent() {
   const t = useTranslations('home');
-  const [geoData, setGeoData] = useState<GeoData | null>(null);
-  const [geoLoading, setGeoLoading] = useState(true);
+  const [detectedRegion, setDetectedRegion] = useState<string | null>(null);
+  const [isGeoLoading, setIsGeoLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/geoip')
-      .then((r) => r.json())
-      .then((data: GeoData) => setGeoData(data))
-      .catch(() => setGeoData(null))
-      .finally(() => setGeoLoading(false));
+    async function detectGeo() {
+      try {
+        // 1. Prüfe localStorage Cache
+        const cached = localStorage.getItem(GEO_CACHE_KEY);
+        if (cached) {
+          const parsed: GeoCache = JSON.parse(cached);
+          const isExpired = Date.now() - parsed.timestamp > GEO_CACHE_TTL;
+
+          if (!isExpired) {
+            setDetectedRegion(parsed.region);
+            setIsGeoLoading(false);
+            return;
+          }
+        }
+
+        // 2. Cache miss oder abgelaufen – API aufrufen
+        const res = await fetch('/api/geoip');
+        if (!res.ok) throw new Error('Geo API failed');
+
+        const data: { country: string | null; region: string | null } = await res.json();
+
+        // 3. Ergebnis cachen
+        const cacheData: GeoCache = {
+          country: data.country,
+          region: data.region,
+          timestamp: Date.now(),
+        };
+        localStorage.setItem(GEO_CACHE_KEY, JSON.stringify(cacheData));
+
+        setDetectedRegion(data.region);
+      } catch (error) {
+        console.warn('Geo detection failed:', error);
+        setDetectedRegion(null);
+      } finally {
+        setIsGeoLoading(false);
+      }
+    }
+
+    detectGeo();
   }, []);
 
   return (
@@ -62,9 +100,10 @@ export default function HomeContent() {
       {/* ── Country / Standard Grid ───────────────────────────────────────── */}
       <CountryGrid
         standards={PAYMENT_STANDARDS}
-        detectedRegion={geoData?.region ?? undefined}
-        isGeoLoading={geoLoading}
+        detectedRegion={detectedRegion ?? undefined}
+        isGeoLoading={isGeoLoading}
       />
+
     </>
   );
 }
