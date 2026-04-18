@@ -201,9 +201,18 @@ function StandardCard({ standard: s }: { standard: PaymentStandard }) {
       <div className="h-1 w-full flex-shrink-0" style={{ backgroundColor: s.color }} />
 
       <div className="flex flex-col items-center gap-2 p-5 flex-1">
-        <span className="text-5xl leading-none select-none" role="img" aria-label={s.name}>
-          {s.flag}
-        </span>
+        <span
+          className={`fi fi-${s.flag}`}
+          style={{
+            width: '3rem',
+            height: '2.25rem',
+            backgroundSize: 'cover',
+            borderRadius: '4px',
+            display: 'inline-block',
+          }}
+          role="img"
+          aria-label={s.name}
+        />
         <p className="text-sm font-bold text-slate-900 text-center leading-snug">{s.name}</p>
         <p className="text-xs text-slate-400 text-center">
           {visibleCountries.join(', ')}

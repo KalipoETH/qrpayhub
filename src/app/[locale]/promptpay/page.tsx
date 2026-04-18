@@ -77,7 +77,7 @@ function PageContent() {
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="text-center space-y-6">
         <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-sm font-medium px-4 py-1.5 rounded-full border border-blue-200">
-          🇹🇭 Thai Payment Standard
+          <span className="fi fi-th" style={{ width: '1.2em', height: '0.9em', display: 'inline-block', backgroundSize: 'cover', borderRadius: '2px', verticalAlign: 'middle' }} /> Thai Payment Standard
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight">
           PromptPay – Thailand&apos;s National Payment System

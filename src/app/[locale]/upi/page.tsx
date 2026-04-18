@@ -77,7 +77,7 @@ function PageContent() {
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="text-center space-y-6">
         <div className="inline-flex items-center gap-2 bg-orange-50 text-orange-700 text-sm font-medium px-4 py-1.5 rounded-full border border-orange-200">
-          🇮🇳 India Payment Standard
+          <span className="fi fi-in" style={{ width: '1.2em', height: '0.9em', display: 'inline-block', backgroundSize: 'cover', borderRadius: '2px', verticalAlign: 'middle' }} /> India Payment Standard
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight">
           UPI QR Code – India&apos;s Universal Payment Interface

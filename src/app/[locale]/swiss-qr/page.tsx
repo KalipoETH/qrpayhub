@@ -77,7 +77,7 @@ function PageContent() {
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="text-center space-y-6">
         <div className="inline-flex items-center gap-2 bg-red-50 text-red-700 text-sm font-medium px-4 py-1.5 rounded-full border border-red-200">
-          🇨🇭 Schweizer Zahlungsstandard
+          <span className="fi fi-ch" style={{ width: '1.2em', height: '0.9em', display: 'inline-block', backgroundSize: 'cover', borderRadius: '2px', verticalAlign: 'middle' }} /> Schweizer Zahlungsstandard
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight">
           Swiss QR Code – Die neue Schweizer Zahlungsstandard

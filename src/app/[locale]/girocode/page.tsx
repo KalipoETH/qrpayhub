@@ -129,7 +129,7 @@ function PageContent() {
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="text-center space-y-6">
         <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-sm font-medium px-4 py-1.5 rounded-full border border-blue-200">
-          🇪🇺 SEPA Payment Standard
+          <span className="fi fi-eu" style={{ width: '1.2em', height: '0.9em', display: 'inline-block', backgroundSize: 'cover', borderRadius: '2px', verticalAlign: 'middle' }} /> SEPA Payment Standard
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight">
           GiroCode / EPC QR Code
@@ -249,13 +249,16 @@ function PageContent() {
           GiroCode is supported in all 36 SEPA member countries.
         </p>
         <div className="flex flex-wrap gap-2">
-          {SEPA_COUNTRIES.map(({ code, flag, name }) => (
+          {SEPA_COUNTRIES.map(({ code, name }) => (
             <div
               key={code}
               title={name}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-full text-sm text-slate-700 shadow-sm hover:border-slate-300 transition-colors"
             >
-              <span>{flag}</span>
+              <span
+                className={`fi fi-${code.toLowerCase()}`}
+                style={{ width: '1.2em', height: '0.9em', display: 'inline-block', backgroundSize: 'cover', borderRadius: '2px' }}
+              />
               <span className="font-medium">{code}</span>
             </div>
           ))}

@@ -39,10 +39,10 @@ function PageContent() {
       {/* ── Header ───────────────────────────────────────────────────────── */}
       <div className="flex items-start gap-4">
         <div
-          className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 shadow-sm"
+          className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden"
           style={{ backgroundColor: '#003399' }}
         >
-          🇪🇺
+          <span className="fi fi-eu" style={{ width: '2.5rem', height: '1.875rem', display: 'inline-block', backgroundSize: 'cover', borderRadius: '3px' }} />
         </div>
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
