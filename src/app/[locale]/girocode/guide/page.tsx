@@ -2,13 +2,19 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'How GiroCode Works – Complete Technical Guide | QRPayHub',
-  description:
-    'Step-by-step guide: how GiroCode QR codes work, the EPC payload structure, supported banks and best practices.',
-  keywords: ['girocode how it works', 'epc qr code guide', 'girocode payload', 'sepa qr tutorial'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'How GiroCode Works – Complete Technical Guide | QRPayHub',
+    description:
+      'Step-by-step guide: how GiroCode QR codes work, the EPC payload structure, supported banks and best practices.',
+    keywords: ['girocode how it works', 'epc qr code guide', 'girocode payload', 'sepa qr tutorial'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/girocode/guide'),
+  };
+}
 
 const PAYLOAD_ROWS = [
   { line: '1', content: 'BCD', description: 'Service Tag – always "BCD"' },

@@ -3,13 +3,19 @@ import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 import GiroCodeGenerator from '@/components/generators/GiroCodeGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'GiroCode Generator – Free SEPA QR Code | QRPayHub',
-  description:
-    'Generate GiroCode (EPC QR) payment codes for free. Compatible with all European SEPA banks.',
-  keywords: ['girocode', 'epc qr code', 'sepa qr', 'girocode generator'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'GiroCode Generator – Free SEPA QR Code | QRPayHub',
+    description:
+      'Generate GiroCode (EPC QR) payment codes for free. Compatible with all European SEPA banks.',
+    keywords: ['girocode', 'epc qr code', 'sepa qr', 'girocode generator'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/girocode/generator'),
+  };
+}
 
 export default function GiroCodeGeneratorPage({
   params,

@@ -2,20 +2,26 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: "How UPI Works – Complete Guide to India's Payment System | QRPayHub",
-  description:
-    "Complete guide to UPI (Unified Payments Interface): how it works, UPI IDs, QR code format, supported apps and India's payment revolution.",
-  keywords: [
-    'upi guide',
-    'how upi works',
-    'upi qr code format',
-    'unified payments interface',
-    'upi id explained',
-    'npci upi',
-  ],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: "How UPI Works – Complete Guide to India's Payment System | QRPayHub",
+    description:
+      "Complete guide to UPI (Unified Payments Interface): how it works, UPI IDs, QR code format, supported apps and India's payment revolution.",
+    keywords: [
+      'upi guide',
+      'how upi works',
+      'upi qr code format',
+      'unified payments interface',
+      'upi id explained',
+      'npci upi',
+    ],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/upi/guide'),
+  };
+}
 
 const BANK_HANDLES = [
   { handle: '@okicici',   bank: 'ICICI Bank',              app: 'Google Pay / third-party' },

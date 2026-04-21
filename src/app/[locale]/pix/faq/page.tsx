@@ -6,19 +6,25 @@ import Accordion from '@/components/ui/Accordion';
 import RelatedToolCard from '@/components/ui/RelatedToolCard';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import { FAQ_ITEMS } from '@/lib/standards/pix-faq';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: "PIX FAQ – 25 Questions About Brazil's Payment System | QRPayHub",
-  description:
-    'Everything about PIX: PIX keys, QR code format, transaction limits, CRC16 checksum and how to receive payments.',
-  keywords: [
-    'pix faq',
-    'pix questions',
-    'pix qr code help',
-    'chave pix explained',
-    'banco central brasil pix guide',
-  ],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: "PIX FAQ – 25 Questions About Brazil's Payment System | QRPayHub",
+    description:
+      'Everything about PIX: PIX keys, QR code format, transaction limits, CRC16 checksum and how to receive payments.',
+    keywords: [
+      'pix faq',
+      'pix questions',
+      'pix qr code help',
+      'chave pix explained',
+      'banco central brasil pix guide',
+    ],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/pix/faq'),
+  };
+}
 
 const JSON_LD_FAQ = {
   '@context': 'https://schema.org',

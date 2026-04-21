@@ -6,13 +6,19 @@ import Accordion from '@/components/ui/Accordion';
 import RelatedToolCard from '@/components/ui/RelatedToolCard';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import { FAQ_ITEMS } from '@/lib/standards/upi-faq';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: "UPI FAQ – 25 Questions About India's Payment System | QRPayHub",
-  description:
-    'Everything about UPI: how it works, UPI IDs, transaction limits, international expansion and QR code format.',
-  keywords: ['upi faq', 'upi questions', 'unified payments interface help', 'upi qr faq', 'npci upi guide'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: "UPI FAQ – 25 Questions About India's Payment System | QRPayHub",
+    description:
+      'Everything about UPI: how it works, UPI IDs, transaction limits, international expansion and QR code format.',
+    keywords: ['upi faq', 'upi questions', 'unified payments interface help', 'upi qr faq', 'npci upi guide'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/upi/faq'),
+  };
+}
 
 const JSON_LD_FAQ = {
   '@context': 'https://schema.org',

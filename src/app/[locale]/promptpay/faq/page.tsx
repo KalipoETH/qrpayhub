@@ -6,19 +6,25 @@ import Accordion from '@/components/ui/Accordion';
 import RelatedToolCard from '@/components/ui/RelatedToolCard';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import { FAQ_ITEMS } from '@/lib/standards/promptpay-faq';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: "PromptPay FAQ – 25 Questions About Thai Payments | QRPayHub",
-  description:
-    'Everything about PromptPay: keys, QR format, ASEAN connections, transaction limits and how to receive payments in Thailand.',
-  keywords: [
-    'promptpay faq',
-    'promptpay questions',
-    'thai qr payment help',
-    'promptpay key types',
-    'bank of thailand promptpay guide',
-  ],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: "PromptPay FAQ – 25 Questions About Thai Payments | QRPayHub",
+    description:
+      'Everything about PromptPay: keys, QR format, ASEAN connections, transaction limits and how to receive payments in Thailand.',
+    keywords: [
+      'promptpay faq',
+      'promptpay questions',
+      'thai qr payment help',
+      'promptpay key types',
+      'bank of thailand promptpay guide',
+    ],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/promptpay/faq'),
+  };
+}
 
 const JSON_LD_FAQ = {
   '@context': 'https://schema.org',

@@ -6,13 +6,19 @@ import Accordion from '@/components/ui/Accordion';
 import RelatedToolCard from '@/components/ui/RelatedToolCard';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import { FAQ_ITEMS } from '@/lib/standards/swiss-qr-faq';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Swiss QR Code FAQ – 25 Questions Answered | QRPayHub',
-  description:
-    'Frequently asked questions about Swiss QR Code: Zahlteil, reference types QRR/SCOR/NON, supported banks, technical specifications and best practices.',
-  keywords: ['swiss qr code faq', 'qr rechnung fragen', 'zahlteil erklärung', 'qrr scor non', 'swiss qr hilfe'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'Swiss QR Code FAQ – 25 Questions Answered | QRPayHub',
+    description:
+      'Frequently asked questions about Swiss QR Code: Zahlteil, reference types QRR/SCOR/NON, supported banks, technical specifications and best practices.',
+    keywords: ['swiss qr code faq', 'qr rechnung fragen', 'zahlteil erklärung', 'qrr scor non', 'swiss qr hilfe'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/swiss-qr/faq'),
+  };
+}
 
 const JSON_LD_FAQ = {
   '@context': 'https://schema.org',

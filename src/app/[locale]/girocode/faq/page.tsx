@@ -6,13 +6,19 @@ import Accordion from '@/components/ui/Accordion';
 import RelatedToolCard from '@/components/ui/RelatedToolCard';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import { FAQ_ITEMS } from '@/lib/standards/girocode-faq';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'GiroCode FAQ – All Questions Answered | QRPayHub',
-  description:
-    'Frequently asked questions about GiroCode: how it works, which banks support it, security and technical details.',
-  keywords: ['girocode faq', 'epc qr code questions', 'girocode help', 'sepa qr faq'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'GiroCode FAQ – All Questions Answered | QRPayHub',
+    description:
+      'Frequently asked questions about GiroCode: how it works, which banks support it, security and technical details.',
+    keywords: ['girocode faq', 'epc qr code questions', 'girocode help', 'sepa qr faq'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/girocode/faq'),
+  };
+}
 
 const JSON_LD_FAQ = {
   '@context': 'https://schema.org',

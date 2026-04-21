@@ -2,13 +2,19 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import SwissQRGenerator from '@/components/generators/SwissQRGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Swiss QR Code Generator – Free | QRPayHub',
-  description:
-    'Generate Swiss QR Codes (QR-Rechnung) for free. Compatible with all Swiss banks. Supports CHF and EUR.',
-  keywords: ['swiss qr code', 'qr rechnung', 'swiss qr generator', 'qr-bill', 'swiss payment'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'Swiss QR Code Generator – Free | QRPayHub',
+    description:
+      'Generate Swiss QR Codes (QR-Rechnung) for free. Compatible with all Swiss banks. Supports CHF and EUR.',
+    keywords: ['swiss qr code', 'qr rechnung', 'swiss qr generator', 'qr-bill', 'swiss payment'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/swiss-qr/generator'),
+  };
+}
 
 export default function SwissQRGeneratorPage({
   params,

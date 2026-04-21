@@ -2,19 +2,25 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'How Swiss QR Code Works – Complete Guide | QRPayHub',
-  description:
-    'Complete guide to Swiss QR Code (QR-Rechnung): history, Zahlteil, reference types, payload structure, supported banks and best practices.',
-  keywords: [
-    'swiss qr code guide',
-    'qr rechnung erklärt',
-    'zahlteil anleitung',
-    'swiss qr payload',
-    'qrr scor non',
-  ],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'How Swiss QR Code Works – Complete Guide | QRPayHub',
+    description:
+      'Complete guide to Swiss QR Code (QR-Rechnung): history, Zahlteil, reference types, payload structure, supported banks and best practices.',
+    keywords: [
+      'swiss qr code guide',
+      'qr rechnung erklärt',
+      'zahlteil anleitung',
+      'swiss qr payload',
+      'qrr scor non',
+    ],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/swiss-qr/guide'),
+  };
+}
 
 const PAYLOAD_ROWS = [
   { line: '1',  content: 'SPC',                      description: 'Header – always "SPC" (Swiss Payments Code)' },

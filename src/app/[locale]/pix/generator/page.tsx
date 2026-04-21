@@ -2,13 +2,19 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import PIXGenerator from '@/components/generators/PIXGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'PIX QR Code Generator – Free | QRPayHub',
-  description:
-    'Generate PIX QR codes for Brazilian payments. Compatible with all Brazilian banks and payment apps.',
-  keywords: ['pix qr code', 'pix pagamento', 'gerador pix qr', 'qr code pix', 'banco central pix'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'PIX QR Code Generator – Free | QRPayHub',
+    description:
+      'Generate PIX QR codes for Brazilian payments. Compatible with all Brazilian banks and payment apps.',
+    keywords: ['pix qr code', 'pix pagamento', 'gerador pix qr', 'qr code pix', 'banco central pix'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/pix/generator'),
+  };
+}
 
 export default function PIXGeneratorPage({
   params,

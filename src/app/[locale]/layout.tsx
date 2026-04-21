@@ -23,6 +23,14 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: 'QRPayHub – The Global QR Payment Code Hub',
   description: 'Generate QR payment codes for any country in seconds.',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 export function generateStaticParams() {

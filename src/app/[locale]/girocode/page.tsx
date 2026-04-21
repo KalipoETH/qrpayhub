@@ -5,13 +5,19 @@ import { Link } from '@/i18n/navigation';
 import RelatedToolCard from '@/components/ui/RelatedToolCard';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'GiroCode / EPC QR Code – Complete Guide | QRPayHub',
-  description:
-    'Everything about GiroCode: what it is, how it works, which banks support it and how to generate one for free.',
-  keywords: ['girocode', 'epc qr code', 'sepa qr code', 'girocode generator', 'european qr payment'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'GiroCode / EPC QR Code – Complete Guide | QRPayHub',
+    description:
+      'Everything about GiroCode: what it is, how it works, which banks support it and how to generate one for free.',
+    keywords: ['girocode', 'epc qr code', 'sepa qr code', 'girocode generator', 'european qr payment'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/girocode'),
+  };
+}
 
 const SEPA_COUNTRIES = [
   { code: 'DE', flag: '🇩🇪', name: 'Germany' },

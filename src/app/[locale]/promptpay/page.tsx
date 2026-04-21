@@ -4,13 +4,19 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: "PromptPay QR Code Generator – Free | QRPayHub",
-  description:
-    "Generate PromptPay QR codes for Thai payments. Compatible with all Thai banks. Supports phone and National ID.",
-  keywords: ['promptpay qr', 'promptpay generator', 'thai payment qr', 'พร้อมเพย์', 'thailand qr code'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: "PromptPay – Thailand's National Payment System | QRPayHub",
+    description:
+      "Everything about PromptPay QR codes: what PromptPay is, how it works, which Thai banks support it and how to generate a PromptPay QR code for free.",
+    keywords: ['promptpay qr', 'promptpay generator', 'thai payment qr', 'พร้อมเพย์', 'thailand qr code'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/promptpay'),
+  };
+}
 
 const QUICK_FACTS = [
   { icon: '👥', value: '55M+',     label: 'Active Users' },

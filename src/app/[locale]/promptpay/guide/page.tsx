@@ -2,21 +2,27 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: "How PromptPay Works – Complete Guide to Thai Payments | QRPayHub",
-  description:
-    "Complete guide to PromptPay: Thailand's national instant payment system. PromptPay keys, QR format, supported banks, ASEAN connections and how to generate for free.",
-  keywords: [
-    'promptpay guide',
-    'how promptpay works',
-    'thai qr payment format',
-    'bank of thailand promptpay',
-    'promptpay emv format',
-    'promptpay asean',
-    'พร้อมเพย์',
-  ],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: "How PromptPay Works – Complete Guide to Thai Payments | QRPayHub",
+    description:
+      "Complete guide to PromptPay: Thailand's national instant payment system. PromptPay keys, QR format, supported banks, ASEAN connections and how to generate for free.",
+    keywords: [
+      'promptpay guide',
+      'how promptpay works',
+      'thai qr payment format',
+      'bank of thailand promptpay',
+      'promptpay emv format',
+      'promptpay asean',
+      'พร้อมเพย์',
+    ],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/promptpay/guide'),
+  };
+}
 
 const PROMPTPAY_KEYS = [
   {

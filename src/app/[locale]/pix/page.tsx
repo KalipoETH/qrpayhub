@@ -4,13 +4,19 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: "PIX QR Code – Brazil's Instant Payment System | QRPayHub",
-  description:
-    'Everything about PIX QR codes: what PIX is, how it works, which apps support it and how to generate a PIX QR code for free.',
-  keywords: ['pix', 'banco central brasil', 'pix qr code', 'pagamento instantaneo', 'bcb pix'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: "PIX QR Code – Brazil's Instant Payment System | QRPayHub",
+    description:
+      'Everything about PIX QR codes: what PIX is, how it works, which apps support it and how to generate a PIX QR code for free.',
+    keywords: ['pix', 'banco central brasil', 'pix qr code', 'pagamento instantaneo', 'bcb pix'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/pix'),
+  };
+}
 
 const QUICK_FACTS = [
   { icon: '👥', value: '150M+', label: 'Active Users' },

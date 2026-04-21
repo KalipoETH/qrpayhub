@@ -4,13 +4,19 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: "UPI QR Code – India's Universal Payment Interface | QRPayHub",
-  description:
-    'Everything about UPI QR codes: what UPI is, how it works, which apps support it and how to generate a UPI QR code for free.',
-  keywords: ['upi', 'unified payments interface', 'upi qr code', 'npci', 'bhim upi', 'india payments'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: "UPI QR Code – India's Universal Payment Interface | QRPayHub",
+    description:
+      'Everything about UPI QR codes: what UPI is, how it works, which apps support it and how to generate a UPI QR code for free.',
+    keywords: ['upi', 'unified payments interface', 'upi qr code', 'npci', 'bhim upi', 'india payments'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/upi'),
+  };
+}
 
 const QUICK_FACTS = [
   { icon: '👥', value: '350M+', label: 'Monthly Users' },

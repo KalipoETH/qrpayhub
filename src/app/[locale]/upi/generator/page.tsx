@@ -2,13 +2,19 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import UPIGenerator from '@/components/generators/UPIGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'UPI QR Code Generator – Free | QRPayHub',
-  description:
-    'Generate UPI QR codes for Indian payments. Compatible with PhonePe, Google Pay, Paytm, BHIM and all UPI apps.',
-  keywords: ['upi qr code', 'upi payment', 'bhim qr', 'google pay qr', 'phonepe qr', 'paytm qr'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'UPI QR Code Generator – Free | QRPayHub',
+    description:
+      'Generate UPI QR codes for Indian payments. Compatible with PhonePe, Google Pay, Paytm, BHIM and all UPI apps.',
+    keywords: ['upi qr code', 'upi payment', 'bhim qr', 'google pay qr', 'phonepe qr', 'paytm qr'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/upi/generator'),
+  };
+}
 
 export default function UPIGeneratorPage({
   params,

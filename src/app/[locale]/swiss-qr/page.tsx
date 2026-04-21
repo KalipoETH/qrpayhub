@@ -4,13 +4,19 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Swiss QR Code – Die neue Schweizer Zahlungsstandard | QRPayHub',
-  description:
-    'Alles über den Swiss QR Code (QR-Rechnung): Was er ist, wie er funktioniert und wie man ihn kostenlos generiert. Unterstützt CHF und EUR.',
-  keywords: ['swiss qr code', 'qr rechnung', 'swiss qr bill', 'schweizer qr code', 'six group'],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: 'Swiss QR Code – Die neue Schweizer Zahlungsstandard | QRPayHub',
+    description:
+      'Alles über den Swiss QR Code (QR-Rechnung): Was er ist, wie er funktioniert und wie man ihn kostenlos generiert. Unterstützt CHF und EUR.',
+    keywords: ['swiss qr code', 'qr rechnung', 'swiss qr bill', 'schweizer qr code', 'six group'],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/swiss-qr'),
+  };
+}
 
 const QUICK_FACTS = [
   { icon: '👥', value: '9 Mio.', label: 'Active Users' },

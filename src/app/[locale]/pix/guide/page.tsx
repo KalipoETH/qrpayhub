@@ -2,21 +2,27 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { buildAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: "How PIX Works – Complete Guide to Brazil's Payment System | QRPayHub",
-  description:
-    "Complete guide to PIX: Brazil's instant payment system. PIX keys, QR code format, CRC16 checksum, supported banks and how to generate PIX QR codes for free.",
-  keywords: [
-    'pix guide',
-    'how pix works',
-    'pix qr code format',
-    'banco central brasil',
-    'pix chave explained',
-    'emv pix payload',
-    'crc16 pix',
-  ],
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
+  return {
+    title: "How PIX Works – Complete Guide to Brazil's Payment System | QRPayHub",
+    description:
+      "Complete guide to PIX: Brazil's instant payment system. PIX keys, QR code format, CRC16 checksum, supported banks and how to generate PIX QR codes for free.",
+    keywords: [
+      'pix guide',
+      'how pix works',
+      'pix qr code format',
+      'banco central brasil',
+      'pix chave explained',
+      'emv pix payload',
+      'crc16 pix',
+    ],
+    robots: { index: true, follow: true },
+    alternates: buildAlternates(locale, '/pix/guide'),
+  };
+}
 
 const PIX_KEYS = [
   {
