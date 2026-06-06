@@ -49,14 +49,12 @@ const SUB_PAGES: SubPage[] = [
     title: 'Technical Guide',
     description: 'EMV TLV payload spec, CRC16, NMID, merchant criteria and BI integration docs',
     href: '/qris/guide',
-    comingSoon: true,
   },
   {
     icon: '❓',
     title: 'FAQ',
     description: 'All questions about QRIS QR codes answered',
     href: '/qris/faq',
-    comingSoon: true,
   },
 ];
 

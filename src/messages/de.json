@@ -146,6 +146,10 @@
   "qris": {
     "title": "QRIS Generator",
     "description": "QRIS QR-Codes für indonesische Zahlungen erstellen",
+    "guideTitle": "Wie QRIS funktioniert",
+    "guideDescription": "Vollständiger Guide zu Indonesiens nationalem QR-Zahlungsstandard",
+    "faqTitle": "QRIS FAQ",
+    "faqDescription": "25 Fragen zu QRIS beantwortet",
     "merchantIdLabel": "National Merchant ID (NMID)",
     "merchantIdPlaceholder": "ID1234567890123",
     "merchantIdHelp": "Ihre NMID von der Bank Indonesia Registrierung",
@@ -215,6 +219,10 @@
   "duitnow": {
     "title": "DuitNow QR Generator",
     "description": "DuitNow QR-Codes für malaysische Zahlungen erstellen",
+    "guideTitle": "Wie DuitNow funktioniert",
+    "guideDescription": "Vollständiger Guide zu Malaysias Echtzeit-Zahlungssystem",
+    "faqTitle": "DuitNow FAQ",
+    "faqDescription": "25 Fragen zu DuitNow beantwortet",
     "keyLabel": "DuitNow ID",
     "keyPlaceholder": "01X-XXXXXXXX oder IC-Nummer",
     "keyDetected": "Erkannt",

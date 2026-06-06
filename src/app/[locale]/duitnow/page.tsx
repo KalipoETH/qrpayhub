@@ -44,6 +44,18 @@ const SUB_PAGES: SubPage[] = [
     description: 'Create DuitNow QR codes instantly — works with all DuitNow-enabled apps',
     href: '/duitnow/generator',
   },
+  {
+    icon: '📖',
+    title: 'Technical Guide',
+    description: 'DuitNow IDs, EMV payload format, mobile normalization and ASEAN cross-border docs',
+    href: '/duitnow/guide',
+  },
+  {
+    icon: '❓',
+    title: 'FAQ',
+    description: '25 questions about DuitNow QR codes answered',
+    href: '/duitnow/faq',
+  },
 ];
 
 const JSON_LD = {

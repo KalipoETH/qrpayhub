@@ -45,6 +45,8 @@ const PAGES: PageDef[] = [
   // QRIS (Phase 2 – live)
   { path: '/qris',                 priority: 0.8, changeFreq: 'weekly' },
   { path: '/qris/generator',       priority: 0.9, changeFreq: 'weekly' },
+  { path: '/qris/guide',           priority: 0.7, changeFreq: 'monthly' },
+  { path: '/qris/faq',             priority: 0.7, changeFreq: 'monthly' },
 
   // FPS (Phase 2 – live)
   { path: '/fps',                  priority: 0.8, changeFreq: 'weekly' },
@@ -57,6 +59,8 @@ const PAGES: PageDef[] = [
   // DuitNow (Phase 2 – live)
   { path: '/duitnow',              priority: 0.8, changeFreq: 'weekly' },
   { path: '/duitnow/generator',    priority: 0.9, changeFreq: 'weekly' },
+  { path: '/duitnow/guide',        priority: 0.7, changeFreq: 'monthly' },
+  { path: '/duitnow/faq',          priority: 0.7, changeFreq: 'monthly' },
 
   // PayNow (Phase 2 – live)
   { path: '/paynow',               priority: 0.8, changeFreq: 'weekly' },
