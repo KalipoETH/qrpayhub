@@ -175,6 +175,10 @@
   "fps": {
     "title": "FPS QR Generator",
     "description": "FPS QR-Codes für Zahlungen in Hongkong erstellen",
+    "guideTitle": "Wie FPS funktioniert",
+    "guideDescription": "Vollständiger Guide zu Hongkongs Faster Payment System",
+    "faqTitle": "FPS FAQ",
+    "faqDescription": "25 Fragen zu FPS beantwortet",
     "keyLabel": "FPS-Schlüssel",
     "keyPlaceholder": "+852XXXXXXXX, E-Mail oder FPS-ID",
     "keyDetected": "Erkannt",
@@ -247,6 +251,10 @@
   "paynow": {
     "title": "PayNow QR Generator",
     "description": "PayNow QR-Codes für singapurische Zahlungen erstellen",
+    "guideTitle": "Wie PayNow funktioniert",
+    "guideDescription": "Vollständiger Guide zu Singapurs Echtzeit-Zahlungssystem",
+    "faqTitle": "PayNow FAQ",
+    "faqDescription": "25 Fragen zu PayNow beantwortet",
     "keyLabel": "PayNow-Schlüssel",
     "keyPlaceholder": "+65XXXXXXXX, UEN oder NRIC",
     "keyDetected": "Erkannt",

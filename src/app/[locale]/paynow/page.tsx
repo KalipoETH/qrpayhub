@@ -44,6 +44,18 @@ const SUB_PAGES: SubPage[] = [
     description: 'Create PayNow QR codes instantly — works with all Singapore payment apps',
     href: '/paynow/generator',
   },
+  {
+    icon: '📖',
+    title: 'Technical Guide',
+    description: 'Proxy types, EMV payload, editable amount, SGQR and ASEAN cross-border docs',
+    href: '/paynow/guide',
+  },
+  {
+    icon: '❓',
+    title: 'FAQ',
+    description: '25 questions about PayNow QR codes answered',
+    href: '/paynow/faq',
+  },
 ];
 
 const JSON_LD = {

@@ -44,6 +44,18 @@ const SUB_PAGES: SubPage[] = [
     description: 'Create FPS QR codes instantly — works with all FPS-enabled apps and banks',
     href: '/fps/generator',
   },
+  {
+    icon: '📖',
+    title: 'Technical Guide',
+    description: 'Proxy types, HKD/CNY dual currency, EMV payload and FPS vs CHATS comparison',
+    href: '/fps/guide',
+  },
+  {
+    icon: '❓',
+    title: 'FAQ',
+    description: '25 questions about FPS QR codes answered',
+    href: '/fps/faq',
+  },
 ];
 
 const JSON_LD = {

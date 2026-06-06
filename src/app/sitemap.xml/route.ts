@@ -51,6 +51,8 @@ const PAGES: PageDef[] = [
   // FPS (Phase 2 – live)
   { path: '/fps',                  priority: 0.8, changeFreq: 'weekly' },
   { path: '/fps/generator',        priority: 0.9, changeFreq: 'weekly' },
+  { path: '/fps/guide',            priority: 0.7, changeFreq: 'monthly' },
+  { path: '/fps/faq',              priority: 0.7, changeFreq: 'monthly' },
 
   // VietQR (Phase 2 – live)
   { path: '/vietqr',               priority: 0.8, changeFreq: 'weekly' },
@@ -65,6 +67,8 @@ const PAGES: PageDef[] = [
   // PayNow (Phase 2 – live)
   { path: '/paynow',               priority: 0.8, changeFreq: 'weekly' },
   { path: '/paynow/generator',     priority: 0.9, changeFreq: 'weekly' },
+  { path: '/paynow/guide',         priority: 0.7, changeFreq: 'monthly' },
+  { path: '/paynow/faq',           priority: 0.7, changeFreq: 'monthly' },
 
   // QR Ph (Phase 2 – live)
   { path: '/qr-ph',                priority: 0.8, changeFreq: 'weekly' },

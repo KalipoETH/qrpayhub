@@ -122,6 +122,7 @@
     "title": "PromptPay QR Code Generator",
     "description": "Generate PromptPay QR codes for Thai payments",
     "guideTitle": "How PromptPay Works",
+
     "guideDescription": "Complete guide to Thailand's payment system",
     "faqTitle": "PromptPay FAQ",
     "faqDescription": "25 questions about PromptPay answered",
@@ -175,6 +176,10 @@
   "fps": {
     "title": "FPS QR Generator",
     "description": "Generate FPS QR codes for Hong Kong payments",
+    "guideTitle": "How FPS Works",
+    "guideDescription": "Complete guide to Hong Kong's Faster Payment System",
+    "faqTitle": "FPS FAQ",
+    "faqDescription": "25 questions about FPS answered",
     "keyLabel": "FPS Key",
     "keyPlaceholder": "+852XXXXXXXX, email or FPS ID",
     "keyDetected": "Detected",
@@ -247,6 +252,10 @@
   "paynow": {
     "title": "PayNow QR Generator",
     "description": "Generate PayNow QR codes for Singapore payments",
+    "guideTitle": "How PayNow Works",
+    "guideDescription": "Complete guide to Singapore's instant payment system",
+    "faqTitle": "PayNow FAQ",
+    "faqDescription": "25 questions about PayNow answered",
     "keyLabel": "PayNow Key",
     "keyPlaceholder": "+65XXXXXXXX, UEN or NRIC",
     "keyDetected": "Detected",
