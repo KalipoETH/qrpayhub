@@ -71,7 +71,7 @@ export const PAYMENT_STANDARDS: PaymentStandard[] = [
     region: 'asia',
     phase: 2,
     color: '#E53E3E',
-    available: false,
+    available: true,
   },
   {
     id: 'duitnow',

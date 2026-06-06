@@ -12,6 +12,7 @@ const nextConfig = {
       '/upi', '/upi/generator', '/upi/guide', '/upi/faq',
       '/pix', '/pix/generator', '/pix/guide', '/pix/faq',
       '/promptpay', '/promptpay/generator', '/promptpay/guide', '/promptpay/faq',
+      '/qris', '/qris/generator',
       '/contact', '/impressum', '/datenschutz',
     ];
 

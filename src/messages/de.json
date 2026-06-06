@@ -143,6 +143,31 @@
       "ewallet": "E-Wallet"
     }
   },
+  "qris": {
+    "title": "QRIS Generator",
+    "description": "QRIS QR-Codes für indonesische Zahlungen erstellen",
+    "merchantIdLabel": "National Merchant ID (NMID)",
+    "merchantIdPlaceholder": "ID1234567890123",
+    "merchantIdHelp": "Ihre NMID von der Bank Indonesia Registrierung",
+    "merchantNameLabel": "Händlername",
+    "merchantCityLabel": "Stadt",
+    "merchantTypeLabel": "Händlertyp",
+    "amountLabel": "Betrag (IDR)",
+    "amountHelp": "Leer lassen für offenen Betrag",
+    "terminalIdLabel": "Terminal-ID",
+    "referenceIdLabel": "Referenz-ID",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "scanWith": "Mit GoPay, OVO, Dana, LinkAja, ShopeePay oder jeder QRIS-App scannen",
+    "downloadPng": "PNG herunterladen",
+    "copyPayload": "QRIS Payload kopieren",
+    "copied": "Kopiert!",
+    "merchantTypes": {
+      "micro": "Mikro (Usaha Mikro)",
+      "small": "Klein (Usaha Kecil)",
+      "medium": "Mittel (Usaha Menengah)",
+      "large": "Groß (Usaha Besar)"
+    }
+  },
   "footer": {
     "tagline": "Der globale QR-Zahlungscode Hub",
     "privacy": "Datenschutz",

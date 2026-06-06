@@ -42,6 +42,10 @@ const PAGES: PageDef[] = [
   { path: '/promptpay/guide',      priority: 0.7, changeFreq: 'monthly' },
   { path: '/promptpay/faq',        priority: 0.7, changeFreq: 'monthly' },
 
+  // QRIS (Phase 2 – live)
+  { path: '/qris',                 priority: 0.8, changeFreq: 'weekly' },
+  { path: '/qris/generator',       priority: 0.9, changeFreq: 'weekly' },
+
   // Legal / Contact (noindex pages excluded; contact is indexable)
   { path: '/contact',              priority: 0.3, changeFreq: 'monthly' },
 ];
