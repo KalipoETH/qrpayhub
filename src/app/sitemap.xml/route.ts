@@ -1,8 +1,6 @@
 const BASE_URL = 'https://www.qrpayhub.com';
 
-const LOCALES = [
-  'en', 'de', 'fr', 'es', 'pt', 'hi', 'id', 'th', 'vi', 'tl', 'ar', 'it', 'nl', 'pl',
-] as const;
+const LOCALES = ['en', 'de'] as const;
 
 type PageDef = {
   path: string;
@@ -59,9 +57,8 @@ export async function GET() {
 
       const langLinks = [
         `    <xhtml:link rel="alternate" hreflang="x-default" href="${xdefault}"/>`,
-        ...LOCALES.map(
-          (l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE_URL}/${l}${page.path}"/>`,
-        ),
+        `    <xhtml:link rel="alternate" hreflang="en" href="${BASE_URL}/en${page.path}"/>`,
+        `    <xhtml:link rel="alternate" hreflang="de" href="${BASE_URL}/de${page.path}"/>`,
       ].join('\n');
 
       urlEntries.push(

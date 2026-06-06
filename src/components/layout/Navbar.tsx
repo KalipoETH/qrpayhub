@@ -7,18 +7,6 @@ import { useRouter, usePathname, Link } from '@/i18n/navigation';
 const LANGUAGES: { code: string; flag: string; name: string }[] = [
   { code: 'en', flag: '🇬🇧', name: 'English' },
   { code: 'de', flag: '🇩🇪', name: 'Deutsch' },
-  { code: 'fr', flag: '🇫🇷', name: 'Français' },
-  { code: 'es', flag: '🇪🇸', name: 'Español' },
-  { code: 'pt', flag: '🇵🇹', name: 'Português' },
-  { code: 'hi', flag: '🇮🇳', name: 'हिन्दी' },
-  { code: 'id', flag: '🇮🇩', name: 'Indonesia' },
-  { code: 'th', flag: '🇹🇭', name: 'ไทย' },
-  { code: 'vi', flag: '🇻🇳', name: 'Tiếng Việt' },
-  { code: 'tl', flag: '🇵🇭', name: 'Filipino' },
-  { code: 'ar', flag: '🇸🇦', name: 'العربية' },
-  { code: 'it', flag: '🇮🇹', name: 'Italiano' },
-  { code: 'nl', flag: '🇳🇱', name: 'Nederlands' },
-  { code: 'pl', flag: '🇵🇱', name: 'Polski' },
 ];
 
 const AVAILABLE_STANDARDS = [
