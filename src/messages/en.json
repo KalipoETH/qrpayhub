@@ -258,6 +258,52 @@
       "nric": "NRIC/FIN"
     }
   },
+  "qrph": {
+    "title": "QR Ph Generator",
+    "description": "Generate QR Ph codes for Philippine payments",
+    "keyLabel": "QR Ph Key",
+    "keyPlaceholder": "09XXXXXXXXX, account number or email",
+    "keyDetected": "Detected",
+    "merchantNameLabel": "Payee Name",
+    "merchantCityLabel": "City",
+    "amountLabel": "Amount (PHP)",
+    "purposeLabel": "Purpose",
+    "referenceIdLabel": "Reference ID",
+    "advancedSettings": "Advanced Settings",
+    "scanWith": "Scan with GCash, Maya, BDO, BPI or any InstaPay app",
+    "downloadPng": "Download PNG",
+    "copyPayload": "Copy Payload",
+    "copied": "Copied!",
+    "keyTypes": {
+      "mobile": "Mobile Number",
+      "account": "Bank Account",
+      "email": "Email Address"
+    }
+  },
+  "codi": {
+    "title": "CoDi QR Generator",
+    "description": "Generate CoDi QR codes for Mexican SPEI payments",
+    "recipientTypeLabel": "Recipient Type",
+    "clabeLabel": "CLABE (18 digits)",
+    "clabePlaceholder": "18-digit CLABE number",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "10-digit Mexican mobile",
+    "merchantNameLabel": "Beneficiary Name",
+    "conceptLabel": "Concept",
+    "conceptPlaceholder": "Payment description (max 35 chars)",
+    "amountLabel": "Amount (MXN)",
+    "amountRequired": "Amount is required for CoDi payments",
+    "referenceLabel": "Numeric Reference",
+    "referencePlaceholder": "1234567",
+    "referenceHelp": "Numeric reference (1-7 digits)",
+    "bankDetected": "Bank detected",
+    "advancedSettings": "Advanced Settings",
+    "scanWith": "Scan with BBVA, Santander MX, Banorte or any CoDi app",
+    "codiWarning": "CoDi requires a registered Mexican bank account",
+    "downloadPng": "Download PNG",
+    "copyPayload": "Copy Payload",
+    "copied": "Copied!"
+  },
   "footer": {
     "tagline": "The Global QR Payment Code Hub",
     "privacy": "Privacy Policy",

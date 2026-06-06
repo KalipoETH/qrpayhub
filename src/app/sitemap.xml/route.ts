@@ -62,6 +62,14 @@ const PAGES: PageDef[] = [
   { path: '/paynow',               priority: 0.8, changeFreq: 'weekly' },
   { path: '/paynow/generator',     priority: 0.9, changeFreq: 'weekly' },
 
+  // QR Ph (Phase 2 – live)
+  { path: '/qr-ph',                priority: 0.8, changeFreq: 'weekly' },
+  { path: '/qr-ph/generator',      priority: 0.9, changeFreq: 'weekly' },
+
+  // CoDi (Phase 2 – live)
+  { path: '/codi',                 priority: 0.8, changeFreq: 'weekly' },
+  { path: '/codi/generator',       priority: 0.9, changeFreq: 'weekly' },
+
   // Legal / Contact (noindex pages excluded; contact is indexable)
   { path: '/contact',              priority: 0.3, changeFreq: 'monthly' },
 ];

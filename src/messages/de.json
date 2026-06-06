@@ -258,6 +258,52 @@
       "nric": "NRIC/FIN"
     }
   },
+  "qrph": {
+    "title": "QR Ph Generator",
+    "description": "QR Ph-Codes für philippinische Zahlungen erstellen",
+    "keyLabel": "QR Ph-Schlüssel",
+    "keyPlaceholder": "09XXXXXXXXX, Kontonummer oder E-Mail",
+    "keyDetected": "Erkannt",
+    "merchantNameLabel": "Empfängername",
+    "merchantCityLabel": "Stadt",
+    "amountLabel": "Betrag (PHP)",
+    "purposeLabel": "Verwendungszweck",
+    "referenceIdLabel": "Referenz-ID",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "scanWith": "Mit GCash, Maya, BDO, BPI oder jeder InstaPay-App scannen",
+    "downloadPng": "PNG herunterladen",
+    "copyPayload": "Payload kopieren",
+    "copied": "Kopiert!",
+    "keyTypes": {
+      "mobile": "Mobilnummer",
+      "account": "Bankkonto",
+      "email": "E-Mail-Adresse"
+    }
+  },
+  "codi": {
+    "title": "CoDi QR Generator",
+    "description": "CoDi QR-Codes für mexikanische SPEI-Zahlungen erstellen",
+    "recipientTypeLabel": "Empfängertyp",
+    "clabeLabel": "CLABE (18 Ziffern)",
+    "clabePlaceholder": "18-stellige CLABE-Nummer",
+    "phoneLabel": "Telefonnummer",
+    "phonePlaceholder": "10-stellige mexikanische Mobilnummer",
+    "merchantNameLabel": "Begünstigter",
+    "conceptLabel": "Verwendungszweck",
+    "conceptPlaceholder": "Zahlungsbeschreibung (max. 35 Zeichen)",
+    "amountLabel": "Betrag (MXN)",
+    "amountRequired": "Betrag ist bei CoDi-Zahlungen Pflicht",
+    "referenceLabel": "Numerische Referenz",
+    "referencePlaceholder": "1234567",
+    "referenceHelp": "Numerische Referenz (1–7 Ziffern)",
+    "bankDetected": "Bank erkannt",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "scanWith": "Mit BBVA, Santander MX, Banorte oder jeder CoDi-App scannen",
+    "codiWarning": "CoDi erfordert ein registriertes mexikanisches Bankkonto",
+    "downloadPng": "PNG herunterladen",
+    "copyPayload": "Payload kopieren",
+    "copied": "Kopiert!"
+  },
   "footer": {
     "tagline": "Der globale QR-Zahlungscode Hub",
     "privacy": "Datenschutz",

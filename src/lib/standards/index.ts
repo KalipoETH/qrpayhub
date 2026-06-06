@@ -121,7 +121,7 @@ export const PAYMENT_STANDARDS: PaymentStandard[] = [
     region: 'asia',
     phase: 2,
     color: '#0038A8',
-    available: false,
+    available: true,
   },
   {
     id: 'codi',
@@ -131,7 +131,7 @@ export const PAYMENT_STANDARDS: PaymentStandard[] = [
     region: 'latam',
     phase: 2,
     color: '#006847',
-    available: false,
+    available: true,
   },
 
   // ── Phase 3 ────────────────────────────────────────────────────────────────

@@ -17,6 +17,8 @@ const nextConfig = {
       '/vietqr', '/vietqr/generator',
       '/duitnow', '/duitnow/generator',
       '/paynow', '/paynow/generator',
+      '/qr-ph', '/qr-ph/generator',
+      '/codi', '/codi/generator',
       '/contact', '/impressum', '/datenschutz',
     ];
 
