@@ -168,6 +168,96 @@
       "large": "Groß (Usaha Besar)"
     }
   },
+  "fps": {
+    "title": "FPS QR Generator",
+    "description": "FPS QR-Codes für Zahlungen in Hongkong erstellen",
+    "keyLabel": "FPS-Schlüssel",
+    "keyPlaceholder": "+852XXXXXXXX, E-Mail oder FPS-ID",
+    "keyDetected": "Erkannt",
+    "merchantNameLabel": "Empfänger",
+    "currencyLabel": "Währung",
+    "amountLabel": "Betrag",
+    "memoLabel": "Memo",
+    "referenceIdLabel": "Referenz-ID",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "scanWith": "Mit HSBC HK, Hang Seng, PayMe oder jeder FPS-App scannen",
+    "downloadPng": "PNG herunterladen",
+    "copyPayload": "Payload kopieren",
+    "copied": "Kopiert!",
+    "keyTypes": {
+      "mobile": "Mobilnummer",
+      "email": "E-Mail-Adresse",
+      "fps_id": "FPS-ID"
+    }
+  },
+  "vietqr": {
+    "title": "VietQR Generator",
+    "description": "VietQR-Codes für vietnamesische Banküberweisungen erstellen",
+    "bankLabel": "Bank",
+    "bankBinLabel": "Bank-BIN",
+    "accountNumberLabel": "Kontonummer",
+    "accountNameLabel": "Kontoinhaber",
+    "accountNameHelp": "GROSSBUCHSTABEN, ohne vietnamesische Akzente",
+    "amountLabel": "Betrag (VND)",
+    "descriptionLabel": "Verwendungszweck",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "scanWith": "Mit Vietcombank, BIDV, Techcombank, MoMo oder jeder VietQR-App scannen",
+    "downloadPng": "PNG herunterladen",
+    "copyPayload": "Payload kopieren",
+    "copied": "Kopiert!",
+    "quickAmounts": {
+      "50k": "50K",
+      "100k": "100K",
+      "200k": "200K",
+      "500k": "500K"
+    }
+  },
+  "duitnow": {
+    "title": "DuitNow QR Generator",
+    "description": "DuitNow QR-Codes für malaysische Zahlungen erstellen",
+    "keyLabel": "DuitNow ID",
+    "keyPlaceholder": "01X-XXXXXXXX oder IC-Nummer",
+    "keyDetected": "Erkannt",
+    "merchantNameLabel": "Händlername",
+    "merchantCityLabel": "Stadt",
+    "amountLabel": "Betrag (MYR)",
+    "billDetailsLabel": "Rechnungsdetails",
+    "referenceIdLabel": "Referenz-ID",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "scanWith": "Mit Maybank2u, CIMB, Touch 'n Go oder jeder DuitNow-App scannen",
+    "downloadPng": "PNG herunterladen",
+    "copyPayload": "Payload kopieren",
+    "copied": "Kopiert!",
+    "keyTypes": {
+      "mobile": "Mobilnummer",
+      "ic": "MyKad IC-Nummer",
+      "passport": "Reisepass",
+      "business": "Unternehmen (ROC/ROB)",
+      "others": "Sonstige"
+    }
+  },
+  "paynow": {
+    "title": "PayNow QR Generator",
+    "description": "PayNow QR-Codes für singapurische Zahlungen erstellen",
+    "keyLabel": "PayNow-Schlüssel",
+    "keyPlaceholder": "+65XXXXXXXX, UEN oder NRIC",
+    "keyDetected": "Erkannt",
+    "merchantNameLabel": "Empfänger",
+    "amountLabel": "Betrag (SGD)",
+    "editableLabel": "Zahler darf Betrag ändern",
+    "expiryLabel": "Ablaufdatum (optional)",
+    "referenceIdLabel": "Referenz-ID",
+    "advancedSettings": "Erweiterte Einstellungen",
+    "scanWith": "Mit DBS PayLah!, OCBC, UOB, GrabPay oder jeder PayNow-App scannen",
+    "downloadPng": "PNG herunterladen",
+    "copyPayload": "Payload kopieren",
+    "copied": "Kopiert!",
+    "keyTypes": {
+      "mobile": "Mobilnummer",
+      "uen": "UEN (Unternehmen)",
+      "nric": "NRIC/FIN"
+    }
+  },
   "footer": {
     "tagline": "Der globale QR-Zahlungscode Hub",
     "privacy": "Datenschutz",

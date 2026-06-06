@@ -168,6 +168,96 @@
       "large": "Large (Usaha Besar)"
     }
   },
+  "fps": {
+    "title": "FPS QR Generator",
+    "description": "Generate FPS QR codes for Hong Kong payments",
+    "keyLabel": "FPS Key",
+    "keyPlaceholder": "+852XXXXXXXX, email or FPS ID",
+    "keyDetected": "Detected",
+    "merchantNameLabel": "Payee Name",
+    "currencyLabel": "Currency",
+    "amountLabel": "Amount",
+    "memoLabel": "Memo",
+    "referenceIdLabel": "Reference ID",
+    "advancedSettings": "Advanced Settings",
+    "scanWith": "Scan with HSBC HK, Hang Seng, PayMe or any FPS app",
+    "downloadPng": "Download PNG",
+    "copyPayload": "Copy Payload",
+    "copied": "Copied!",
+    "keyTypes": {
+      "mobile": "Mobile Number",
+      "email": "Email Address",
+      "fps_id": "FPS ID"
+    }
+  },
+  "vietqr": {
+    "title": "VietQR Generator",
+    "description": "Generate VietQR codes for Vietnamese bank transfers",
+    "bankLabel": "Bank",
+    "bankBinLabel": "Bank BIN",
+    "accountNumberLabel": "Account Number",
+    "accountNameLabel": "Account Name",
+    "accountNameHelp": "Use UPPERCASE without Vietnamese accents",
+    "amountLabel": "Amount (VND)",
+    "descriptionLabel": "Payment Description",
+    "advancedSettings": "Advanced Settings",
+    "scanWith": "Scan with Vietcombank, BIDV, Techcombank, MoMo or any VietQR app",
+    "downloadPng": "Download PNG",
+    "copyPayload": "Copy Payload",
+    "copied": "Copied!",
+    "quickAmounts": {
+      "50k": "50K",
+      "100k": "100K",
+      "200k": "200K",
+      "500k": "500K"
+    }
+  },
+  "duitnow": {
+    "title": "DuitNow QR Generator",
+    "description": "Generate DuitNow QR codes for Malaysian payments",
+    "keyLabel": "DuitNow ID",
+    "keyPlaceholder": "01X-XXXXXXXX or IC number",
+    "keyDetected": "Detected",
+    "merchantNameLabel": "Merchant Name",
+    "merchantCityLabel": "City",
+    "amountLabel": "Amount (MYR)",
+    "billDetailsLabel": "Bill Details",
+    "referenceIdLabel": "Reference ID",
+    "advancedSettings": "Advanced Settings",
+    "scanWith": "Scan with Maybank2u, CIMB, Touch 'n Go or any DuitNow app",
+    "downloadPng": "Download PNG",
+    "copyPayload": "Copy Payload",
+    "copied": "Copied!",
+    "keyTypes": {
+      "mobile": "Mobile Number",
+      "ic": "MyKad IC Number",
+      "passport": "Passport",
+      "business": "Business (ROC/ROB)",
+      "others": "Others"
+    }
+  },
+  "paynow": {
+    "title": "PayNow QR Generator",
+    "description": "Generate PayNow QR codes for Singapore payments",
+    "keyLabel": "PayNow Key",
+    "keyPlaceholder": "+65XXXXXXXX, UEN or NRIC",
+    "keyDetected": "Detected",
+    "merchantNameLabel": "Payee Name",
+    "amountLabel": "Amount (SGD)",
+    "editableLabel": "Allow payer to edit amount",
+    "expiryLabel": "Expiry Date (optional)",
+    "referenceIdLabel": "Reference ID",
+    "advancedSettings": "Advanced Settings",
+    "scanWith": "Scan with DBS PayLah!, OCBC, UOB, GrabPay or any PayNow app",
+    "downloadPng": "Download PNG",
+    "copyPayload": "Copy Payload",
+    "copied": "Copied!",
+    "keyTypes": {
+      "mobile": "Mobile Number",
+      "uen": "UEN (Business)",
+      "nric": "NRIC/FIN"
+    }
+  },
   "footer": {
     "tagline": "The Global QR Payment Code Hub",
     "privacy": "Privacy Policy",

@@ -81,7 +81,7 @@ export const PAYMENT_STANDARDS: PaymentStandard[] = [
     region: 'asia',
     phase: 2,
     color: '#CC0001',
-    available: false,
+    available: true,
   },
   {
     id: 'paynow',
@@ -91,7 +91,7 @@ export const PAYMENT_STANDARDS: PaymentStandard[] = [
     region: 'asia',
     phase: 2,
     color: '#EF4444',
-    available: false,
+    available: true,
   },
   {
     id: 'fps',
@@ -101,7 +101,7 @@ export const PAYMENT_STANDARDS: PaymentStandard[] = [
     region: 'asia',
     phase: 2,
     color: '#BA0C2F',
-    available: false,
+    available: true,
   },
   {
     id: 'vietqr',
@@ -111,7 +111,7 @@ export const PAYMENT_STANDARDS: PaymentStandard[] = [
     region: 'asia',
     phase: 2,
     color: '#DA251D',
-    available: false,
+    available: true,
   },
   {
     id: 'qrph',

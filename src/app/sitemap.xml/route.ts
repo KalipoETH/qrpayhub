@@ -46,6 +46,22 @@ const PAGES: PageDef[] = [
   { path: '/qris',                 priority: 0.8, changeFreq: 'weekly' },
   { path: '/qris/generator',       priority: 0.9, changeFreq: 'weekly' },
 
+  // FPS (Phase 2 – live)
+  { path: '/fps',                  priority: 0.8, changeFreq: 'weekly' },
+  { path: '/fps/generator',        priority: 0.9, changeFreq: 'weekly' },
+
+  // VietQR (Phase 2 – live)
+  { path: '/vietqr',               priority: 0.8, changeFreq: 'weekly' },
+  { path: '/vietqr/generator',     priority: 0.9, changeFreq: 'weekly' },
+
+  // DuitNow (Phase 2 – live)
+  { path: '/duitnow',              priority: 0.8, changeFreq: 'weekly' },
+  { path: '/duitnow/generator',    priority: 0.9, changeFreq: 'weekly' },
+
+  // PayNow (Phase 2 – live)
+  { path: '/paynow',               priority: 0.8, changeFreq: 'weekly' },
+  { path: '/paynow/generator',     priority: 0.9, changeFreq: 'weekly' },
+
   // Legal / Contact (noindex pages excluded; contact is indexable)
   { path: '/contact',              priority: 0.3, changeFreq: 'monthly' },
 ];

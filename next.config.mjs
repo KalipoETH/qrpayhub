@@ -13,6 +13,10 @@ const nextConfig = {
       '/pix', '/pix/generator', '/pix/guide', '/pix/faq',
       '/promptpay', '/promptpay/generator', '/promptpay/guide', '/promptpay/faq',
       '/qris', '/qris/generator',
+      '/fps', '/fps/generator',
+      '/vietqr', '/vietqr/generator',
+      '/duitnow', '/duitnow/generator',
+      '/paynow', '/paynow/generator',
       '/contact', '/impressum', '/datenschutz',
     ];
 
