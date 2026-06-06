@@ -43,6 +43,9 @@ const PAGES: PageDef[] = [
   { path: '/promptpay/generator',  priority: 0.9, changeFreq: 'weekly' },
   { path: '/promptpay/guide',      priority: 0.7, changeFreq: 'monthly' },
   { path: '/promptpay/faq',        priority: 0.7, changeFreq: 'monthly' },
+
+  // Legal / Contact (noindex pages excluded; contact is indexable)
+  { path: '/contact',              priority: 0.3, changeFreq: 'monthly' },
 ];
 
 export async function GET() {

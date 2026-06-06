@@ -149,6 +149,15 @@
     "imprint": "Imprint",
     "contact": "Contact"
   },
+  "legal": {
+    "impressum": "Legal Notice",
+    "datenschutz": "Privacy Policy",
+    "contact": "Contact",
+    "contactTitle": "Get in Touch",
+    "contactSubtitle": "Questions, feedback or business inquiries?",
+    "sendEmail": "Send Email →",
+    "responseTime": "We typically respond within 24-48 hours."
+  },
   "common": {
     "relatedTools": "Related Tools",
     "visitTool": "Visit Tool →",

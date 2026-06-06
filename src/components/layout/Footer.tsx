@@ -29,13 +29,13 @@ export default function Footer() {
 
           <nav className="flex items-center gap-6 order-1 sm:order-2" aria-label="Footer navigation">
             <Link
-              href="/privacy"
+              href="/datenschutz"
               className="text-sm text-slate-400 hover:text-white transition-colors"
             >
               {t('privacy')}
             </Link>
             <Link
-              href="/imprint"
+              href="/impressum"
               className="text-sm text-slate-400 hover:text-white transition-colors"
             >
               {t('imprint')}
