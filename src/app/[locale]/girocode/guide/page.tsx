@@ -3,13 +3,15 @@ import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { buildAlternates } from '@/lib/seo';
+import { girocodeGuideContent } from '@/content/girocode/guide';
+import type { GuideContent } from '@/content/types';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
+  const content = girocodeGuideContent[locale as 'en' | 'de'] ?? girocodeGuideContent.en;
   return {
-    title: 'How GiroCode Works – Complete Technical Guide | QRPayHub',
-    description:
-      'Step-by-step guide: how GiroCode QR codes work, the EPC payload structure, supported banks and best practices.',
+    title: `${content.title} | QRPayHub`,
+    description: content.description,
     keywords: ['girocode how it works', 'epc qr code guide', 'girocode payload', 'sepa qr tutorial'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/girocode/guide'),
@@ -90,6 +92,8 @@ const JSON_LD_ARTICLE = {
 
 export default function GiroCodeGuidePage({ params }: { params: { locale: string } }) {
   setRequestLocale(params.locale);
+  const locale = params.locale as 'en' | 'de';
+  const content = girocodeGuideContent[locale] ?? girocodeGuideContent.en;
   return (
     <>
       <Script
@@ -97,12 +101,14 @@ export default function GiroCodeGuidePage({ params }: { params: { locale: string
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_ARTICLE) }}
       />
-      <PageContent />
+      <PageContent content={content} locale={locale} />
     </>
   );
 }
 
-function PageContent() {
+function PageContent({ content, locale }: { content: GuideContent; locale: 'en' | 'de' }) {
+  const sectionMap = Object.fromEntries(content.sections.map((s) => [s.id, s]));
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-4">
 
@@ -110,23 +116,23 @@ function PageContent() {
       <Breadcrumb items={[
         { label: 'Home', href: '/' },
         { label: 'GiroCode', href: '/girocode' },
-        { label: 'How it Works' },
+        { label: sectionMap['what-is-girocode']?.heading ?? 'Guide' },
       ]} />
 
       {/* ── Title ────────────────────────────────────────────────────────── */}
       <header className="space-y-3 pt-4 pb-6 border-b border-slate-100">
         <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
-          How GiroCode Works
+          {content.title}
         </h1>
         <p className="text-lg text-slate-500">
-          Complete technical guide to the EPC QR payload, supported banks and best practices.
+          {content.description}
         </p>
         <div className="flex items-center gap-3">
           <Link
             href="/girocode/generator"
             className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors"
           >
-            Try the Generator →
+            {locale === 'de' ? 'Zum Generator →' : 'Try the Generator →'}
           </Link>
         </div>
       </header>
@@ -134,85 +140,70 @@ function PageContent() {
       <div className="space-y-14 pt-4">
 
         {/* ── Section 1: What is GiroCode ─────────────────────────────────── */}
-        <Section id="what-is-girocode" title="What is GiroCode?">
-          <Prose>
-            <p>
-              GiroCode is the informal name for the <strong>EPC QR Code</strong>, defined in
-              specification <strong>EPC069-12</strong> by the European Payments Council. The
-              first version was published in 2012; version 002 — the current recommended
-              version — followed in 2016. German banks made GiroCode support mandatory in 2019,
-              and today virtually every banking app in the SEPA zone supports it.
-            </p>
-            <p>
-              The code is a standard <strong>QR code</strong> (ISO/IEC 18004) that contains a
-              structured text payload. Unlike proprietary payment QR formats, the EPC standard
-              is fully open and free. No licence fees, no API keys, no third-party dependencies.
-              Any QR library can generate a valid GiroCode, and any SEPA-compliant banking app
-              can scan it.
-            </p>
-            <p>
-              The payload encodes all data needed for a SEPA Credit Transfer: the beneficiary&apos;s
-              name, IBAN, an optional BIC, an optional amount, and an optional payment reference.
-              When scanned, the banking app pre-fills the transfer form — the payer just reviews
-              and confirms.
-            </p>
-          </Prose>
-        </Section>
+        {sectionMap['what-is-girocode'] && (
+          <Section id="what-is-girocode" title={sectionMap['what-is-girocode'].heading}>
+            <Prose>
+              <p>{sectionMap['what-is-girocode'].content}</p>
+            </Prose>
+          </Section>
+        )}
 
         {/* ── Section 2: Step by Step ─────────────────────────────────────── */}
-        <Section id="how-it-works" title="How Does GiroCode Work? (Step-by-Step)">
-          <ol className="space-y-4">
-            {[
-              {
-                step: 1,
-                title: 'Sender opens their banking app',
-                body: 'Any SEPA-compliant banking app works — Deutsche Bank, Sparkasse, ING, N26, Revolut, or any of the 500+ other apps in the SEPA zone.',
-              },
-              {
-                step: 2,
-                title: 'Taps "Scan QR Code" or "Transfer via QR"',
-                body: 'The exact menu label varies by bank, but all modern apps have this feature. It is usually found in the transfer or payment section.',
-              },
-              {
-                step: 3,
-                title: 'Camera scans the GiroCode',
-                body: 'The app activates the device camera. The GiroCode can be printed on paper, displayed on a screen, or embedded in a PDF.',
-              },
-              {
-                step: 4,
-                title: 'All payment details are filled in automatically',
-                body: 'Name, IBAN, amount, currency and reference are instantly extracted from the QR code. No manual input, no typos.',
-              },
-              {
-                step: 5,
-                title: 'Sender reviews and confirms',
-                body: 'The payer verifies the pre-filled data and authorises the transfer with their PIN, biometrics or TAN. Done.',
-              },
-            ].map(({ step, title, body }) => (
-              <li key={step} className="flex gap-4">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
-                  {step}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-slate-800">{title}</h3>
-                  <p className="text-sm text-slate-500 mt-0.5">{body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Section>
+        {sectionMap['how-it-works'] && (
+          <Section id="how-it-works" title={sectionMap['how-it-works'].heading}>
+            <Prose>
+              <p>{sectionMap['how-it-works'].content}</p>
+            </Prose>
+            <ol className="space-y-4 mt-4">
+              {[
+                {
+                  step: 1,
+                  title: 'Sender opens their banking app',
+                  body: 'Any SEPA-compliant banking app works — Deutsche Bank, Sparkasse, ING, N26, Revolut, or any of the 500+ other apps in the SEPA zone.',
+                },
+                {
+                  step: 2,
+                  title: 'Taps "Scan QR Code" or "Transfer via QR"',
+                  body: 'The exact menu label varies by bank, but all modern apps have this feature. It is usually found in the transfer or payment section.',
+                },
+                {
+                  step: 3,
+                  title: 'Camera scans the GiroCode',
+                  body: 'The app activates the device camera. The GiroCode can be printed on paper, displayed on a screen, or embedded in a PDF.',
+                },
+                {
+                  step: 4,
+                  title: 'All payment details are filled in automatically',
+                  body: 'Name, IBAN, amount, currency and reference are instantly extracted from the QR code. No manual input, no typos.',
+                },
+                {
+                  step: 5,
+                  title: 'Sender reviews and confirms',
+                  body: 'The payer verifies the pre-filled data and authorises the transfer with their PIN, biometrics or TAN. Done.',
+                },
+              ].map(({ step, title, body }) => (
+                <li key={step} className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                    {step}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-800">{title}</h3>
+                    <p className="text-sm text-slate-500 mt-0.5">{body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Section>
+        )}
 
         {/* ── Section 3: Payload Structure ───────────────────────────────── */}
-        <Section id="payload-structure" title="The GiroCode Payload – Technical Structure">
-          <Prose>
-            <p>
-              The payload is plain UTF-8 text, with each field on its own line. Here is a
-              complete example:
-            </p>
-          </Prose>
+        {sectionMap['payload-structure'] && (
+          <Section id="payload-structure" title={sectionMap['payload-structure'].heading}>
+            <Prose>
+              <p>{sectionMap['payload-structure'].content}</p>
+            </Prose>
 
-          {/* Code block */}
-          <pre className="bg-slate-900 text-emerald-400 text-sm font-mono rounded-2xl p-5 overflow-x-auto leading-relaxed my-4">
+            <pre className="bg-slate-900 text-emerald-400 text-sm font-mono rounded-2xl p-5 overflow-x-auto leading-relaxed my-4">
 {`BCD
 002
 1
@@ -224,114 +215,142 @@ EUR150.00
 
 
 Invoice 2026-001`}
-          </pre>
+            </pre>
 
-          {/* Payload table */}
-          <div className="overflow-x-auto rounded-2xl border border-slate-200">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left">
-                <tr>
-                  {['Line', 'Content', 'Description'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {PAYLOAD_ROWS.map(({ line, content, description }) => (
-                  <tr key={line} className="hover:bg-slate-50">
-                    <td className="px-4 py-3 font-mono text-slate-500 w-12">{line}</td>
-                    <td className="px-4 py-3 font-mono text-slate-900 font-medium">{content}</td>
-                    <td className="px-4 py-3 text-slate-600">{description}</td>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200">
+              <table className="min-w-full text-sm">
+                <thead className="bg-slate-50 text-left">
+                  <tr>
+                    {['Line', 'Content', 'Description'].map((h) => (
+                      <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">
+                        {h}
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {PAYLOAD_ROWS.map(({ line, content, description }) => (
+                    <tr key={line} className="hover:bg-slate-50">
+                      <td className="px-4 py-3 font-mono text-slate-500 w-12">{line}</td>
+                      <td className="px-4 py-3 font-mono text-slate-900 font-medium">{content}</td>
+                      <td className="px-4 py-3 text-slate-600">{description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Section>
+        )}
 
         {/* ── Section 4: Supported Banks ─────────────────────────────────── */}
-        <Section id="supported-banks" title="Which Banks Support GiroCode?">
-          <Prose>
-            <p>
-              All SEPA-compliant banks are required to support GiroCode. In Germany, the
-              following major banks have confirmed support:
-            </p>
-          </Prose>
-          <div className="flex flex-wrap gap-2 mt-3">
-            {SUPPORTED_BANKS.map((bank) => (
-              <span
-                key={bank}
-                className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full font-medium"
-              >
-                {bank}
-              </span>
-            ))}
-          </div>
-          <Prose className="mt-4">
-            <p>
-              Beyond Germany, every bank in the 36 SEPA countries that supports SEPA Credit
-              Transfers also supports GiroCode scanning. This includes Austria, France, Italy,
-              Spain, the Netherlands, Switzerland and all other SEPA member states.
-            </p>
-          </Prose>
-        </Section>
+        {sectionMap['supported-banks'] && (
+          <Section id="supported-banks" title={sectionMap['supported-banks'].heading}>
+            <Prose>
+              <p>{sectionMap['supported-banks'].content}</p>
+            </Prose>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {SUPPORTED_BANKS.map((bank) => (
+                <span
+                  key={bank}
+                  className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full font-medium"
+                >
+                  {bank}
+                </span>
+              ))}
+            </div>
+          </Section>
+        )}
 
         {/* ── Section 5: Best Practices ──────────────────────────────────── */}
-        <Section id="best-practices" title="GiroCode on Invoices – Best Practices">
-          <ul className="space-y-3">
-            {[
-              { icon: '📐', text: 'Position: Bottom-right corner of the invoice — where payers naturally look for payment information.' },
-              { icon: '📏', text: 'Minimum size: 2 cm × 2 cm. Smaller codes are harder to scan, especially with older devices.' },
-              { icon: '⬜', text: 'White border: At least 2 mm of white space (quiet zone) on all four sides. Avoid placing text or graphics immediately adjacent.' },
-              { icon: '🖨️', text: 'Print quality: Use at least 300 DPI for printed invoices. Blurry or pixelated codes may fail to scan.' },
-              { icon: '🗜️', text: 'No compression: Do not use lossy image formats (JPEG) for the QR code. Use PNG or SVG to preserve sharpness.' },
-              { icon: '✅', text: 'Always test: Scan your generated code with at least two different banking apps before distributing.' },
-            ].map(({ icon, text }) => (
-              <li key={text} className="flex gap-3 text-sm text-slate-600">
-                <span className="text-lg flex-shrink-0">{icon}</span>
-                <span>{text}</span>
-              </li>
-            ))}
-          </ul>
-        </Section>
+        {sectionMap['on-invoices'] && (
+          <Section id="on-invoices" title={sectionMap['on-invoices'].heading}>
+            <Prose>
+              <p>{sectionMap['on-invoices'].content}</p>
+            </Prose>
+            <ul className="space-y-3 mt-4">
+              {[
+                { icon: '📐', text: 'Position: Bottom-right corner of the invoice — where payers naturally look for payment information.' },
+                { icon: '📏', text: 'Minimum size: 2 cm × 2 cm. Smaller codes are harder to scan, especially with older devices.' },
+                { icon: '⬜', text: 'White border: At least 2 mm of white space (quiet zone) on all four sides. Avoid placing text or graphics immediately adjacent.' },
+                { icon: '🖨️', text: 'Print quality: Use at least 300 DPI for printed invoices. Blurry or pixelated codes may fail to scan.' },
+                { icon: '🗜️', text: 'No compression: Do not use lossy image formats (JPEG) for the QR code. Use PNG or SVG to preserve sharpness.' },
+                { icon: '✅', text: 'Always test: Scan your generated code with at least two different banking apps before distributing.' },
+              ].map(({ icon, text }) => (
+                <li key={text} className="flex gap-3 text-sm text-slate-600">
+                  <span className="text-lg flex-shrink-0">{icon}</span>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
 
         {/* ── Section 6: Common Mistakes ─────────────────────────────────── */}
-        <Section id="common-mistakes" title="Common Mistakes">
-          <div className="overflow-x-auto rounded-2xl border border-slate-200">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left">
-                <tr>
-                  {['Mistake', 'Incorrect Example', 'Correct Approach'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {COMMON_MISTAKES.map(({ mistake, example, fix }) => (
-                  <tr key={mistake} className="hover:bg-slate-50 align-top">
-                    <td className="px-4 py-3 font-semibold text-red-600 whitespace-nowrap">{mistake}</td>
-                    <td className="px-4 py-3 font-mono text-slate-500 text-xs">{example}</td>
-                    <td className="px-4 py-3 text-slate-600">{fix}</td>
+        {sectionMap['common-mistakes'] && (
+          <Section id="common-mistakes" title={sectionMap['common-mistakes'].heading}>
+            <Prose>
+              <p>{sectionMap['common-mistakes'].content}</p>
+            </Prose>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-4">
+              <table className="min-w-full text-sm">
+                <thead className="bg-slate-50 text-left">
+                  <tr>
+                    {['Mistake', 'Incorrect Example', 'Correct Approach'].map((h) => (
+                      <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">
+                        {h}
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {COMMON_MISTAKES.map(({ mistake, example, fix }) => (
+                    <tr key={mistake} className="hover:bg-slate-50 align-top">
+                      <td className="px-4 py-3 font-semibold text-red-600 whitespace-nowrap">{mistake}</td>
+                      <td className="px-4 py-3 font-mono text-slate-500 text-xs">{example}</td>
+                      <td className="px-4 py-3 text-slate-600">{fix}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Section>
+        )}
+
+        {/* ── Section 7: SEPA Countries (new) ────────────────────────────── */}
+        {sectionMap['sepa-countries'] && (
+          <Section id="sepa-countries" title={sectionMap['sepa-countries'].heading}>
+            <Prose>
+              <p>{sectionMap['sepa-countries'].content}</p>
+            </Prose>
+          </Section>
+        )}
+
+        {/* ── Section 8: Technical Spec (new) ────────────────────────────── */}
+        {sectionMap['technical-spec'] && (
+          <Section id="technical-spec" title={sectionMap['technical-spec'].heading}>
+            <Prose>
+              <p>{sectionMap['technical-spec'].content}</p>
+            </Prose>
+          </Section>
+        )}
 
         {/* ── CTA ──────────────────────────────────────────────────────────── */}
         <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-center space-y-3">
-          <p className="font-semibold text-blue-900 text-lg">Ready to generate your first GiroCode?</p>
-          <p className="text-blue-700 text-sm">Free, instant, no registration required.</p>
+          <p className="font-semibold text-blue-900 text-lg">
+            {locale === 'de'
+              ? 'Bereit, Ihren ersten GiroCode zu erstellen?'
+              : 'Ready to generate your first GiroCode?'}
+          </p>
+          <p className="text-blue-700 text-sm">
+            {locale === 'de'
+              ? 'Kostenlos, sofort, keine Registrierung erforderlich.'
+              : 'Free, instant, no registration required.'}
+          </p>
           <Link
             href="/girocode/generator"
             className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-sm transition-colors"
           >
-            Open Generator →
+            {locale === 'de' ? 'Generator öffnen →' : 'Open Generator →'}
           </Link>
         </div>
 
@@ -391,3 +410,4 @@ function Prose({ children, className = '' }: { children: React.ReactNode; classN
     </div>
   );
 }
+
