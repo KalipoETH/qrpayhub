@@ -3,13 +3,15 @@ import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { buildAlternates } from '@/lib/seo';
+import { fpsGuideContent } from '@/content/fps/guide';
+import type { GuideContent } from '@/content/types';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
+  const content = fpsGuideContent[locale as 'en' | 'de'] ?? fpsGuideContent.en;
   return {
-    title: "How FPS Works – Hong Kong Faster Payment System Guide | QRPayHub",
-    description:
-      "Complete guide to FPS: Hong Kong's Faster Payment System. Proxy types, dual HKD/CNY currency, EMV QR format, supported banks and cross-border payments.",
+    title: `${content.title} | QRPayHub`,
+    description: content.description,
     keywords: [
       'fps guide',
       'hong kong fps',
@@ -59,7 +61,7 @@ const EMV_TAGS = [
   { id: '53', name: 'Transaction Currency',        value: '344 or 156',       required: true,  description: '344 = HKD, 156 = CNY – unique dual-currency feature of FPS' },
   { id: '54', name: 'Transaction Amount',          value: '88.50',            required: false, description: 'Present in dynamic QR only; omitted in static codes' },
   { id: '58', name: 'Country Code',               value: 'HK',               required: true,  description: 'ISO 3166-1 alpha-2 – Hong Kong' },
-  { id: '59', name: 'Merchant Name',              value: 'Cheung\'s Store',   required: true,  description: 'Displayed to payer on confirmation screen, max 25 chars' },
+  { id: '59', name: 'Merchant Name',              value: "Cheung's Store",    required: true,  description: 'Displayed to payer on confirmation screen, max 25 chars' },
   { id: '60', name: 'Merchant City',              value: 'Hong Kong',         required: true,  description: 'City of the merchant' },
   { id: '62', name: 'Additional Data Field',      value: 'reference / memo',  required: false, description: 'Optional reference ID, memo, or terminal ID' },
   { id: '63', name: 'CRC',                        value: '4-digit hex',       required: true,  description: 'CRC16-CCITT checksum of entire payload including "6304"' },
@@ -111,11 +113,12 @@ const JSON_LD_ARTICLE = {
   },
 };
 
-// Hong Kong red
 const HK_RED = '#BA0C2F';
 
 export default function FPSGuidePage({ params }: { params: { locale: string } }) {
   setRequestLocale(params.locale);
+  const locale = params.locale as 'en' | 'de';
+  const content = fpsGuideContent[locale] ?? fpsGuideContent.en;
   return (
     <>
       <Script
@@ -123,245 +126,188 @@ export default function FPSGuidePage({ params }: { params: { locale: string } })
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_ARTICLE) }}
       />
-      <PageContent />
+      <PageContent content={content} locale={locale} />
     </>
   );
 }
 
-function PageContent() {
+function PageContent({ content, locale }: { content: GuideContent; locale: 'en' | 'de' }) {
+  const sectionMap = Object.fromEntries(content.sections.map((s) => [s.id, s]));
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-4">
 
       <Breadcrumb items={[
         { label: 'Home', href: '/' },
         { label: 'FPS',  href: '/fps' },
-        { label: 'Guide' },
+        { label: locale === 'de' ? 'Guide' : 'Guide' },
       ]} />
 
       <header className="space-y-3 pt-4 pb-6 border-b border-slate-100">
         <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
-          How FPS Works – Complete Guide
+          {content.title}
         </h1>
-        <p className="text-lg text-slate-500">
-          Everything about Hong Kong&apos;s Faster Payment System: proxy types, dual HKD/CNY
-          currency, EMV QR format, supported banks and cross-border payments.
-        </p>
-        <Link
-          href="/fps/generator"
-          className="inline-flex items-center gap-1.5 px-4 py-2 text-white text-sm font-semibold rounded-xl transition-colors"
-          style={{ backgroundColor: HK_RED }}
-        >
-          Try the FPS Generator →
-        </Link>
+        <p className="text-lg text-slate-500">{content.description}</p>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/fps/generator"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-white text-sm font-semibold rounded-xl transition-colors"
+            style={{ backgroundColor: HK_RED }}
+          >
+            {locale === 'de' ? 'Zum Generator →' : 'Try the Generator →'}
+          </Link>
+          <Link
+            href="/fps/faq"
+            className="inline-flex items-center gap-1.5 px-4 py-2 border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-semibold rounded-xl transition-colors"
+          >
+            {locale === 'de' ? 'FPS FAQ →' : 'FPS FAQ →'}
+          </Link>
+        </div>
       </header>
 
       <div className="space-y-14 pt-4">
 
         {/* Section 1: What is FPS */}
-        <Section id="what-is-fps" title="What is FPS?">
-          <Prose>
-            <p>
-              <strong>FPS (Faster Payment System)</strong> is Hong Kong&apos;s real-time interbank
-              payment infrastructure, operated by{' '}
-              <strong>HKICL (Hong Kong Interbank Clearing Limited)</strong> under regulation by the{' '}
-              <strong>Hong Kong Monetary Authority (HKMA)</strong>. Launched on{' '}
-              <strong>September 30, 2018</strong>, FPS enables individuals and businesses to
-              transfer money instantly using a mobile phone number, email address, or FPS ID —
-              without needing to know the recipient&apos;s bank account number. Transfers settle
-              within seconds, <strong>24 hours a day, 365 days a year</strong>.
-            </p>
-            <p>
-              FPS has a feature that sets it apart from every other major instant payment system
-              in the world: <strong>native dual-currency support</strong>. A single FPS infrastructure
-              processes payments in both <strong>Hong Kong Dollar (HKD)</strong> and{' '}
-              <strong>Chinese Yuan Renminbi (CNY)</strong>. This is not an afterthought — it
-              reflects Hong Kong&apos;s unique position as a global financial hub that sits at the
-              intersection of international finance (HKD) and mainland China&apos;s vast economy (CNY).
-            </p>
-            <p>
-              As of 2025, FPS connects over <strong>7 million registered accounts</strong> across
-              all licensed Hong Kong banks and major e-wallets including HSBC, Hang Seng Bank,
-              Bank of China HK, Standard Chartered HK, DBS HK — as well as popular apps PayMe
-              by HSBC, AlipayHK, WeChat Pay HK, and Tap &amp; Go. Monthly transaction volumes
-              run into the hundreds of billions of HKD.
-            </p>
-            <p>
-              FPS QR codes are built on the <strong>EMV Merchant Presented Mode (MPM)</strong>{' '}
-              standard with Application Identifier (AID){' '}
-              <code className="font-mono text-sm bg-slate-100 px-1.5 py-0.5 rounded">hk.edu.hkma.fps</code>{' '}
-              in EMV tag ID 26. The currency code in tag 53 determines whether the payment is
-              in HKD (<code className="font-mono text-sm bg-slate-100 px-1.5 py-0.5 rounded">344</code>)
-              or CNY (<code className="font-mono text-sm bg-slate-100 px-1.5 py-0.5 rounded">156</code>).
-            </p>
-          </Prose>
-        </Section>
+        {sectionMap['what-is-fps'] && (
+          <Section id="what-is-fps" title={sectionMap['what-is-fps'].heading}>
+            <Prose>
+              <p>{sectionMap['what-is-fps'].content}</p>
+            </Prose>
+          </Section>
+        )}
 
         {/* Section 2: Step by Step */}
-        <Section id="how-it-works" title="How FPS Works – Step by Step">
-          <ol className="space-y-4">
-            {[
-              {
-                step: 1,
-                title: 'Merchant displays FPS QR code',
-                body: 'Static QR codes (open amount, payer enters value) are printed at the counter. Dynamic codes with pre-encoded amounts are generated per transaction for restaurants, vending machines, and e-commerce.',
-              },
-              {
-                step: 2,
-                title: 'Customer opens any FPS-enabled app',
-                body: 'HSBC HK, Hang Seng, Bank of China HK, PayMe, AlipayHK, WeChat Pay HK, Tap & Go — all apps are interoperable through HKICL\'s FPS switching infrastructure.',
-              },
-              {
-                step: 3,
-                title: 'Customer selects currency (HKD or CNY)',
-                body: 'For merchants that accept both currencies, the customer\'s app may prompt currency selection. The FPS QR payload specifies the merchant\'s preferred currency via EMV tag 53.',
-              },
-              {
-                step: 4,
-                title: 'Customer scans the FPS QR code',
-                body: 'The app parses the EMV payload, extracts the AID (hk.edu.hkma.fps), proxy type, proxy value, and amount. Merchant name and city are shown for confirmation.',
-              },
-              {
-                step: 5,
-                title: 'Customer enters amount (if static QR)',
-                body: 'For static QR codes, the customer enters the payment amount. For dynamic QR, the amount is pre-filled from the payload.',
-              },
-              {
-                step: 6,
-                title: 'Customer authenticates the payment',
-                body: 'Authentication (PIN, biometrics, or in-app password) is completed in the customer\'s banking app. No credentials are stored in the QR code.',
-              },
-              {
-                step: 7,
-                title: 'HKICL routes and settles in real time',
-                body: "HKICL's FPS infrastructure processes and settles the payment within seconds. Both payer and merchant receive immediate confirmation.",
-              },
-            ].map(({ step, title, body }) => (
-              <li key={step} className="flex gap-4">
-                <div
-                  className="flex-shrink-0 w-8 h-8 rounded-full text-white flex items-center justify-center font-bold text-sm"
-                  style={{ backgroundColor: HK_RED }}
-                >
-                  {step}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-slate-800">{title}</h3>
-                  <p className="text-sm text-slate-500 mt-0.5">{body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Section>
+        {sectionMap['how-it-works'] && (
+          <Section id="how-it-works" title={sectionMap['how-it-works'].heading}>
+            <ol className="space-y-4">
+              {(locale === 'de' ? [
+                { step: 1, title: 'Händler zeigt FPS QR-Code an', body: 'Statische QR-Codes (offener Betrag) werden an der Kasse ausgedruckt. Dynamische Codes mit vorab kodierten Beträgen werden pro Transaktion für Restaurants, Automaten und E-Commerce generiert.' },
+                { step: 2, title: 'Kunde öffnet eine FPS-fähige App', body: 'HSBC HK, Hang Seng, Bank of China HK, PayMe, AlipayHK, WeChat Pay HK, Tap & Go – alle Apps sind über HKICLs FPS-Vermittlungsinfrastruktur interoperabel.' },
+                { step: 3, title: 'Kunde wählt Währung (HKD oder CNY)', body: 'Bei Händlern, die beide Währungen akzeptieren, kann die App des Kunden zur Währungsauswahl auffordern. Der FPS QR-Payload gibt die bevorzugte Währung des Händlers über EMV-Tag 53 an.' },
+                { step: 4, title: 'Kunde scannt den FPS QR-Code', body: 'Die App analysiert den EMV-Payload, extrahiert die AID (hk.edu.hkma.fps), Proxy-Typ, Proxy-Wert und Betrag. Händlername und Stadt werden zur Bestätigung angezeigt.' },
+                { step: 5, title: 'Kunde gibt Betrag ein (bei statischem QR)', body: 'Bei statischen QR-Codes gibt der Kunde den Zahlungsbetrag ein. Bei dynamischen QR ist der Betrag aus dem Payload vorausgefüllt.' },
+                { step: 6, title: 'Kunde authentifiziert die Zahlung', body: 'Authentifizierung (PIN, Biometrie oder In-App-Passwort) erfolgt in der Banking-App des Kunden. Keine Zugangsdaten werden im QR-Code gespeichert.' },
+                { step: 7, title: 'HKICL leitet und wickelt in Echtzeit ab', body: 'HKICLs FPS-Infrastruktur verarbeitet und wickelt die Zahlung innerhalb von Sekunden ab. Zahler und Händler erhalten sofortige Bestätigung.' },
+              ] : [
+                { step: 1, title: 'Merchant displays FPS QR code', body: 'Static QR codes (open amount, payer enters value) are printed at the counter. Dynamic codes with pre-encoded amounts are generated per transaction for restaurants, vending machines, and e-commerce.' },
+                { step: 2, title: 'Customer opens any FPS-enabled app', body: "HSBC HK, Hang Seng, Bank of China HK, PayMe, AlipayHK, WeChat Pay HK, Tap & Go — all apps are interoperable through HKICL's FPS switching infrastructure." },
+                { step: 3, title: 'Customer selects currency (HKD or CNY)', body: "For merchants that accept both currencies, the customer's app may prompt currency selection. The FPS QR payload specifies the merchant's preferred currency via EMV tag 53." },
+                { step: 4, title: 'Customer scans the FPS QR code', body: 'The app parses the EMV payload, extracts the AID (hk.edu.hkma.fps), proxy type, proxy value, and amount. Merchant name and city are shown for confirmation.' },
+                { step: 5, title: 'Customer enters amount (if static QR)', body: 'For static QR codes, the customer enters the payment amount. For dynamic QR, the amount is pre-filled from the payload.' },
+                { step: 6, title: 'Customer authenticates the payment', body: "Authentication (PIN, biometrics, or in-app password) is completed in the customer's banking app. No credentials are stored in the QR code." },
+                { step: 7, title: 'HKICL routes and settles in real time', body: "HKICL's FPS infrastructure processes and settles the payment within seconds. Both payer and merchant receive immediate confirmation." },
+              ]).map(({ step, title, body }) => (
+                <li key={step} className="flex gap-4">
+                  <div
+                    className="flex-shrink-0 w-8 h-8 rounded-full text-white flex items-center justify-center font-bold text-sm"
+                    style={{ backgroundColor: HK_RED }}
+                  >
+                    {step}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-800">{title}</h3>
+                    <p className="text-sm text-slate-500 mt-0.5">{body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Section>
+        )}
 
         {/* Section 3: Proxy Types */}
-        <Section id="proxy-types" title="FPS Proxy Types">
-          <Prose>
-            <p>
-              FPS uses <strong>proxy identifiers</strong> registered in HKICL&apos;s central registry
-              to route payments without exposing bank account numbers. The proxy type is encoded
-              in tag 26 of the FPS QR payload. Each bank or e-wallet may support a different
-              subset of proxy types for registration.
-            </p>
-          </Prose>
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-4">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left">
-                <tr>
-                  {['Type', 'Tag', 'Format', 'Example', 'Use Case'].map(h => (
-                    <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200 whitespace-nowrap">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {PROXY_TYPES.map(({ type, tag, format, example, useCase, color }) => (
-                  <tr key={type} className="hover:bg-slate-50">
-                    <td className="px-4 py-3">
-                      <span className={`text-xs font-semibold px-2 py-1 rounded-full border ${color}`}>{type}</span>
-                    </td>
-                    <td className="px-4 py-3 font-mono text-slate-600">{tag}</td>
-                    <td className="px-4 py-3 font-mono text-xs text-slate-500">{format}</td>
-                    <td className="px-4 py-3 font-mono text-xs text-slate-400">{example}</td>
-                    <td className="px-4 py-3 text-slate-600 text-sm">{useCase}</td>
+        {sectionMap['proxy-types'] && (
+          <Section id="proxy-types" title={sectionMap['proxy-types'].heading}>
+            <Prose>
+              <p>{sectionMap['proxy-types'].content}</p>
+            </Prose>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-4">
+              <table className="min-w-full text-sm">
+                <thead className="bg-slate-50 text-left">
+                  <tr>
+                    {(locale === 'de'
+                      ? ['Typ', 'Tag', 'Format', 'Beispiel', 'Anwendungsfall']
+                      : ['Type', 'Tag', 'Format', 'Example', 'Use Case']
+                    ).map(h => (
+                      <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200 whitespace-nowrap">{h}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {PROXY_TYPES.map(({ type, tag, format, example, useCase, color }) => (
+                    <tr key={type} className="hover:bg-slate-50">
+                      <td className="px-4 py-3">
+                        <span className={`text-xs font-semibold px-2 py-1 rounded-full border ${color}`}>{type}</span>
+                      </td>
+                      <td className="px-4 py-3 font-mono text-slate-600">{tag}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-slate-500">{format}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-slate-400">{example}</td>
+                      <td className="px-4 py-3 text-slate-600 text-sm">{useCase}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Section>
+        )}
 
         {/* Section 4: Dual Currency */}
-        <Section id="dual-currency" title="Dual Currency: HKD and CNY">
-          <Prose>
-            <p>
-              FPS&apos;s dual-currency capability is its most distinctive technical feature.
-              No other ASEAN-region fast payment system natively processes two currencies
-              within a single infrastructure. This design reflects Hong Kong&apos;s role as the
-              primary financial gateway between the global economy (priced in USD/HKD) and
-              mainland China (priced in CNY).
-            </p>
-          </Prose>
-          <div className="grid sm:grid-cols-2 gap-4 mt-4">
-            <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🟡</span>
-                <h3 className="font-bold text-slate-800">HKD (Hong Kong Dollar)</h3>
+        {sectionMap['dual-currency'] && (
+          <Section id="dual-currency" title={sectionMap['dual-currency'].heading}>
+            <Prose>
+              <p>{sectionMap['dual-currency'].content}</p>
+            </Prose>
+            <div className="grid sm:grid-cols-2 gap-4 mt-4">
+              <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">🟡</span>
+                  <h3 className="font-bold text-slate-800">HKD (Hong Kong Dollar)</h3>
+                </div>
+                <dl className="text-sm space-y-1.5">
+                  <div className="flex gap-2">
+                    <dt className="text-slate-400 flex-shrink-0 w-28">{locale === 'de' ? 'Währungscode' : 'Currency code'}</dt>
+                    <dd className="font-mono font-bold" style={{ color: HK_RED }}>344</dd>
+                  </div>
+                  <div className="flex gap-2">
+                    <dt className="text-slate-400 flex-shrink-0 w-28">{locale === 'de' ? 'Geeignet für' : 'Best for'}</dt>
+                    <dd className="text-slate-600">{locale === 'de' ? 'Lokale HK-Zahlungen, Einzelhandel, Verbraucher' : 'Local HK payments, retail, consumer transfers'}</dd>
+                  </div>
+                  <div className="flex gap-2">
+                    <dt className="text-slate-400 flex-shrink-0 w-28">{locale === 'de' ? 'Dezimalstellen' : 'Decimals'}</dt>
+                    <dd className="text-slate-600">{locale === 'de' ? '2 (Cents)' : '2 (cents)'}</dd>
+                  </div>
+                </dl>
               </div>
-              <dl className="text-sm space-y-1.5">
-                <div className="flex gap-2">
-                  <dt className="text-slate-400 flex-shrink-0 w-28">Currency code</dt>
-                  <dd className="font-mono font-bold" style={{ color: HK_RED }}>344</dd>
+              <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">🔴</span>
+                  <h3 className="font-bold text-slate-800">CNY (Chinese Yuan)</h3>
                 </div>
-                <div className="flex gap-2">
-                  <dt className="text-slate-400 flex-shrink-0 w-28">Best for</dt>
-                  <dd className="text-slate-600">Local HK payments, retail, consumer transfers</dd>
-                </div>
-                <div className="flex gap-2">
-                  <dt className="text-slate-400 flex-shrink-0 w-28">Decimals</dt>
-                  <dd className="text-slate-600">2 (cents)</dd>
-                </div>
-              </dl>
-            </div>
-            <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🔴</span>
-                <h3 className="font-bold text-slate-800">CNY (Chinese Yuan)</h3>
+                <dl className="text-sm space-y-1.5">
+                  <div className="flex gap-2">
+                    <dt className="text-slate-400 flex-shrink-0 w-28">{locale === 'de' ? 'Währungscode' : 'Currency code'}</dt>
+                    <dd className="font-mono font-bold text-red-800">156</dd>
+                  </div>
+                  <div className="flex gap-2">
+                    <dt className="text-slate-400 flex-shrink-0 w-28">{locale === 'de' ? 'Geeignet für' : 'Best for'}</dt>
+                    <dd className="text-slate-600">{locale === 'de' ? 'Grenzüberschreitend mit Festlandchina, CNY-Konten' : 'Cross-border with mainland China, CNY accounts'}</dd>
+                  </div>
+                  <div className="flex gap-2">
+                    <dt className="text-slate-400 flex-shrink-0 w-28">{locale === 'de' ? 'Dezimalstellen' : 'Decimals'}</dt>
+                    <dd className="text-slate-600">{locale === 'de' ? '2 (Fen)' : '2 (fen)'}</dd>
+                  </div>
+                </dl>
               </div>
-              <dl className="text-sm space-y-1.5">
-                <div className="flex gap-2">
-                  <dt className="text-slate-400 flex-shrink-0 w-28">Currency code</dt>
-                  <dd className="font-mono font-bold text-red-800">156</dd>
-                </div>
-                <div className="flex gap-2">
-                  <dt className="text-slate-400 flex-shrink-0 w-28">Best for</dt>
-                  <dd className="text-slate-600">Cross-border with mainland China, CNY accounts</dd>
-                </div>
-                <div className="flex gap-2">
-                  <dt className="text-slate-400 flex-shrink-0 w-28">Decimals</dt>
-                  <dd className="text-slate-600">2 (fen)</dd>
-                </div>
-              </dl>
             </div>
-          </div>
-          <Prose className="mt-4">
-            <p>
-              When generating an FPS QR code in CNY, the payer&apos;s app must have a CNY-enabled
-              bank account registered with FPS. Settlement occurs in CNY through HKMA&apos;s
-              designated CNY settlement bank. For most retail use cases involving Hong Kong
-              residents, HKD (code 344) is the correct choice.
-            </p>
-          </Prose>
-        </Section>
+          </Section>
+        )}
 
         {/* Section 5: EMV Payload */}
-        <Section id="emv-payload" title="The FPS QR Payload – EMV Format">
-          <Prose>
-            <p>
-              An FPS QR code is a TLV (Tag-Length-Value) ASCII string following the EMV MPM
-              specification. Here is a complete example of a static FPS QR code using a mobile
-              number proxy, HKD currency:
-            </p>
-          </Prose>
-
-          <pre className="bg-slate-900 text-emerald-400 text-xs font-mono rounded-2xl p-5 overflow-x-auto leading-relaxed my-4 whitespace-pre-wrap break-all">
+        {sectionMap['payload-emv'] && (
+          <Section id="payload-emv" title={sectionMap['payload-emv'].heading}>
+            <Prose>
+              <p>{sectionMap['payload-emv'].content}</p>
+            </Prose>
+            <pre className="bg-slate-900 text-emerald-400 text-xs font-mono rounded-2xl p-5 overflow-x-auto leading-relaxed my-4 whitespace-pre-wrap break-all">
 {`000201
 010211
 3162
@@ -374,141 +320,110 @@ function PageContent() {
 5912Cheungs Store
 6009Hong Kong
 630412CD`}
-          </pre>
-
-          <Prose>
-            <p>
-              The AID <code className="font-mono text-sm bg-slate-100 px-1.5 py-0.5 rounded">hk.edu.hkma.fps</code>{' '}
-              in tag 26 sub-tag 00 identifies this as an FPS payment. Sub-tag 02 holds the
-              normalized mobile number in international format. Tag 53 contains{' '}
-              <code className="font-mono text-sm bg-slate-100 px-1.5 py-0.5 rounded">344</code>{' '}
-              (HKD). Tag 63 has the CRC16-CCITT checksum (4-char hex).
-            </p>
-          </Prose>
-
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-4">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left">
-                <tr>
-                  {['Tag ID', 'Field Name', 'Example', 'Required', 'Description'].map(h => (
-                    <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200 whitespace-nowrap">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {EMV_TAGS.map(({ id, name, value, required, description }) => (
-                  <tr key={id} className={id === '26' || id === '53' ? 'bg-red-50 hover:bg-red-100' : 'hover:bg-slate-50'}>
-                    <td className="px-4 py-3 font-mono font-bold" style={{ color: HK_RED }}>{id}</td>
-                    <td className="px-4 py-3 font-semibold text-slate-700">{name}</td>
-                    <td className="px-4 py-3 font-mono text-xs text-slate-500">{value}</td>
-                    <td className="px-4 py-3">
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${required ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-500'}`}>
-                        {required ? 'Required' : 'Optional'}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-slate-600 text-sm">{description}</td>
+            </pre>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-4">
+              <table className="min-w-full text-sm">
+                <thead className="bg-slate-50 text-left">
+                  <tr>
+                    {(locale === 'de'
+                      ? ['Tag ID', 'Feldname', 'Beispiel', 'Pflicht', 'Beschreibung']
+                      : ['Tag ID', 'Field Name', 'Example', 'Required', 'Description']
+                    ).map(h => (
+                      <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200 whitespace-nowrap">{h}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {EMV_TAGS.map(({ id, name, value, required, description }) => (
+                    <tr key={id} className={id === '26' || id === '53' ? 'bg-red-50 hover:bg-red-100' : 'hover:bg-slate-50'}>
+                      <td className="px-4 py-3 font-mono font-bold" style={{ color: HK_RED }}>{id}</td>
+                      <td className="px-4 py-3 font-semibold text-slate-700">{name}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-slate-500">{value}</td>
+                      <td className="px-4 py-3">
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${required ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-500'}`}>
+                          {required ? (locale === 'de' ? 'Pflicht' : 'Required') : 'Optional'}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-slate-600 text-sm">{description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Section>
+        )}
 
-        {/* Section 6: Mobile Number Format */}
-        <Section id="mobile-format" title="Mobile Number Format">
-          <Prose>
-            <p>
-              Hong Kong mobile numbers must be normalized to international format before embedding
-              in an FPS QR payload. The rule: prefix with{' '}
-              <code className="font-mono text-sm bg-slate-100 px-1.5 py-0.5 rounded">+852</code>{' '}
-              (Hong Kong country code). Hong Kong numbers are always 8 digits and begin with
-              5, 6, 7, or 9.
-            </p>
-          </Prose>
-          <div className="overflow-x-auto rounded-2xl border border-slate-100 mt-3 bg-slate-50 p-4">
-            <div className="space-y-2 text-sm font-mono">
-              {[
-                { input: '91234567', output: '+85291234567' },
-                { input: '+85291234567', output: '+85291234567', note: '(already normalized)' },
-                { input: '85291234567', output: '+85291234567', note: '(add + prefix)' },
-              ].map(({ input, output, note }) => (
-                <div key={input} className="flex items-center gap-3">
-                  <span className="text-slate-400">Input:</span>
-                  <code className="bg-white border border-slate-200 px-3 py-1 rounded-lg text-slate-700">{input}</code>
-                  <span className="text-slate-400">→</span>
-                  <code className="bg-white border border-slate-200 px-3 py-1 rounded-lg text-green-700">{output}</code>
-                  {note && <span className="text-xs text-slate-400">{note}</span>}
-                </div>
+        {/* Section 6: Phone Normalization */}
+        {sectionMap['phone-normalization'] && (
+          <Section id="phone-normalization" title={sectionMap['phone-normalization'].heading}>
+            <Prose>
+              <p>{sectionMap['phone-normalization'].content}</p>
+            </Prose>
+            <div className="overflow-x-auto rounded-2xl border border-slate-100 mt-3 bg-slate-50 p-4">
+              <div className="space-y-2 text-sm font-mono">
+                {[
+                  { input: '91234567', output: '+85291234567' },
+                  { input: '+85291234567', output: '+85291234567', note: locale === 'de' ? '(bereits normalisiert)' : '(already normalized)' },
+                  { input: '85291234567', output: '+85291234567', note: locale === 'de' ? '(+ Präfix hinzufügen)' : '(add + prefix)' },
+                ].map(({ input, output, note }) => (
+                  <div key={input} className="flex items-center gap-3">
+                    <span className="text-slate-400">{locale === 'de' ? 'Eingabe:' : 'Input:'}</span>
+                    <code className="bg-white border border-slate-200 px-3 py-1 rounded-lg text-slate-700">{input}</code>
+                    <span className="text-slate-400">→</span>
+                    <code className="bg-white border border-slate-200 px-3 py-1 rounded-lg text-green-700">{output}</code>
+                    {note && <span className="text-xs text-slate-400">{note}</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Section>
+        )}
+
+        {/* Section 7: Supported Banks */}
+        {sectionMap['supported-banks'] && (
+          <Section id="supported-banks" title={sectionMap['supported-banks'].heading}>
+            <Prose>
+              <p>{sectionMap['supported-banks'].content}</p>
+            </Prose>
+            <div className="flex flex-wrap gap-2.5 mt-3">
+              {BANKS_WALLETS.map(({ name, type, color }) => (
+                <span key={name} className={`px-3 py-1.5 rounded-xl border text-sm font-semibold ${color}`}>
+                  {name}
+                  {type === 'wallet' && <span className="ml-1.5 text-xs opacity-60">{locale === 'de' ? 'Wallet' : 'wallet'}</span>}
+                </span>
               ))}
             </div>
-          </div>
-          <Prose className="mt-3">
-            <p>
-              Email addresses and FPS IDs are used as-is without normalization. FPS IDs are
-              purely numeric 7–9 digit strings assigned by the bank at registration time.
-            </p>
-          </Prose>
-        </Section>
-
-        {/* Section 7: Banks & Wallets */}
-        <Section id="banks" title="Supported Banks &amp; E-Wallets">
-          <Prose>
-            <p>
-              All licensed Hong Kong banks and major e-wallets participate in FPS. Every app is
-              fully interoperable — a transfer from HSBC arrives instantly in an AlipayHK account,
-              and vice versa. HKICL operates the central switching infrastructure that connects
-              all participants.
-            </p>
-          </Prose>
-          <div className="flex flex-wrap gap-2.5 mt-3">
-            {BANKS_WALLETS.map(({ name, type, color }) => (
-              <span key={name} className={`px-3 py-1.5 rounded-xl border text-sm font-semibold ${color}`}>
-                {name}
-                {type === 'wallet' && <span className="ml-1.5 text-xs opacity-60">wallet</span>}
-              </span>
-            ))}
-          </div>
-        </Section>
+          </Section>
+        )}
 
         {/* Section 8: FPS vs CHATS */}
-        <Section id="fps-vs-chats" title="FPS vs CHATS – When to Use Which">
-          <Prose>
-            <p>
-              Hong Kong&apos;s payment infrastructure has two main interbank clearing systems:
-              <strong> FPS</strong> for retail and everyday transfers, and{' '}
-              <strong>CHATS (Clearing House Automated Transfer System)</strong> for high-value
-              corporate transactions. They serve complementary purposes.
-            </p>
-          </Prose>
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-4">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left">
-                <tr>
-                  <th className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">Feature</th>
-                  <th className="px-4 py-3 font-semibold border-b border-slate-200" style={{ color: HK_RED }}>FPS (retail)</th>
-                  <th className="px-4 py-3 font-semibold text-slate-500 border-b border-slate-200">CHATS (corporate)</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {CHATS_COMPARISON.map(({ feature, fps, chats }) => (
-                  <tr key={feature} className="hover:bg-slate-50">
-                    <td className="px-4 py-3 font-semibold text-slate-700">{feature}</td>
-                    <td className="px-4 py-3 text-green-700 font-medium">{fps}</td>
-                    <td className="px-4 py-3 text-slate-500">{chats}</td>
+        {sectionMap['fps-vs-chats'] && (
+          <Section id="fps-vs-chats" title={sectionMap['fps-vs-chats'].heading}>
+            <Prose>
+              <p>{sectionMap['fps-vs-chats'].content}</p>
+            </Prose>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-4">
+              <table className="min-w-full text-sm">
+                <thead className="bg-slate-50 text-left">
+                  <tr>
+                    <th className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">{locale === 'de' ? 'Merkmal' : 'Feature'}</th>
+                    <th className="px-4 py-3 font-semibold border-b border-slate-200" style={{ color: HK_RED }}>FPS ({locale === 'de' ? 'Einzelhandel' : 'retail'})</th>
+                    <th className="px-4 py-3 font-semibold text-slate-500 border-b border-slate-200">CHATS ({locale === 'de' ? 'Unternehmen' : 'corporate'})</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <Prose className="mt-4">
-            <p>
-              For everyday consumer and small-business payments, FPS is the clear choice: instant,
-              free, and available 24/7. CHATS remains essential for large corporate transactions,
-              securities settlement, and foreign currency transfers where SWIFT or RTGS infrastructure
-              is required.
-            </p>
-          </Prose>
-        </Section>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {CHATS_COMPARISON.map(({ feature, fps, chats }) => (
+                    <tr key={feature} className="hover:bg-slate-50">
+                      <td className="px-4 py-3 font-semibold text-slate-700">{feature}</td>
+                      <td className="px-4 py-3 text-green-700 font-medium">{fps}</td>
+                      <td className="px-4 py-3 text-slate-500">{chats}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Section>
+        )}
 
         {/* CTA */}
         <div
@@ -516,18 +431,29 @@ function PageContent() {
           style={{ backgroundColor: '#fdf2f4', borderWidth: 1, borderStyle: 'solid', borderColor: '#fca5a5' }}
         >
           <p className="font-semibold text-lg" style={{ color: '#7f1d1d' }}>
-            Ready to generate your FPS QR Code?
+            {locale === 'de' ? 'Bereit, Ihren FPS QR-Code zu erstellen?' : 'Ready to generate your FPS QR Code?'}
           </p>
           <p className="text-sm" style={{ color: '#991b1b' }}>
-            Free, instant — HKD or CNY — works with HSBC, Hang Seng, PayMe, AlipayHK and all FPS apps.
+            {locale === 'de'
+              ? 'Kostenlos, sofort – HKD oder CNY – funktioniert mit HSBC, Hang Seng, PayMe, AlipayHK und allen FPS-Apps.'
+              : 'Free, instant — HKD or CNY — works with HSBC, Hang Seng, PayMe, AlipayHK and all FPS apps.'}
           </p>
-          <Link
-            href="/fps/generator"
-            className="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl shadow-sm transition-colors"
-            style={{ backgroundColor: HK_RED }}
-          >
-            Open FPS Generator →
-          </Link>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link
+              href="/fps/generator"
+              className="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl shadow-sm transition-colors"
+              style={{ backgroundColor: HK_RED }}
+            >
+              {locale === 'de' ? 'Generator öffnen →' : 'Open FPS Generator →'}
+            </Link>
+            <Link
+              href="/fps/faq"
+              className="inline-flex items-center gap-2 px-6 py-3 border text-slate-800 hover:bg-slate-50 font-semibold rounded-xl transition-colors"
+              style={{ borderColor: '#fca5a5', color: '#7f1d1d' }}
+            >
+              {locale === 'de' ? 'FPS FAQ lesen →' : 'Read FPS FAQ →'}
+            </Link>
+          </div>
         </div>
 
       </div>

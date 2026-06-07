@@ -3,13 +3,15 @@ import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { buildAlternates } from '@/lib/seo';
+import { codiGuideContent } from '@/content/codi/guide';
+import type { GuideContent } from '@/content/types';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
+  const content = codiGuideContent[locale as 'en' | 'de'] ?? codiGuideContent.en;
   return {
-    title: "How CoDi Works – Mexico's Digital Payment Guide | QRPayHub",
-    description:
-      "Complete guide to CoDi (Cobro Digital): Mexico's QR payment system by Banxico. Learn about CLABE validation, SPEI infrastructure, BXC protocol and DiMo.",
+    title: `${content.title} | QRPayHub`,
+    description: content.description,
     keywords: [
       'codi guide',
       'how codi works',
@@ -80,8 +82,12 @@ const JSON_LD_ARTICLE = {
   },
 };
 
+const MX_GREEN = '#006847';
+
 export default function CoDiGuidePage({ params }: { params: { locale: string } }) {
   setRequestLocale(params.locale);
+  const locale = params.locale as 'en' | 'de';
+  const content = codiGuideContent[locale] ?? codiGuideContent.en;
   return (
     <>
       <Script
@@ -89,12 +95,14 @@ export default function CoDiGuidePage({ params }: { params: { locale: string } }
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_ARTICLE) }}
       />
-      <PageContent />
+      <PageContent content={content} locale={locale} />
     </>
   );
 }
 
-function PageContent() {
+function PageContent({ content, locale }: { content: GuideContent; locale: 'en' | 'de' }) {
+  const sectionMap = Object.fromEntries(content.sections.map((s) => [s.id, s]));
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-4">
 
@@ -106,131 +114,82 @@ function PageContent() {
 
       <header className="space-y-3 pt-4 pb-6 border-b border-slate-100">
         <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
-          How CoDi Works – Mexico&apos;s Digital Payment Guide
+          {content.title}
         </h1>
-        <p className="text-lg text-slate-500">
-          Everything about CoDi: CLABE accounts, the SPEI infrastructure, BXC:// QR protocol, required fields and DiMo.
-        </p>
+        <p className="text-lg text-slate-500">{content.description}</p>
         <div className="flex items-center gap-3">
           <Link
             href="/codi/generator"
             className="inline-flex items-center gap-1.5 px-4 py-2 text-white text-sm font-semibold rounded-xl transition-colors"
-            style={{ backgroundColor: '#006847' }}
+            style={{ backgroundColor: MX_GREEN }}
           >
-            Try the Generator →
+            {locale === 'de' ? 'Zum Generator →' : 'Try the Generator →'}
+          </Link>
+          <Link
+            href="/codi/faq"
+            className="inline-flex items-center gap-1.5 px-4 py-2 border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-semibold rounded-xl transition-colors"
+          >
+            {locale === 'de' ? 'CoDi FAQ →' : 'CoDi FAQ →'}
           </Link>
         </div>
       </header>
 
       <div className="space-y-14 pt-4">
 
-        {/* ── Section 1: What is CoDi ───────────────────────────────────────── */}
-        <Section id="what-is-codi" title="What is CoDi?">
-          <Prose>
-            <p>
-              <strong>CoDi</strong> (Cobro Digital — &ldquo;Digital Collection&rdquo;) is Mexico&apos;s
-              national digital payment system, developed and operated by{' '}
-              <strong>Banxico (Banco de México)</strong>, the country&apos;s central bank. Launched
-              in <strong>September 2019</strong>, CoDi enables merchants and individuals to receive
-              payments via QR code or NFC, settled instantly through the{' '}
-              <strong>SPEI</strong> interbank network — free of charge, 24 hours a day.
-            </p>
-            <p>
-              Unlike most QR payment standards that are voluntary, CoDi was <strong>mandated</strong>{' '}
-              by Banxico: all banks participating in SPEI are required to offer CoDi functionality
-              to their customers. This means CoDi coverage spans every regulated bank in Mexico —
-              BBVA México, Santander, Banorte, HSBC, Citibanamex, and 40+ others.
-            </p>
-            <p>
-              CoDi differs from other QR payment systems in one important way:{' '}
-              <strong>an amount is always required</strong>. CoDi initiates a specific SPEI transfer
-              for a fixed amount — it is a &ldquo;payment request&rdquo; rather than an open QR
-              that the payer fills in. This makes CoDi particularly suitable for merchant checkouts
-              and invoicing.
-            </p>
-          </Prose>
-        </Section>
+        {/* Section 1: What is CoDi */}
+        {sectionMap['what-is-codi'] && (
+          <Section id="what-is-codi" title={sectionMap['what-is-codi'].heading}>
+            <Prose>
+              <p>{sectionMap['what-is-codi'].content}</p>
+            </Prose>
+          </Section>
+        )}
 
-        {/* ── Section 2: Step by Step ───────────────────────────────────────── */}
-        <Section id="how-it-works" title="How CoDi Works – Step by Step">
-          <ol className="space-y-4">
-            {[
-              {
-                step: 1,
-                title: 'Merchant generates a CoDi QR code',
-                body: 'Enter the CLABE (18-digit bank account) or registered phone number, the exact amount (required), a concept description, and a numeric reference. The QR encodes a BXC://SPEI payload.',
-              },
-              {
-                step: 2,
-                title: 'Merchant displays the QR code',
-                body: 'The QR can be shown on a phone screen, printed, or embedded in an invoice or website. CoDi also supports NFC for contactless payment without a QR code.',
-              },
-              {
-                step: 3,
-                title: 'Customer opens their bank app',
-                body: 'Any SPEI-participant bank app supports CoDi. The customer selects the CoDi payment option (usually under "Pay" or "Cobrar/Pagar").',
-              },
-              {
-                step: 4,
-                title: 'Customer scans the QR code',
-                body: 'The app reads the BXC://SPEI payload, extracting the recipient\'s CLABE or phone, amount, concept, and reference. These are displayed for review.',
-              },
-              {
-                step: 5,
-                title: 'Customer authenticates',
-                body: 'The customer confirms the payment using their bank\'s authentication (NIP, biometrics). The transfer is initiated from their SPEI-linked account.',
-              },
-              {
-                step: 6,
-                title: 'SPEI processes the transfer',
-                body: 'Banxico\'s SPEI infrastructure processes the transfer in under 30 seconds. SPEI operates 24/7/365, so CoDi payments are available at any time.',
-              },
-              {
-                step: 7,
-                title: 'Merchant receives confirmation',
-                body: 'The merchant\'s bank sends an instant credit notification. The numeric reference and concept in the SPEI record enable automatic reconciliation.',
-              },
-            ].map(({ step, title, body }) => (
-              <li key={step} className="flex gap-4">
-                <div
-                  className="flex-shrink-0 w-8 h-8 rounded-full text-white flex items-center justify-center font-bold text-sm"
-                  style={{ backgroundColor: '#006847' }}
-                >
-                  {step}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-slate-800">{title}</h3>
-                  <p className="text-sm text-slate-500 mt-0.5">{body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Section>
+        {/* Section 2: Step by Step */}
+        {sectionMap['how-it-works'] && (
+          <Section id="how-it-works" title={sectionMap['how-it-works'].heading}>
+            <ol className="space-y-4">
+              {(locale === 'de' ? [
+                { step: 1, title: 'Händler generiert CoDi QR-Code', body: 'CLABE (18-stelliges Bankkonto) oder registrierte Telefonnummer, den genauen Betrag (Pflicht), eine Konzeptbeschreibung und eine Referenznummer eingeben. Der QR kodiert einen BXC://SPEI-Payload.' },
+                { step: 2, title: 'Händler zeigt den QR-Code an', body: 'Der QR kann auf einem Telefonbildschirm angezeigt, gedruckt oder in eine Rechnung oder Website eingebettet werden. CoDi unterstützt auch NFC für kontaktlose Zahlung.' },
+                { step: 3, title: 'Kunde öffnet die Banking-App', body: 'Jede SPEI-Teilnehmer-Banking-App unterstützt CoDi. Der Kunde wählt die CoDi-Zahlungsoption (üblicherweise unter „Pagar/Cobrar").' },
+                { step: 4, title: 'Kunde scannt den QR-Code', body: 'Die App liest den BXC://SPEI-Payload und extrahiert CLABE oder Telefon des Empfängers, Betrag, Konzept und Referenz. Diese werden zur Überprüfung angezeigt.' },
+                { step: 5, title: 'Kunde authentifiziert', body: 'Kunde bestätigt die Zahlung per NIP oder Biometrie. Die Überweisung wird von seinem SPEI-verknüpften Konto initiiert.' },
+                { step: 6, title: 'SPEI verarbeitet die Überweisung', body: 'Banxicos SPEI-Infrastruktur verarbeitet die Überweisung in unter 30 Sekunden. SPEI läuft 24/7/365.' },
+                { step: 7, title: 'Händler erhält Bestätigung', body: 'Die Bank des Händlers sendet eine sofortige Gutschriftsbenachrichtigung. Referenznummer und Konzept im SPEI-Datensatz ermöglichen automatische Abstimmung.' },
+              ] : [
+                { step: 1, title: 'Merchant generates a CoDi QR code', body: 'Enter the CLABE (18-digit bank account) or registered phone number, the exact amount (required), a concept description, and a numeric reference. The QR encodes a BXC://SPEI payload.' },
+                { step: 2, title: 'Merchant displays the QR code', body: 'The QR can be shown on a phone screen, printed, or embedded in an invoice or website. CoDi also supports NFC for contactless payment.' },
+                { step: 3, title: 'Customer opens their bank app', body: 'Any SPEI-participant bank app supports CoDi. The customer selects the CoDi payment option (usually under "Pay" or "Cobrar/Pagar").' },
+                { step: 4, title: 'Customer scans the QR code', body: "The app reads the BXC://SPEI payload, extracting the recipient's CLABE or phone, amount, concept, and reference. These are displayed for review." },
+                { step: 5, title: 'Customer authenticates', body: "The customer confirms the payment using their bank's authentication (NIP, biometrics). The transfer is initiated from their SPEI-linked account." },
+                { step: 6, title: 'SPEI processes the transfer', body: "Banxico's SPEI infrastructure processes the transfer in under 30 seconds. SPEI operates 24/7/365." },
+                { step: 7, title: 'Merchant receives confirmation', body: "The merchant's bank sends an instant credit notification. The numeric reference and concept in the SPEI record enable automatic reconciliation." },
+              ]).map(({ step, title, body }) => (
+                <li key={step} className="flex gap-4">
+                  <div
+                    className="flex-shrink-0 w-8 h-8 rounded-full text-white flex items-center justify-center font-bold text-sm"
+                    style={{ backgroundColor: MX_GREEN }}
+                  >
+                    {step}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-800">{title}</h3>
+                    <p className="text-sm text-slate-500 mt-0.5">{body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Section>
+        )}
 
-        {/* ── Section 3: CLABE ─────────────────────────────────────────────── */}
-        <Section id="clabe" title="CLABE – Mexico's Bank Account Standard">
-          <Prose>
-            <p>
-              <strong>CLABE</strong> (Clave Bancaria Estandarizada) is Mexico&apos;s 18-digit
-              standardised bank account number, mandatory for all SPEI transfers. Every Mexican
-              bank account has a unique CLABE. The structure is:
-            </p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li><strong>Digits 1–3:</strong> Bank code (identifies the institution)</li>
-              <li><strong>Digits 4–6:</strong> City/plaza code</li>
-              <li><strong>Digits 7–17:</strong> Account number (11 digits)</li>
-              <li><strong>Digit 18:</strong> Check digit (calculated via weighted algorithm)</li>
-            </ul>
-            <p>
-              <strong>CLABE check digit algorithm:</strong> Multiply each of the first 17 digits by
-              the repeating weight sequence <code className="font-mono text-sm bg-slate-100 px-1.5 py-0.5 rounded">3, 7, 1</code>,
-              sum all products, take the result modulo 10, subtract from 10, and take modulo 10 again.
-              This gives the 18th check digit. qrpayhub.com validates CLABEs automatically using
-              this algorithm and displays the detected bank name from the first 3 digits.
-            </p>
-          </Prose>
-
-          <pre className="bg-slate-900 text-emerald-400 text-sm font-mono rounded-2xl p-5 overflow-x-auto leading-relaxed my-4">
+        {/* Section 3: CLABE */}
+        {sectionMap['clabe'] && (
+          <Section id="clabe" title={sectionMap['clabe'].heading}>
+            <Prose>
+              <p>{sectionMap['clabe'].content}</p>
+            </Prose>
+            <pre className="bg-slate-900 text-emerald-400 text-sm font-mono rounded-2xl p-5 overflow-x-auto leading-relaxed my-4">
 {`CLABE: 0 7 2 1 8 0 0 0 1 1 8 3 5 9 4 4 0 1
        │ │ │ └─ City (180)
        │ │ └─── Bank: 072 = Banorte
@@ -239,225 +198,183 @@ function PageContent() {
 
 Weights: 3 7 1 3 7 1 3 7 1 3 7 1 3 7 1 3 7 (×17)
 Sum all (digit × weight) → mod 10 → (10 - x) mod 10`}
-          </pre>
-
-          <div className="overflow-x-auto rounded-2xl border border-slate-200">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left">
-                <tr>
-                  {['Bank Code', 'Bank Name', 'Note'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {CLABE_BANKS.map(({ code, bank, note }) => (
-                  <tr key={bank} className="hover:bg-slate-50">
-                    <td className="px-4 py-3 font-mono font-bold" style={{ color: '#006847' }}>{code}</td>
-                    <td className="px-4 py-3 font-medium text-slate-800">{bank}</td>
-                    <td className="px-4 py-3 text-slate-500 text-xs">{note}</td>
+            </pre>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200">
+              <table className="min-w-full text-sm">
+                <thead className="bg-slate-50 text-left">
+                  <tr>
+                    {[locale === 'de' ? 'Bankcode' : 'Bank Code', locale === 'de' ? 'Bankname' : 'Bank Name', locale === 'de' ? 'Hinweis' : 'Note'].map((h) => (
+                      <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">
+                        {h}
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {CLABE_BANKS.map(({ code, bank, note }) => (
+                    <tr key={bank} className="hover:bg-slate-50">
+                      <td className="px-4 py-3 font-mono font-bold" style={{ color: MX_GREEN }}>{code}</td>
+                      <td className="px-4 py-3 font-medium text-slate-800">{bank}</td>
+                      <td className="px-4 py-3 text-slate-500 text-xs">{note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Section>
+        )}
 
-        {/* ── Section 4: CoDi QR Payload ───────────────────────────────────── */}
-        <Section id="payload-format" title="The CoDi QR Payload Format">
-          <Prose>
-            <p>
-              CoDi QR codes use the <strong>BXC:// protocol</strong> (Banxico) — a proprietary
-              URL scheme designed by Banxico specifically for CoDi. The payload structure encodes
-              SPEI transfer parameters as a pipe-delimited string:
-            </p>
-          </Prose>
-
-          <pre className="bg-slate-900 text-emerald-400 text-sm font-mono rounded-2xl p-5 overflow-x-auto leading-relaxed my-4">
+        {/* Section 4: Payload Format */}
+        {sectionMap['payload-format'] && (
+          <Section id="payload-format" title={sectionMap['payload-format'].heading}>
+            <Prose>
+              <p>{sectionMap['payload-format'].content}</p>
+            </Prose>
+            <pre className="bg-slate-900 text-emerald-400 text-sm font-mono rounded-2xl p-5 overflow-x-auto leading-relaxed my-4">
 {`BXC://SPEI?data=SPEI|[version]|[type]|[clabe_or_phone]|[amount]|[concept]|[reference]|[name]
 
 Example:
 BXC://SPEI?data=SPEI|1|03|072180001183594401|150.00|Pago%20factura%20001|1234567|TIENDA%20LA%20PALMA`}
-          </pre>
-
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-4">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left">
-                <tr>
-                  {['Field', 'Example', 'Required', 'Description'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">
-                      {h}
-                    </th>
+            </pre>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-4">
+              <table className="min-w-full text-sm">
+                <thead className="bg-slate-50 text-left">
+                  <tr>
+                    {[locale === 'de' ? 'Feld' : 'Field', locale === 'de' ? 'Beispiel' : 'Example', locale === 'de' ? 'Pflicht' : 'Required', locale === 'de' ? 'Beschreibung' : 'Description'].map((h) => (
+                      <th key={h} className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {[
+                    { field: 'Protocol',   example: 'BXC://SPEI',          req: true,  desc: locale === 'de' ? 'Banxico CoDi-Protokoll-Kennung' : 'Banxico CoDi protocol identifier' },
+                    { field: 'version',    example: '1',                   req: true,  desc: locale === 'de' ? 'CoDi-Version (immer 1)' : 'CoDi version (always 1)' },
+                    { field: 'type',       example: '03',                  req: true,  desc: '03=CLABE, 10=' + (locale === 'de' ? 'Telefonnummer' : 'phone number') },
+                    { field: 'recipient',  example: '072180001183594401',  req: true,  desc: locale === 'de' ? 'CLABE (18 Stellen) oder 10-stellige Telefonnummer' : 'CLABE (18 digits) or 10-digit phone' },
+                    { field: 'amount',     example: '150.00',              req: true,  desc: locale === 'de' ? 'Betrag in MXN (bei CoDi immer Pflicht)' : 'Amount in MXN (required for CoDi)' },
+                    { field: 'concepto',   example: 'Pago factura 001',    req: true,  desc: locale === 'de' ? 'Zahlungskonzept (1–35 Zeichen, URL-kodiert)' : 'Payment concept (1–35 chars, URL-encoded)' },
+                    { field: 'referencia', example: '1234567',             req: true,  desc: locale === 'de' ? 'Numerische Referenz (1–7 Stellen)' : 'Numeric reference (1–7 digits)' },
+                    { field: 'name',       example: 'TIENDA LA PALMA',     req: false, desc: locale === 'de' ? 'Begünstigtenname (URL-kodiert)' : 'Beneficiary name (URL-encoded)' },
+                  ].map(({ field, example, req, desc }) => (
+                    <tr key={field} className="hover:bg-slate-50">
+                      <td className="px-4 py-3 font-mono font-bold" style={{ color: MX_GREEN }}>{field}</td>
+                      <td className="px-4 py-3 font-mono text-slate-600 text-xs">{example}</td>
+                      <td className="px-4 py-3">
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                          req ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'
+                        }`}>
+                          {req ? (locale === 'de' ? 'Pflicht' : 'Required') : 'Optional'}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-slate-600">{desc}</td>
+                    </tr>
                   ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {[
-                  { field: 'Protocol',   example: 'BXC://SPEI',          req: true,  desc: 'Banxico CoDi protocol identifier' },
-                  { field: 'version',    example: '1',                   req: true,  desc: 'CoDi version (always 1)' },
-                  { field: 'type',       example: '03',                  req: true,  desc: '03=CLABE, 10=phone number' },
-                  { field: 'recipient',  example: '072180001183594401',  req: true,  desc: 'CLABE (18 digits) or 10-digit phone' },
-                  { field: 'amount',     example: '150.00',              req: true,  desc: 'Amount in MXN (required for CoDi)' },
-                  { field: 'concepto',   example: 'Pago factura 001',    req: true,  desc: 'Payment concept (1–35 chars, URL-encoded)' },
-                  { field: 'referencia', example: '1234567',             req: true,  desc: 'Numeric reference (1–7 digits)' },
-                  { field: 'name',       example: 'TIENDA LA PALMA',     req: false, desc: 'Beneficiary name (URL-encoded)' },
-                ].map(({ field, example, req, desc }) => (
-                  <tr key={field} className="hover:bg-slate-50">
-                    <td className="px-4 py-3 font-mono font-bold" style={{ color: '#006847' }}>{field}</td>
-                    <td className="px-4 py-3 font-mono text-slate-600 text-xs">{example}</td>
-                    <td className="px-4 py-3">
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                        req ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'
-                      }`}>
-                        {req ? 'Required' : 'Optional'}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-slate-600">{desc}</td>
+                </tbody>
+              </table>
+            </div>
+          </Section>
+        )}
+
+        {/* Section 5: Required Fields */}
+        {sectionMap['required-fields'] && (
+          <Section id="required-fields" title={sectionMap['required-fields'].heading}>
+            <Prose>
+              <p>{sectionMap['required-fields'].content}</p>
+            </Prose>
+          </Section>
+        )}
+
+        {/* Section 6: CoDi vs DiMo */}
+        {sectionMap['codi-vs-dimo'] && (
+          <Section id="codi-vs-dimo" title={sectionMap['codi-vs-dimo'].heading}>
+            <Prose>
+              <p>{sectionMap['codi-vs-dimo'].content}</p>
+            </Prose>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-3">
+              <table className="min-w-full text-sm">
+                <thead className="bg-slate-50 text-left">
+                  <tr>
+                    <th className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">{locale === 'de' ? 'Merkmal' : 'Feature'}</th>
+                    <th className="px-4 py-3 font-semibold border-b border-slate-200" style={{ color: MX_GREEN }}>CoDi</th>
+                    <th className="px-4 py-3 font-semibold text-purple-700 border-b border-slate-200">DiMo</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {CODI_VS_DIMO.map(({ feature, codi, dimo }) => (
+                    <tr key={feature} className="hover:bg-slate-50">
+                      <td className="px-4 py-3 font-semibold text-slate-700">{feature}</td>
+                      <td className="px-4 py-3 text-slate-600">{codi}</td>
+                      <td className="px-4 py-3 text-slate-600">{dimo}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Section>
+        )}
 
-        {/* ── Section 5: Required Fields ────────────────────────────────────── */}
-        <Section id="required-fields" title="Required Fields – Why Amount is Mandatory">
-          <Prose>
-            <p>
-              CoDi&apos;s requirement for a fixed amount is a deliberate design decision by Banxico.
-              CoDi is a <strong>payment collection system</strong> (Cobro = Collection), not just
-              a payment routing mechanism. The workflow assumes the merchant has calculated the exact
-              amount and encoded it in the QR — the customer simply scans and confirms.
-            </p>
-            <p>
-              This contrasts with standards like VietQR or PromptPay, which support &ldquo;open
-              amount&rdquo; QR codes where the payer enters the amount. CoDi&apos;s mandatory amount
-              reduces errors and disputes in retail transactions, since both parties see the same
-              figure before the transfer is authorised.
-            </p>
-            <p>
-              The <strong>Referencia Numérica</strong> (1–7 digits) is also required and appears
-              in the SPEI transfer record for both sender and recipient. Businesses should use
-              invoice numbers, order IDs, or folio numbers as the reference for automated
-              reconciliation. Random or sequential numbers work for small merchants.
-            </p>
-            <p>
-              The <strong>Concepto</strong> (1–35 characters) describes the payment purpose and
-              also appears in the SPEI record. Common values: &ldquo;Pago factura 001&rdquo;,
-              &ldquo;Servicio mensual marzo&rdquo;, &ldquo;Anticipo pedido 123&rdquo;.
-            </p>
-          </Prose>
-        </Section>
-
-        {/* ── Section 6: CoDi vs DiMo ──────────────────────────────────────── */}
-        <Section id="codi-vs-dimo" title="CoDi vs DiMo – Mexico's Two Systems">
-          <Prose>
-            <p>
-              In 2023, Banxico launched <strong>DiMo (Dinero Móvil)</strong> as a complementary
-              instant payment system. DiMo uses phone numbers as proxies for bank account transfers
-              — similar to how India&apos;s UPI uses UPI IDs or Brazil&apos;s PIX uses CPF/phone.
-              CoDi and DiMo serve different use cases and coexist.
-            </p>
-          </Prose>
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 mt-3">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left">
-                <tr>
-                  <th className="px-4 py-3 font-semibold text-slate-700 border-b border-slate-200">Feature</th>
-                  <th className="px-4 py-3 font-semibold border-b border-slate-200" style={{ color: '#006847' }}>CoDi</th>
-                  <th className="px-4 py-3 font-semibold text-purple-700 border-b border-slate-200">DiMo</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {CODI_VS_DIMO.map(({ feature, codi, dimo }) => (
-                  <tr key={feature} className="hover:bg-slate-50">
-                    <td className="px-4 py-3 font-semibold text-slate-700">{feature}</td>
-                    <td className="px-4 py-3 text-slate-600">{codi}</td>
-                    <td className="px-4 py-3 text-slate-600">{dimo}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
-
-        {/* ── Section 7: Supported Banks ────────────────────────────────────── */}
-        <Section id="supported-banks" title="Supported Banks">
-          <Prose>
-            <p>
-              All SPEI-participant banks in Mexico are obligated to support CoDi. As of 2025,
-              this includes over 50 commercial banks, development banks, and fintech institutions
-              licensed to operate in Mexico.
-            </p>
-          </Prose>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-            {SUPPORTED_BANKS.map(({ name, app }) => (
-              <div
-                key={name}
-                className="bg-white border border-slate-100 rounded-xl p-3 flex items-center justify-between shadow-sm"
-              >
-                <div>
-                  <p className="font-semibold text-slate-800 text-sm">{name}</p>
-                  <p className="text-xs text-slate-400">{app}</p>
+        {/* Section 7: Supported Banks */}
+        {sectionMap['supported-banks'] && (
+          <Section id="supported-banks" title={sectionMap['supported-banks'].heading}>
+            <Prose>
+              <p>{sectionMap['supported-banks'].content}</p>
+            </Prose>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+              {SUPPORTED_BANKS.map(({ name, app }) => (
+                <div
+                  key={name}
+                  className="bg-white border border-slate-100 rounded-xl p-3 flex items-center justify-between shadow-sm"
+                >
+                  <div>
+                    <p className="font-semibold text-slate-800 text-sm">{name}</p>
+                    <p className="text-xs text-slate-400">{app}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </Section>
+              ))}
+            </div>
+          </Section>
+        )}
 
-        {/* ── Section 8: Mexico's Digital Payment Evolution ─────────────────── */}
-        <Section id="digital-evolution" title="Mexico's Digital Payment Evolution">
-          <Prose>
-            <p>
-              Mexico&apos;s digital payment journey began with <strong>SPEI in 2004</strong> —
-              one of Latin America&apos;s first real-time interbank systems. For over a decade,
-              SPEI was a business and high-value payment tool. CoDi in 2019 brought SPEI to
-              everyday retail by wrapping it in a QR code interface.
-            </p>
-            <p>
-              CoDi adoption has been slower than comparable systems in Brazil (PIX) or India (UPI).
-              Banxico mandated bank support, but adoption by consumers and merchants has been
-              constrained by <strong>the requirement for a SPEI-enrolled bank account</strong>
-              (excluding many of the unbanked) and competition from Mercado Pago&apos;s own QR
-              payment system, which reached millions of users through marketplace integration.
-            </p>
-            <p>
-              <strong>DiMo&apos;s launch in 2023</strong> addressed one key limitation by enabling
-              phone-number-based transfers without needing to know the recipient&apos;s CLABE.
-              DiMo has grown faster than CoDi, with major banks enrolling millions of users in
-              the first year. Together, CoDi (QR merchant payments) and DiMo (P2P transfers)
-              form a complete instant payment system comparable to Brazil&apos;s PIX.
-            </p>
-            <p>
-              For businesses operating in Mexico, CoDi offers a <strong>zero-fee payment
-              acceptance</strong> option with universal bank coverage — no card terminal, no
-              payment gateway fees. Combined with SPEI&apos;s 24/7 availability and proven
-              infrastructure, CoDi is an increasingly attractive option for Mexican merchants
-              and B2B payment collections.
-            </p>
-          </Prose>
-        </Section>
+        {/* Section 8: Digital Payment Evolution */}
+        {sectionMap['digital-payment-evolution'] && (
+          <Section id="digital-payment-evolution" title={sectionMap['digital-payment-evolution'].heading}>
+            <Prose>
+              <p>{sectionMap['digital-payment-evolution'].content}</p>
+            </Prose>
+          </Section>
+        )}
 
-        {/* ── CTA ──────────────────────────────────────────────────────────── */}
+        {/* CTA */}
         <div
           className="rounded-2xl p-6 text-center space-y-3"
           style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}
         >
           <p className="font-semibold text-lg" style={{ color: '#14532d' }}>
-            Ready to generate your CoDi QR Code?
+            {locale === 'de' ? 'Bereit, Ihren CoDi QR-Code zu erstellen?' : 'Ready to generate your CoDi QR Code?'}
           </p>
           <p className="text-sm" style={{ color: '#166534' }}>
-            Free, instant, works with all Mexican banks via SPEI.
+            {locale === 'de'
+              ? 'Kostenlos, sofort, funktioniert mit allen mexikanischen Banken über SPEI.'
+              : 'Free, instant, works with all Mexican banks via SPEI.'}
           </p>
-          <Link
-            href="/codi/generator"
-            className="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl shadow-sm transition-colors"
-            style={{ backgroundColor: '#006847' }}
-          >
-            Open Generator →
-          </Link>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link
+              href="/codi/generator"
+              className="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl shadow-sm transition-colors"
+              style={{ backgroundColor: MX_GREEN }}
+            >
+              {locale === 'de' ? 'Generator öffnen →' : 'Open Generator →'}
+            </Link>
+            <Link
+              href="/codi/faq"
+              className="inline-flex items-center gap-2 px-6 py-3 border font-semibold rounded-xl transition-colors"
+              style={{ borderColor: '#bbf7d0', color: '#14532d' }}
+            >
+              {locale === 'de' ? 'CoDi FAQ lesen →' : 'Read CoDi FAQ →'}
+            </Link>
+          </div>
         </div>
 
       </div>
@@ -492,15 +409,7 @@ function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
   );
 }
 
-function Section({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: React.ReactNode;
-}) {
+function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
     <section id={id} className="space-y-4 scroll-mt-20">
       <h2 className="text-2xl font-bold text-slate-900">{title}</h2>
