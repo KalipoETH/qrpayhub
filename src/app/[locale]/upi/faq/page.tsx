@@ -3,32 +3,35 @@ import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import Accordion from '@/components/ui/Accordion';
+import type { AccordionItem } from '@/components/ui/Accordion';
 import RelatedToolCard from '@/components/ui/RelatedToolCard';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { FAQ_ITEMS } from '@/lib/standards/upi-faq';
+import { upiFAQContent } from '@/content/upi/faq';
 import { buildAlternates } from '@/lib/seo';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
+  const content = upiFAQContent[locale as 'en' | 'de'] ?? upiFAQContent.en;
   return {
-    title: "UPI FAQ – 25 Questions About India's Payment System | QRPayHub",
-    description:
-      'Everything about UPI: how it works, UPI IDs, transaction limits, international expansion and QR code format.',
+    title: `${content.title} – 25 Questions Answered | QRPayHub`,
+    description: content.description,
     keywords: ['upi faq', 'upi questions', 'unified payments interface help', 'upi qr faq', 'npci upi guide'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/upi/faq'),
   };
 }
 
-const JSON_LD_FAQ = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQ_ITEMS.map(({ question, answer }) => ({
-    '@type': 'Question',
-    name: question,
-    acceptedAnswer: { '@type': 'Answer', text: answer },
-  })),
-};
+function buildJsonLdFaq(items: AccordionItem[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  };
+}
 
 const JSON_LD_BREADCRUMB = {
   '@context': 'https://schema.org',
@@ -42,89 +45,108 @@ const JSON_LD_BREADCRUMB = {
 
 export default function UPIFAQPage({ params }: { params: { locale: string } }) {
   setRequestLocale(params.locale);
+  const locale = params.locale as 'en' | 'de';
+  const content = upiFAQContent[locale] ?? upiFAQContent.en;
+
+  const accordionItems: AccordionItem[] = content.items.map((item, i) => ({
+    id: `faq-${i}`,
+    question: item.question,
+    answer: item.answer,
+  }));
+
+  const jsonLdFaq = buildJsonLdFaq(accordionItems);
+
   return (
     <>
       <Script
         id="json-ld-upi-faq"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_FAQ) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
       />
       <Script
         id="json-ld-upi-faq-breadcrumb"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_BREADCRUMB) }}
       />
-      <PageContent />
-    </>
-  );
-}
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
 
-function PageContent() {
-  return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+        {/* Breadcrumb */}
+        <Breadcrumb
+          items={[
+            { label: 'Home',   href: '/' },
+            { label: 'UPI QR', href: '/upi' },
+            { label: 'FAQ' },
+          ]}
+        />
 
-      {/* Breadcrumb */}
-      <Breadcrumb
-        items={[
-          { label: 'Home',   href: '/' },
-          { label: 'UPI QR', href: '/upi' },
-          { label: 'FAQ' },
-        ]}
-      />
-
-      {/* Header */}
-      <header className="space-y-3">
-        <h1 className="text-3xl sm:text-4xl font-bold text-slate-900">
-          UPI FAQ
-        </h1>
-        <p className="text-lg text-slate-500">
-          25 questions answered — from UPI IDs and transaction limits to global expansion and QR format.
-        </p>
-      </header>
-
-      {/* Accordion */}
-      <Accordion items={FAQ_ITEMS} />
-
-      {/* CTA */}
-      <div className="bg-orange-50 border border-orange-100 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <p className="font-semibold text-orange-900">Still have questions?</p>
-          <p className="text-sm text-orange-700 mt-0.5">
-            Or ready to generate your first UPI QR Code?
+        {/* Header */}
+        <header className="space-y-3">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900">
+            {content.title}
+          </h1>
+          <p className="text-lg text-slate-500">
+            {content.description}
           </p>
-        </div>
-        <Link
-          href="/upi/generator"
-          className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-xl transition-colors"
-        >
-          Open Generator →
-        </Link>
-      </div>
+        </header>
 
-      {/* Related Tools */}
-      <section className="space-y-4">
-        <h2 className="text-xl font-bold text-slate-900">Related Tools</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <RelatedToolCard
-            icon="⚡"
-            name="UPI QR Generator"
-            url="/upi/generator"
-            description="Generate UPI QR codes instantly — works with PhonePe, Google Pay, Paytm, BHIM and all UPI apps. Free, no registration."
-            badge="Free"
-            visitLabel="Open Generator →"
-            external={false}
-          />
-          <RelatedToolCard
-            icon="🇨🇭"
-            name="Swiss QR Code Generator"
-            url="/swiss-qr/generator"
-            description="Generate Swiss QR Codes (QR-Rechnung) for invoices and payments in Switzerland and Liechtenstein."
-            badge="Free"
-            visitLabel="Open Generator →"
-            external={false}
-          />
+        {/* Accordion */}
+        <Accordion items={accordionItems} />
+
+        {/* CTA */}
+        <div className="bg-orange-50 border border-orange-100 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <p className="font-semibold text-orange-900">
+              {locale === 'de' ? 'Noch Fragen?' : 'Still have questions?'}
+            </p>
+            <p className="text-sm text-orange-700 mt-0.5">
+              {locale === 'de'
+                ? 'Oder bereit für Ihren ersten UPI QR-Code?'
+                : 'Or ready to generate your first UPI QR Code?'}
+            </p>
+          </div>
+          <Link
+            href="/upi/generator"
+            className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-xl transition-colors"
+          >
+            {locale === 'de' ? 'Generator öffnen →' : 'Open Generator →'}
+          </Link>
         </div>
-      </section>
-    </div>
+
+        {/* Related Tools */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-bold text-slate-900">
+            {locale === 'de' ? 'Verwandte Tools' : 'Related Tools'}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <RelatedToolCard
+              icon="⚡"
+              name="UPI QR Generator"
+              url="/upi/generator"
+              description={
+                locale === 'de'
+                  ? 'UPI QR-Codes sofort erstellen – funktioniert mit PhonePe, Google Pay, Paytm, BHIM und allen UPI-Apps. Kostenlos, ohne Registrierung.'
+                  : 'Generate UPI QR codes instantly — works with PhonePe, Google Pay, Paytm, BHIM and all UPI apps. Free, no registration.'
+              }
+              badge="Free"
+              visitLabel={locale === 'de' ? 'Generator öffnen →' : 'Open Generator →'}
+              external={false}
+            />
+            <RelatedToolCard
+              icon="🇨🇭"
+              name="Swiss QR Code Generator"
+              url="/swiss-qr/generator"
+              description={
+                locale === 'de'
+                  ? 'Swiss QR Codes (QR-Rechnung) für Rechnungen und Zahlungen in der Schweiz und Liechtenstein erstellen.'
+                  : 'Generate Swiss QR Codes (QR-Rechnung) for invoices and payments in Switzerland and Liechtenstein.'
+              }
+              badge="Free"
+              visitLabel={locale === 'de' ? 'Generator öffnen →' : 'Open Generator →'}
+              external={false}
+            />
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
