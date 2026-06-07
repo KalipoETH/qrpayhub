@@ -32,6 +32,18 @@ const SUB_PAGES: SubPage[] = [
     description: 'Create CoDi QR codes instantly — works with all major Mexican banks and Mercado Pago',
     href: '/codi/generator',
   },
+  {
+    icon: '📖',
+    title: 'Guide',
+    description: "Complete guide to CoDi: CLABE validation, SPEI infrastructure, BXC:// protocol and DiMo",
+    href: '/codi/guide',
+  },
+  {
+    icon: '❓',
+    title: 'FAQ',
+    description: '25 questions about CoDi answered — CLABE, SPEI, DiMo, Banxico and Mexican payments',
+    href: '/codi/faq',
+  },
 ];
 
 const JSON_LD = {

@@ -57,6 +57,8 @@ const PAGES: PageDef[] = [
   // VietQR (Phase 2 – live)
   { path: '/vietqr',               priority: 0.8, changeFreq: 'weekly' },
   { path: '/vietqr/generator',     priority: 0.9, changeFreq: 'weekly' },
+  { path: '/vietqr/guide',         priority: 0.7, changeFreq: 'monthly' },
+  { path: '/vietqr/faq',           priority: 0.7, changeFreq: 'monthly' },
 
   // DuitNow (Phase 2 – live)
   { path: '/duitnow',              priority: 0.8, changeFreq: 'weekly' },
@@ -73,10 +75,14 @@ const PAGES: PageDef[] = [
   // QR Ph (Phase 2 – live)
   { path: '/qr-ph',                priority: 0.8, changeFreq: 'weekly' },
   { path: '/qr-ph/generator',      priority: 0.9, changeFreq: 'weekly' },
+  { path: '/qr-ph/guide',          priority: 0.7, changeFreq: 'monthly' },
+  { path: '/qr-ph/faq',            priority: 0.7, changeFreq: 'monthly' },
 
   // CoDi (Phase 2 – live)
   { path: '/codi',                 priority: 0.8, changeFreq: 'weekly' },
   { path: '/codi/generator',       priority: 0.9, changeFreq: 'weekly' },
+  { path: '/codi/guide',           priority: 0.7, changeFreq: 'monthly' },
+  { path: '/codi/faq',             priority: 0.7, changeFreq: 'monthly' },
 
   // Legal / Contact (noindex pages excluded; contact is indexable)
   { path: '/contact',              priority: 0.3, changeFreq: 'monthly' },

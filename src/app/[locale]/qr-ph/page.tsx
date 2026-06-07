@@ -32,6 +32,18 @@ const SUB_PAGES: SubPage[] = [
     description: 'Create QR Ph codes instantly — works with GCash, Maya, BDO, BPI and all InstaPay apps',
     href: '/qr-ph/generator',
   },
+  {
+    icon: '📖',
+    title: 'Guide',
+    description: "Complete guide to QR Ph: proxy types, InstaPay network, GCash, Maya and financial inclusion",
+    href: '/qr-ph/guide',
+  },
+  {
+    icon: '❓',
+    title: 'FAQ',
+    description: '25 questions about QR Ph answered — InstaPay, PESONet, GCash and BSP standards',
+    href: '/qr-ph/faq',
+  },
 ];
 
 const JSON_LD = {

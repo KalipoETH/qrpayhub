@@ -44,6 +44,18 @@ const SUB_PAGES: SubPage[] = [
     description: 'Create VietQR codes instantly — works with all Vietnamese banks and e-wallets',
     href: '/vietqr/generator',
   },
+  {
+    icon: '📖',
+    title: 'Guide',
+    description: "Complete guide to Vietnam's bank transfer QR standard: Bank BINs, EMV payload format and account name rules",
+    href: '/vietqr/guide',
+  },
+  {
+    icon: '❓',
+    title: 'FAQ',
+    description: '25 questions about VietQR answered — BINs, MoMo, ZaloPay, limits and cashless Vietnam',
+    href: '/vietqr/faq',
+  },
 ];
 
 const JSON_LD = {

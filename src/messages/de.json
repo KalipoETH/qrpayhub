@@ -201,6 +201,10 @@
   "vietqr": {
     "title": "VietQR Generator",
     "description": "VietQR-Codes für vietnamesische Banküberweisungen erstellen",
+    "guideTitle": "Wie VietQR funktioniert",
+    "guideDescription": "Vollständiger Guide zu Vietnams Bank-Transfer-QR-Standard: BINs, EMV-Payload und Kontonamen-Regeln",
+    "faqTitle": "VietQR FAQ",
+    "faqDescription": "25 Fragen zu VietQR beantwortet",
     "bankLabel": "Bank",
     "bankBinLabel": "Bank-BIN",
     "accountNumberLabel": "Kontonummer",
@@ -277,6 +281,10 @@
   "qrph": {
     "title": "QR Ph Generator",
     "description": "QR Ph-Codes für philippinische Zahlungen erstellen",
+    "guideTitle": "Wie QR Ph funktioniert",
+    "guideDescription": "Vollständiger Guide zum nationalen QR-Zahlungsstandard der Philippinen",
+    "faqTitle": "QR Ph FAQ",
+    "faqDescription": "25 Fragen zu QR Ph beantwortet",
     "keyLabel": "QR Ph-Schlüssel",
     "keyPlaceholder": "09XXXXXXXXX, Kontonummer oder E-Mail",
     "keyDetected": "Erkannt",
@@ -299,6 +307,10 @@
   "codi": {
     "title": "CoDi QR Generator",
     "description": "CoDi QR-Codes für mexikanische SPEI-Zahlungen erstellen",
+    "guideTitle": "Wie CoDi funktioniert",
+    "guideDescription": "Vollständiger Guide zu Mexikos digitalem Zahlungssystem: CLABE, SPEI und BXC-Protokoll",
+    "faqTitle": "CoDi FAQ",
+    "faqDescription": "25 Fragen zu CoDi beantwortet",
     "recipientTypeLabel": "Empfängertyp",
     "clabeLabel": "CLABE (18 Ziffern)",
     "clabePlaceholder": "18-stellige CLABE-Nummer",
