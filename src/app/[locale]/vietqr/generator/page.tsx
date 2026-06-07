@@ -1,8 +1,39 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import VietQRGenerator from '@/components/generators/VietQRGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+
+const TITLE = 'VietQR Generator – Free Vietnam Bank Transfer | QRPayHub';
+const DESCRIPTION =
+  'Free VietQR code generator for Vietnamese bank transfers. Compatible with Vietcombank, BIDV, Techcombank, MB Bank and all VietQR-enabled banks. No registration needed.';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'VietQR Generator – QRPayHub',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web Browser',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  description: 'Free VietQR code generator. No registration required. Privacy-first – all data stays in your browser.',
+  url: 'https://www.qrpayhub.com/en/vietqr/generator',
+  featureList: ['Real-time QR code generation', 'Download as PNG', 'Copy to clipboard', 'Input validation', 'Free to use'],
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to generate a VietQR code',
+  description: 'Generate a VietQR payment code in 3 steps',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Enter payment details', text: 'Fill in the required payment information such as IBAN/account number and recipient name' },
+    { '@type': 'HowToStep', position: 2, name: 'Generate QR code', text: 'The QR code is generated instantly in your browser – no data is sent to any server' },
+    { '@type': 'HowToStep', position: 3, name: 'Download or copy', text: 'Download the QR code as PNG or copy it to your clipboard for use in invoices or documents' },
+  ],
+  tool: { '@type': 'HowToTool', name: 'QRPayHub Generator' },
+  totalTime: 'PT1M',
+};
 
 export async function generateMetadata({
   params,
@@ -11,20 +42,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: 'VietQR Generator – Free Vietnam | QRPayHub',
-    description:
-      'Generate VietQR codes for Vietnamese bank transfers. Compatible with all Vietnamese banks including Vietcombank, BIDV, Agribank, Techcombank, MB Bank, VNPay and MoMo.',
-    keywords: [
-      'vietqr generator',
-      'vietqr code',
-      'vietnam qr payment',
-      'napas qr',
-      'vietcombank qr',
-      'bidv qr',
-      'momo qr vietnam',
-    ],
+    title: TITLE,
+    description: DESCRIPTION,
+    keywords: ['vietqr generator', 'vietqr code', 'vietnam qr payment', 'napas qr', 'vietcombank qr', 'bidv qr', 'momo qr vietnam'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/vietqr/generator'),
+    openGraph: buildOpenGraph(locale, '/vietqr/generator', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -34,7 +58,13 @@ export default function VietQRGeneratorPage({
   params: { locale: string };
 }) {
   setRequestLocale(params.locale);
-  return <PageContent />;
+  return (
+    <>
+      <Script id="schema-software-vietqr" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
+      <Script id="schema-howto-vietqr" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <PageContent />
+    </>
+  );
 }
 
 function PageContent() {

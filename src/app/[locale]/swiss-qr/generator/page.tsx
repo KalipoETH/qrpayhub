@@ -1,18 +1,50 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import SwissQRGenerator from '@/components/generators/SwissQRGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+
+const TITLE = 'Swiss QR Code Generator – Free QR-Rechnung | QRPayHub';
+const DESCRIPTION =
+  'Free Swiss QR Code (QR-Rechnung) generator. Create Swiss payment QR codes for CHF and EUR instantly. Compatible with all Swiss banks. No registration needed.';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Swiss QR Generator – QRPayHub',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web Browser',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  description: 'Free Swiss QR Code generator. No registration required. Privacy-first – all data stays in your browser.',
+  url: 'https://www.qrpayhub.com/en/swiss-qr/generator',
+  featureList: ['Real-time QR code generation', 'Download as PNG', 'Copy to clipboard', 'Input validation', 'Free to use'],
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to generate a Swiss QR Code',
+  description: 'Generate a Swiss QR Code (QR-Rechnung) in 3 steps',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Enter payment details', text: 'Fill in the required payment information such as IBAN/account number and recipient name' },
+    { '@type': 'HowToStep', position: 2, name: 'Generate QR code', text: 'The QR code is generated instantly in your browser – no data is sent to any server' },
+    { '@type': 'HowToStep', position: 3, name: 'Download or copy', text: 'Download the QR code as PNG or copy it to your clipboard for use in invoices or documents' },
+  ],
+  tool: { '@type': 'HowToTool', name: 'QRPayHub Generator' },
+  totalTime: 'PT1M',
+};
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: 'Swiss QR Code Generator – Free | QRPayHub',
-    description:
-      'Generate Swiss QR Codes (QR-Rechnung) for free. Compatible with all Swiss banks. Supports CHF and EUR.',
+    title: TITLE,
+    description: DESCRIPTION,
     keywords: ['swiss qr code', 'qr rechnung', 'swiss qr generator', 'qr-bill', 'swiss payment'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/swiss-qr/generator'),
+    openGraph: buildOpenGraph(locale, '/swiss-qr/generator', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -22,7 +54,13 @@ export default function SwissQRGeneratorPage({
   params: { locale: string };
 }) {
   setRequestLocale(params.locale);
-  return <PageContent />;
+  return (
+    <>
+      <Script id="schema-software-swiss-qr" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
+      <Script id="schema-howto-swiss-qr" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <PageContent />
+    </>
+  );
 }
 
 function PageContent() {

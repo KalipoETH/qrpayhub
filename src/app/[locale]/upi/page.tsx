@@ -4,17 +4,23 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
+
+const TITLE = "UPI QR Code – India's Universal Payment Interface | QRPayHub";
+const DESCRIPTION =
+  "UPI is India's real-time payment QR standard by NPCI. Free generator compatible with PhonePe, Google Pay, Paytm and all 500+ UPI member banks.";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: "UPI QR Code – India's Universal Payment Interface | QRPayHub",
-    description:
-      'Everything about UPI QR codes: what UPI is, how it works, which apps support it and how to generate a UPI QR code for free.',
+    title: TITLE,
+    description: DESCRIPTION,
     keywords: ['upi', 'unified payments interface', 'upi qr code', 'npci', 'bhim upi', 'india payments'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/upi'),
+    openGraph: buildOpenGraph(locale, '/upi', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -208,6 +214,15 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇧🇷', name: 'PIX QR', href: '/pix' },
+          { flag: '🇹🇭', name: 'PromptPay', href: '/promptpay' },
+          { flag: '🇮🇩', name: 'QRIS', href: '/qris' },
+        ]}
+      />
 
     </div>
   );

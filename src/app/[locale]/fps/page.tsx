@@ -4,7 +4,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
 
 export async function generateMetadata({
   params,
@@ -15,7 +16,7 @@ export async function generateMetadata({
   return {
     title: "FPS – Hong Kong Faster Payment System | QRPayHub",
     description:
-      "Everything about FPS: Hong Kong's Faster Payment System by HKMA. Supports HKD and CNY. Compatible with all HK banks, PayMe, AlipayHK and WeChat Pay HK.",
+      "FPS is Hong Kong's Faster Payment System QR standard by HKMA. Free generator for HSBC HK, Hang Seng, Bank of China HK and PayMe. Supports HKD and CNY.",
     keywords: [
       'fps hong kong',
       'fps qr',
@@ -27,6 +28,8 @@ export async function generateMetadata({
     ],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/fps'),
+    openGraph: buildOpenGraph(locale, '/fps', "FPS – Hong Kong Faster Payment System | QRPayHub", "FPS is Hong Kong's Faster Payment System QR standard by HKMA. Free generator for HSBC HK, Hang Seng, Bank of China HK and PayMe. Supports HKD and CNY."),
+    twitter: buildTwitterCard("FPS – Hong Kong Faster Payment System | QRPayHub", "FPS is Hong Kong's Faster Payment System QR standard by HKMA. Free generator for HSBC HK, Hang Seng, Bank of China HK and PayMe. Supports HKD and CNY."),
   };
 }
 
@@ -231,6 +234,13 @@ function PageContent() {
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">FPS Tools</h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇸🇬', name: 'PayNow', href: '/paynow' },
+        ]}
+      />
 
     </div>
   );

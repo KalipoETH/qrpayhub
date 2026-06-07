@@ -3,19 +3,25 @@ import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import RelatedToolCard from '@/components/ui/RelatedToolCard';
+import RelatedStandards from '@/components/ui/RelatedStandards';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+
+const TITLE = 'GiroCode / EPC QR Code – Complete Guide | QRPayHub';
+const DESCRIPTION =
+  'GiroCode (EPC QR Code) is the European SEPA payment QR standard. Free generator, technical guide and FAQ for all 36 SEPA countries.';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: 'GiroCode / EPC QR Code – Complete Guide | QRPayHub',
-    description:
-      'Everything about GiroCode: what it is, how it works, which banks support it and how to generate one for free.',
+    title: TITLE,
+    description: DESCRIPTION,
     keywords: ['girocode', 'epc qr code', 'sepa qr code', 'girocode generator', 'european qr payment'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/girocode'),
+    openGraph: buildOpenGraph(locale, '/girocode', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -278,6 +284,15 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇨🇭', name: 'Swiss QR Code', href: '/swiss-qr' },
+          { flag: '🇮🇳', name: 'UPI QR', href: '/upi' },
+          { flag: '🇧🇷', name: 'PIX QR', href: '/pix' },
+        ]}
+      />
 
       {/* ── Also useful ──────────────────────────────────────────────────── */}
       <section className="space-y-4">

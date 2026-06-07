@@ -1,19 +1,51 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 import GiroCodeGenerator from '@/components/generators/GiroCodeGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+
+const TITLE = 'GiroCode Generator – Free SEPA QR Code | QRPayHub';
+const DESCRIPTION =
+  'Free GiroCode (EPC QR) generator for SEPA transfers. No registration, no data stored – all generated instantly in your browser. Compatible with all 36 SEPA countries.';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'GiroCode Generator – QRPayHub',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web Browser',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  description: 'Free GiroCode QR code generator. No registration required. Privacy-first – all data stays in your browser.',
+  url: 'https://www.qrpayhub.com/en/girocode/generator',
+  featureList: ['Real-time QR code generation', 'Download as PNG', 'Copy to clipboard', 'Input validation', 'Free to use'],
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to generate a GiroCode QR code',
+  description: 'Generate a GiroCode (EPC QR) payment code in 3 steps',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Enter payment details', text: 'Fill in the required payment information such as IBAN/account number and recipient name' },
+    { '@type': 'HowToStep', position: 2, name: 'Generate QR code', text: 'The QR code is generated instantly in your browser – no data is sent to any server' },
+    { '@type': 'HowToStep', position: 3, name: 'Download or copy', text: 'Download the QR code as PNG or copy it to your clipboard for use in invoices or documents' },
+  ],
+  tool: { '@type': 'HowToTool', name: 'QRPayHub Generator' },
+  totalTime: 'PT1M',
+};
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: 'GiroCode Generator – Free SEPA QR Code | QRPayHub',
-    description:
-      'Generate GiroCode (EPC QR) payment codes for free. Compatible with all European SEPA banks.',
+    title: TITLE,
+    description: DESCRIPTION,
     keywords: ['girocode', 'epc qr code', 'sepa qr', 'girocode generator'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/girocode/generator'),
+    openGraph: buildOpenGraph(locale, '/girocode/generator', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -22,10 +54,14 @@ export default function GiroCodeGeneratorPage({
 }: {
   params: { locale: string };
 }) {
-  const { locale } = params;
-  setRequestLocale(locale);
-
-  return <PageContent />;
+  setRequestLocale(params.locale);
+  return (
+    <>
+      <Script id="schema-software-girocode" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
+      <Script id="schema-howto-girocode" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <PageContent />
+    </>
+  );
 }
 
 function PageContent() {

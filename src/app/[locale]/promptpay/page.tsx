@@ -4,17 +4,23 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
+
+const TITLE = "PromptPay – Thailand's National QR Payment System | QRPayHub";
+const DESCRIPTION =
+  "PromptPay is Thailand's national QR payment standard. Free generator supporting phone number and National ID for all Thai banks and e-wallets.";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: "PromptPay – Thailand's National Payment System | QRPayHub",
-    description:
-      "Everything about PromptPay QR codes: what PromptPay is, how it works, which Thai banks support it and how to generate a PromptPay QR code for free.",
+    title: TITLE,
+    description: DESCRIPTION,
     keywords: ['promptpay qr', 'promptpay generator', 'thai payment qr', 'พร้อมเพย์', 'thailand qr code'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/promptpay'),
+    openGraph: buildOpenGraph(locale, '/promptpay', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -208,6 +214,15 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇮🇩', name: 'QRIS', href: '/qris' },
+          { flag: '🇲🇾', name: 'DuitNow', href: '/duitnow' },
+          { flag: '🇸🇬', name: 'PayNow', href: '/paynow' },
+        ]}
+      />
 
     </div>
   );

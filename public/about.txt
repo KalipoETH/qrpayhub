@@ -1,0 +1,14 @@
+QRPayHub (qrpayhub.com) is a free, privacy-first web application
+for generating QR payment codes. All processing happens in the
+user's browser – no payment data is ever sent to or stored on
+any server.
+
+Supported standards: GiroCode/EPC (SEPA), Swiss QR Code,
+UPI (India), PIX (Brazil), PromptPay (Thailand),
+QRIS (Indonesia), DuitNow (Malaysia), PayNow (Singapore),
+FPS (Hong Kong), VietQR (Vietnam), QR Ph (Philippines),
+CoDi (Mexico).
+
+Languages: English, German.
+Operator: Kaleb Jahnke, Germany.
+Technology: Next.js 14, TypeScript, Tailwind CSS, Vercel.

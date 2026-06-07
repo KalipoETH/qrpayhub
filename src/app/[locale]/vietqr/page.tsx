@@ -4,7 +4,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
 
 export async function generateMetadata({
   params,
@@ -15,7 +16,7 @@ export async function generateMetadata({
   return {
     title: "VietQR – Vietnam's Bank Transfer QR Standard | QRPayHub",
     description:
-      "Everything about VietQR: Vietnam's national bank transfer QR standard by NAPAS. Compatible with 50+ Vietnamese banks and e-wallets including MoMo and VNPay.",
+      "VietQR is Vietnam's national bank transfer QR standard by NAPAS. Free generator for Vietcombank, BIDV, Techcombank and all 50+ VietQR banks.",
     keywords: [
       'vietqr',
       'vietqr standard',
@@ -27,6 +28,8 @@ export async function generateMetadata({
     ],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/vietqr'),
+    openGraph: buildOpenGraph(locale, '/vietqr', "VietQR – Vietnam's Bank Transfer QR Standard | QRPayHub", "VietQR is Vietnam's national bank transfer QR standard by NAPAS. Free generator for Vietcombank, BIDV, Techcombank and all 50+ VietQR banks."),
+    twitter: buildTwitterCard("VietQR – Vietnam's Bank Transfer QR Standard | QRPayHub", "VietQR is Vietnam's national bank transfer QR standard by NAPAS. Free generator for Vietcombank, BIDV, Techcombank and all 50+ VietQR banks."),
   };
 }
 
@@ -226,6 +229,14 @@ function PageContent() {
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">VietQR Tools</h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇮🇩', name: 'QRIS', href: '/qris' },
+          { flag: '🇹🇭', name: 'PromptPay', href: '/promptpay' },
+        ]}
+      />
 
     </div>
   );

@@ -4,17 +4,23 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
+
+const TITLE = "CoDi – Mexico's QR Payment System via SPEI | QRPayHub";
+const DESCRIPTION =
+  "CoDi is Mexico's QR payment standard via SPEI by Banxico. Free generator for BBVA México, Santander, Banorte and all CoDi-enabled apps. No registration.";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: "CoDi – Mexico's Digital Payment System | QRPayHub",
-    description:
-      'Everything about CoDi QR codes: what CoDi is, how SPEI works, which Mexican banks support it and how to generate a CoDi QR code for free.',
+    title: TITLE,
+    description: DESCRIPTION,
     keywords: ['codi qr', 'codi mexico', 'spei qr code', 'cobro digital', 'banxico qr', 'mexican payment qr', 'clabe qr'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/codi'),
+    openGraph: buildOpenGraph(locale, '/codi', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -204,6 +210,14 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇧🇷', name: 'PIX QR', href: '/pix' },
+          { flag: '🇮🇳', name: 'UPI QR', href: '/upi' },
+        ]}
+      />
 
     </div>
   );

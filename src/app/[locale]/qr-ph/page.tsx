@@ -4,17 +4,23 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
+
+const TITLE = 'QR Ph – Philippines National QR Payment Standard | QRPayHub';
+const DESCRIPTION =
+  'QR Ph is the Philippines\' national QR payment standard by BSP. Free generator for GCash, Maya, BDO, BPI and all InstaPay-enabled apps.';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: 'QR Ph – Philippines National QR Payment | QRPayHub',
-    description:
-      'Generate QR Ph codes for Philippine payments. Compatible with GCash, Maya, BDO, BPI and InstaPay. Free, instant, browser-based.',
+    title: TITLE,
+    description: DESCRIPTION,
     keywords: ['qr ph', 'philippines qr payment', 'instapay qr', 'gcash qr', 'maya qr', 'bsp qr code', 'philippine payment'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/qr-ph'),
+    openGraph: buildOpenGraph(locale, '/qr-ph', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -215,6 +221,14 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇮🇩', name: 'QRIS', href: '/qris' },
+          { flag: '🇲🇾', name: 'DuitNow', href: '/duitnow' },
+        ]}
+      />
 
     </div>
   );

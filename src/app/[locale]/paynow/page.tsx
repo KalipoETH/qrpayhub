@@ -4,7 +4,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
 
 export async function generateMetadata({
   params,
@@ -13,9 +14,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: "PayNow – Singapore's Instant Payment System | QRPayHub",
+    title: "PayNow – Singapore's Instant QR Payment System | QRPayHub",
     description:
-      "Everything about PayNow: Singapore's instant payment system by MAS and ABS. Compatible with all Singapore banks and e-wallets. Connected with PromptPay Thailand and UPI India.",
+      "PayNow is Singapore's instant QR payment standard by MAS. Free generator compatible with DBS PayLah!, OCBC, UOB Mighty and GrabPay. No registration needed.",
     keywords: [
       'paynow',
       'paynow qr',
@@ -27,6 +28,8 @@ export async function generateMetadata({
     ],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/paynow'),
+    openGraph: buildOpenGraph(locale, '/paynow', "PayNow – Singapore's Instant QR Payment System | QRPayHub", "PayNow is Singapore's instant QR payment standard by MAS. Free generator compatible with DBS PayLah!, OCBC, UOB Mighty and GrabPay. No registration needed."),
+    twitter: buildTwitterCard("PayNow – Singapore's Instant QR Payment System | QRPayHub", "PayNow is Singapore's instant QR payment standard by MAS. Free generator compatible with DBS PayLah!, OCBC, UOB Mighty and GrabPay. No registration needed."),
   };
 }
 
@@ -243,6 +246,14 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇲🇾', name: 'DuitNow', href: '/duitnow' },
+          { flag: '🇭🇰', name: 'FPS', href: '/fps' },
+        ]}
+      />
 
     </div>
   );

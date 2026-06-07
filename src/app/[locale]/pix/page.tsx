@@ -4,17 +4,23 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
+
+const TITLE = "PIX QR Code – Brazil's Instant Payment System | QRPayHub";
+const DESCRIPTION =
+  "PIX is Brazil's instant payment QR standard by Banco Central. Free generator compatible with Nubank, Itaú, Bradesco and all 700+ PIX member banks.";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: "PIX QR Code – Brazil's Instant Payment System | QRPayHub",
-    description:
-      'Everything about PIX QR codes: what PIX is, how it works, which apps support it and how to generate a PIX QR code for free.',
+    title: TITLE,
+    description: DESCRIPTION,
     keywords: ['pix', 'banco central brasil', 'pix qr code', 'pagamento instantaneo', 'bcb pix'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/pix'),
+    openGraph: buildOpenGraph(locale, '/pix', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -223,6 +229,14 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇲🇽', name: 'CoDi', href: '/codi' },
+          { flag: '🇮🇳', name: 'UPI QR', href: '/upi' },
+        ]}
+      />
 
     </div>
   );

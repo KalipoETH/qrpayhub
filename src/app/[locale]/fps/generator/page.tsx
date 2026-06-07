@@ -1,8 +1,39 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import FPSGenerator from '@/components/generators/FPSGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+
+const TITLE = 'FPS QR Generator – Free Hong Kong | QRPayHub';
+const DESCRIPTION =
+  'Free FPS QR code generator for Hong Kong payments. Supports HKD and CNY. Compatible with HSBC HK, Hang Seng, PayMe and AlipayHK. No registration needed.';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'FPS Generator – QRPayHub',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web Browser',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  description: 'Free FPS QR code generator. No registration required. Privacy-first – all data stays in your browser.',
+  url: 'https://www.qrpayhub.com/en/fps/generator',
+  featureList: ['Real-time QR code generation', 'Download as PNG', 'Copy to clipboard', 'Input validation', 'Free to use'],
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to generate an FPS QR code',
+  description: 'Generate an FPS QR payment code in 3 steps',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Enter payment details', text: 'Fill in the required payment information such as IBAN/account number and recipient name' },
+    { '@type': 'HowToStep', position: 2, name: 'Generate QR code', text: 'The QR code is generated instantly in your browser – no data is sent to any server' },
+    { '@type': 'HowToStep', position: 3, name: 'Download or copy', text: 'Download the QR code as PNG or copy it to your clipboard for use in invoices or documents' },
+  ],
+  tool: { '@type': 'HowToTool', name: 'QRPayHub Generator' },
+  totalTime: 'PT1M',
+};
 
 export async function generateMetadata({
   params,
@@ -11,20 +42,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: 'FPS QR Generator – Free Hong Kong | QRPayHub',
-    description:
-      'Generate FPS QR codes for Hong Kong payments. Supports HKD and CNY. Compatible with all HK banks including HSBC, Hang Seng, Bank of China HK, PayMe and AlipayHK.',
-    keywords: [
-      'fps qr generator',
-      'fps qr code',
-      'hong kong qr payment',
-      'hkma fps',
-      'payme qr',
-      'hsbc hk qr',
-      'alipayhk qr',
-    ],
+    title: TITLE,
+    description: DESCRIPTION,
+    keywords: ['fps qr generator', 'fps qr code', 'hong kong qr payment', 'hkma fps', 'payme qr', 'hsbc hk qr', 'alipayhk qr'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/fps/generator'),
+    openGraph: buildOpenGraph(locale, '/fps/generator', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -34,7 +58,13 @@ export default function FPSGeneratorPage({
   params: { locale: string };
 }) {
   setRequestLocale(params.locale);
-  return <PageContent />;
+  return (
+    <>
+      <Script id="schema-software-fps" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
+      <Script id="schema-howto-fps" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <PageContent />
+    </>
+  );
 }
 
 function PageContent() {

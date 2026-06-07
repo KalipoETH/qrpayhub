@@ -4,17 +4,23 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
+
+const TITLE = 'Swiss QR Code – Complete Guide & Free Generator | QRPayHub';
+const DESCRIPTION =
+  'Swiss QR Code (QR-Rechnung) is the official Swiss payment standard. Free generator for CHF and EUR – no registration, privacy-first, all major Swiss banks.';
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: 'Swiss QR Code – Die neue Schweizer Zahlungsstandard | QRPayHub',
-    description:
-      'Alles über den Swiss QR Code (QR-Rechnung): Was er ist, wie er funktioniert und wie man ihn kostenlos generiert. Unterstützt CHF und EUR.',
+    title: TITLE,
+    description: DESCRIPTION,
     keywords: ['swiss qr code', 'qr rechnung', 'swiss qr bill', 'schweizer qr code', 'six group'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/swiss-qr'),
+    openGraph: buildOpenGraph(locale, '/swiss-qr', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -201,6 +207,13 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇪🇺', name: 'GiroCode / EPC', href: '/girocode' },
+        ]}
+      />
 
     </div>
   );

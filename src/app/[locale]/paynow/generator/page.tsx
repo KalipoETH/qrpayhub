@@ -1,8 +1,39 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { setRequestLocale } from 'next-intl/server';
 import PayNowGenerator from '@/components/generators/PayNowGenerator';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+
+const TITLE = 'PayNow QR Generator – Free Singapore | QRPayHub';
+const DESCRIPTION =
+  'Free PayNow QR code generator for Singapore payments. Compatible with DBS PayLah!, OCBC, UOB Mighty and GrabPay. Privacy-first – no data stored. No registration.';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'PayNow Generator – QRPayHub',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web Browser',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  description: 'Free PayNow QR code generator. No registration required. Privacy-first – all data stays in your browser.',
+  url: 'https://www.qrpayhub.com/en/paynow/generator',
+  featureList: ['Real-time QR code generation', 'Download as PNG', 'Copy to clipboard', 'Input validation', 'Free to use'],
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to generate a PayNow QR code',
+  description: 'Generate a PayNow QR payment code in 3 steps',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Enter payment details', text: 'Fill in the required payment information such as IBAN/account number and recipient name' },
+    { '@type': 'HowToStep', position: 2, name: 'Generate QR code', text: 'The QR code is generated instantly in your browser – no data is sent to any server' },
+    { '@type': 'HowToStep', position: 3, name: 'Download or copy', text: 'Download the QR code as PNG or copy it to your clipboard for use in invoices or documents' },
+  ],
+  tool: { '@type': 'HowToTool', name: 'QRPayHub Generator' },
+  totalTime: 'PT1M',
+};
 
 export async function generateMetadata({
   params,
@@ -11,20 +42,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = params;
   return {
-    title: 'PayNow QR Generator – Free Singapore | QRPayHub',
-    description:
-      'Generate PayNow QR codes for Singapore payments. Compatible with all Singapore banks and e-wallets including DBS PayLah!, OCBC Pay Anyone, UOB Mighty, GrabPay and Singtel Dash.',
-    keywords: [
-      'paynow qr generator',
-      'paynow qr code',
-      'singapore qr payment',
-      'sgqr generator',
-      'dbs paylah qr',
-      'ocbc qr',
-      'grabpay singapore qr',
-    ],
+    title: TITLE,
+    description: DESCRIPTION,
+    keywords: ['paynow qr generator', 'paynow qr code', 'singapore qr payment', 'sgqr generator', 'dbs paylah qr', 'ocbc qr', 'grabpay singapore qr'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/paynow/generator'),
+    openGraph: buildOpenGraph(locale, '/paynow/generator', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -34,7 +58,13 @@ export default function PayNowGeneratorPage({
   params: { locale: string };
 }) {
   setRequestLocale(params.locale);
-  return <PageContent />;
+  return (
+    <>
+      <Script id="schema-software-paynow" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
+      <Script id="schema-howto-paynow" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <PageContent />
+    </>
+  );
 }
 
 function PageContent() {

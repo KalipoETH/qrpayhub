@@ -15,15 +15,14 @@ const AVAILABLE_STANDARDS = [
   { flag: '🇮🇳', name: 'UPI QR', href: '/upi' },
   { flag: '🇧🇷', name: 'PIX QR', href: '/pix' },
   { flag: '🇹🇭', name: 'PromptPay', href: '/promptpay' },
+  { flag: '🇮🇩', name: 'QRIS', href: '/qris' },
+  { flag: '🇲🇾', name: 'DuitNow', href: '/duitnow' },
+  { flag: '🇸🇬', name: 'PayNow', href: '/paynow' },
+  { flag: '🇭🇰', name: 'FPS', href: '/fps' },
+  { flag: '🇻🇳', name: 'VietQR', href: '/vietqr' },
+  { flag: '🇵🇭', name: 'QR Ph', href: '/qr-ph' },
+  { flag: '🇲🇽', name: 'CoDi', href: '/codi' },
 ] as const;
-
-const COMING_SOON_STANDARDS = [
-  { flag: '🇮🇩', name: 'QRIS' },
-  { flag: '🇲🇾', name: 'DuitNow' },
-  { flag: '🇸🇬', name: 'PayNow' },
-  { flag: '🇭🇰', name: 'FPS' },
-  { flag: '🇻🇳', name: 'VietQR' },
-];
 
 export default function Navbar() {
   const t = useTranslations('nav');
@@ -90,45 +89,37 @@ export default function Navbar() {
             </button>
 
             {/* Dropdown panel */}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[420px] bg-white rounded-2xl shadow-xl border border-slate-100 p-4 invisible opacity-0 group-hover:visible group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-150 z-50">
-              <div className="grid grid-cols-2 gap-x-6">
-                {/* Left column: Available */}
-                <div>
-                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                    Available Now
-                  </p>
-                  <ul className="space-y-1">
-                    {AVAILABLE_STANDARDS.map((s) => (
-                      <li key={s.href}>
-                        <Link
-                          href={s.href as `/${string}`}
-                          className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-                        >
-                          <span className="text-base leading-none">{s.flag}</span>
-                          <span className="font-medium">{s.name}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Right column: Coming Soon */}
-                <div>
-                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                    Coming Soon
-                  </p>
-                  <ul className="space-y-1">
-                    {COMING_SOON_STANDARDS.map((s) => (
-                      <li
-                        key={s.name}
-                        className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-slate-400 cursor-default select-none"
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[440px] bg-white rounded-2xl shadow-xl border border-slate-100 p-4 invisible opacity-0 group-hover:visible group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-150 z-50">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                Available Now
+              </p>
+              <div className="grid grid-cols-2 gap-x-4">
+                <ul className="space-y-1">
+                  {AVAILABLE_STANDARDS.slice(0, 6).map((s) => (
+                    <li key={s.href}>
+                      <Link
+                        href={s.href as `/${string}`}
+                        className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                       >
                         <span className="text-base leading-none">{s.flag}</span>
-                        <span>{s.name}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                        <span className="font-medium">{s.name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <ul className="space-y-1">
+                  {AVAILABLE_STANDARDS.slice(6).map((s) => (
+                    <li key={s.href}>
+                      <Link
+                        href={s.href as `/${string}`}
+                        className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                      >
+                        <span className="text-base leading-none">{s.flag}</span>
+                        <span className="font-medium">{s.name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Footer link */}

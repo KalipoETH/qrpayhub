@@ -4,7 +4,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
 
 export async function generateMetadata({
   params,
@@ -15,7 +16,7 @@ export async function generateMetadata({
   return {
     title: "DuitNow – Malaysia's National QR Payment Standard | QRPayHub",
     description:
-      "Everything about DuitNow: Malaysia's national QR payment standard by PayNet. Compatible with all Malaysian banks and e-wallets including Maybank, CIMB, Touch'n Go and Boost.",
+      "DuitNow is Malaysia's national QR payment standard by PayNet. Free generator compatible with Maybank, CIMB, Touch'n Go, Boost and all DuitNow-enabled apps.",
     keywords: [
       'duitnow',
       'duitnow qr',
@@ -27,6 +28,8 @@ export async function generateMetadata({
     ],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/duitnow'),
+    openGraph: buildOpenGraph(locale, '/duitnow', "DuitNow – Malaysia's National QR Payment Standard | QRPayHub", "DuitNow is Malaysia's national QR payment standard by PayNet. Free generator compatible with Maybank, CIMB, Touch'n Go, Boost and all DuitNow-enabled apps."),
+    twitter: buildTwitterCard("DuitNow – Malaysia's National QR Payment Standard | QRPayHub", "DuitNow is Malaysia's national QR payment standard by PayNet. Free generator compatible with Maybank, CIMB, Touch'n Go, Boost and all DuitNow-enabled apps."),
   };
 }
 
@@ -241,6 +244,15 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇸🇬', name: 'PayNow', href: '/paynow' },
+          { flag: '🇮🇩', name: 'QRIS', href: '/qris' },
+          { flag: '🇹🇭', name: 'PromptPay', href: '/promptpay' },
+        ]}
+      />
 
     </div>
   );

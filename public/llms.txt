@@ -1,0 +1,29 @@
+# QRPayHub
+> The Global QR Payment Code Hub – Free QR payment code generators for 12+ payment standards worldwide.
+
+QRPayHub is a free web tool that generates QR payment codes for international bank transfers. It supports GiroCode (SEPA), Swiss QR Code, UPI (India), PIX (Brazil), PromptPay (Thailand), QRIS (Indonesia), DuitNow (Malaysia), PayNow (Singapore), FPS (Hong Kong), VietQR (Vietnam), QR Ph (Philippines), and CoDi (Mexico).
+
+## Available Generators
+- GiroCode / EPC QR: https://www.qrpayhub.com/en/girocode/generator
+- Swiss QR Code: https://www.qrpayhub.com/en/swiss-qr/generator
+- UPI QR (India): https://www.qrpayhub.com/en/upi/generator
+- PIX QR (Brazil): https://www.qrpayhub.com/en/pix/generator
+- PromptPay (Thailand): https://www.qrpayhub.com/en/promptpay/generator
+- QRIS (Indonesia): https://www.qrpayhub.com/en/qris/generator
+- DuitNow (Malaysia): https://www.qrpayhub.com/en/duitnow/generator
+- PayNow (Singapore): https://www.qrpayhub.com/en/paynow/generator
+- FPS (Hong Kong): https://www.qrpayhub.com/en/fps/generator
+- VietQR (Vietnam): https://www.qrpayhub.com/en/vietqr/generator
+- QR Ph (Philippines): https://www.qrpayhub.com/en/qr-ph/generator
+- CoDi (Mexico): https://www.qrpayhub.com/en/codi/generator
+
+## Knowledge Base
+Each payment standard has:
+- Complete technical guide
+- 25 FAQ entries with structured answers
+- Available in English and German
+
+## About
+Built by Kaleb Jahnke, Osterholz-Scharmbeck, Germany.
+Contact: jahnke.kaleb@gmail.com
+Privacy-first: all QR codes generated client-side, no data stored.

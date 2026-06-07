@@ -4,7 +4,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import SubPageGrid from '@/components/ui/SubPageGrid';
 import type { SubPage } from '@/components/ui/SubPageGrid';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildOpenGraph, buildTwitterCard } from '@/lib/seo';
+import RelatedStandards from '@/components/ui/RelatedStandards';
 
 export async function generateMetadata({
   params,
@@ -12,21 +13,17 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   const { locale } = params;
+  const TITLE = "QRIS – Indonesia's Universal QR Payment Standard | QRPayHub";
+  const DESCRIPTION =
+    "QRIS is Indonesia's national QR payment standard by Bank Indonesia. Free generator for GoPay, OVO, Dana and 50+ QRIS member apps. No registration needed.";
   return {
-    title: "QRIS – Indonesia's Universal QR Payment Standard | QRPayHub",
-    description:
-      "Everything about QRIS: Indonesia's national QR payment standard by Bank Indonesia. Compatible with GoPay, OVO, Dana, LinkAja, ShopeePay and 50+ apps.",
-    keywords: [
-      'qris',
-      'bank indonesia qr',
-      'indonesia qr payment',
-      'qris standard',
-      'qris generator',
-      'gopay qris',
-      'ovo qris',
-    ],
+    title: TITLE,
+    description: DESCRIPTION,
+    keywords: ['qris', 'bank indonesia qr', 'indonesia qr payment', 'qris standard', 'qris generator', 'gopay qris', 'ovo qris'],
     robots: { index: true, follow: true },
     alternates: buildAlternates(locale, '/qris'),
+    openGraph: buildOpenGraph(locale, '/qris', TITLE, DESCRIPTION),
+    twitter: buildTwitterCard(TITLE, DESCRIPTION),
   };
 }
 
@@ -242,6 +239,16 @@ function PageContent() {
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
       </section>
+
+      {/* ── Related Standards ────────────────────────────────────────────── */}
+      <RelatedStandards
+        standards={[
+          { flag: '🇹🇭', name: 'PromptPay', href: '/promptpay' },
+          { flag: '🇲🇾', name: 'DuitNow', href: '/duitnow' },
+          { flag: '🇸🇬', name: 'PayNow', href: '/paynow' },
+          { flag: '🇻🇳', name: 'VietQR', href: '/vietqr' },
+        ]}
+      />
 
     </div>
   );
