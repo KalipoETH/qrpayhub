@@ -259,7 +259,7 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
                 bank account. However, there is a practical solution for tourists:
               </p>
               <p>
-                <strong>Mercado Pago</strong> — Latin America's largest fintech — accepts foreign
+                <strong>Mercado Pago</strong> — Latin America&apos;s largest fintech — accepts foreign
                 users:
               </p>
               <ul className="list-disc pl-6 space-y-1">

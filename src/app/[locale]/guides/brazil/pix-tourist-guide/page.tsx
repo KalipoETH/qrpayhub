@@ -263,7 +263,7 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
             ) : (
               <>
                 <p>
-                  <strong>Mercado Pago</strong> is Latin America's largest fintech and part of
+                  <strong>Mercado Pago</strong> is Latin America&apos;s largest fintech and part of
                   MercadoLibre — the Amazon of Latin America. The app is available in Brazil,
                   Argentina, Mexico and Colombia.
                 </p>
@@ -320,7 +320,7 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
             ) : (
               <>
                 <p>
-                  The <strong>CPF (Cadastro de Pessoas Físicas)</strong> is Brazil's individual
+                  The <strong>CPF (Cadastro de Pessoas Físicas)</strong> is Brazil&apos;s individual
                   taxpayer number. It is required for full PIX access. Tourists <em>can</em> obtain
                   a CPF.
                 </p>
