@@ -101,8 +101,29 @@ const INDIA_GUIDES_DE: SubPage[] = [
   { ...INDIA_GUIDES[7], title: 'UPI-Apps im Vergleich', description: 'PhonePe vs Google Pay vs Paytm vs BHIM' },
 ];
 
+const BRAZIL_GUIDES: SubPage[] = [
+  { icon: '🇧🇷', title: 'Brazil Hub',           description: 'Start here — everything about paying in Brazil',     href: '/guides/brazil' },
+  { icon: '📖', title: 'How to Use PIX',        description: 'Step-by-step instructions',                          href: '/guides/brazil/how-to-use-pix' },
+  { icon: '🌍', title: 'PIX Tourist Guide',     description: 'Can foreigners use PIX? Mercado Pago solution',      href: '/guides/brazil/pix-tourist-guide' },
+  { icon: '📱', title: 'PIX QR Code Explained', description: 'How the PIX QR format technically works',            href: '/guides/brazil/pix-qr-code-explained' },
+  { icon: '🤳', title: 'PIX for Foreigners',    description: 'Long-term visitors: how to get full PIX access',     href: '/guides/brazil/pix-for-foreigners' },
+  { icon: '✈️', title: 'Cashless Travel',       description: 'Going cash-free across Brazil',                      href: '/guides/brazil/cashless-travel-brazil' },
+  { icon: '📷', title: 'Scan PIX QR Code',      description: 'Scan with Nubank, Itaú or Mercado Pago',             href: '/guides/brazil/scan-pix-qr-code' },
+  { icon: '🔑', title: 'PIX Keys Explained',    description: 'CPF, CNPJ, phone, email and random keys',            href: '/guides/brazil/pix-keys-explained' },
+];
+
+const BRAZIL_GUIDES_DE: SubPage[] = [
+  { ...BRAZIL_GUIDES[0], title: 'Brasilien Hub',            description: 'Hier starten — alles über Bezahlen in Brasilien' },
+  { ...BRAZIL_GUIDES[1], title: 'Wie man PIX benutzt',      description: 'Schritt-für-Schritt-Anleitung' },
+  { ...BRAZIL_GUIDES[2], title: 'PIX Touristen-Guide',      description: 'Können Ausländer PIX nutzen? Die Mercado-Pago-Lösung' },
+  { ...BRAZIL_GUIDES[3], title: 'PIX-QR-Code erklärt',      description: 'Wie das PIX-QR-Format technisch funktioniert' },
+  { ...BRAZIL_GUIDES[4], title: 'PIX für Ausländer',        description: 'Langzeitbesucher: So bekommst du vollen PIX-Zugang' },
+  { ...BRAZIL_GUIDES[5], title: 'Bargeldlos reisen',        description: 'Bargeldlos durch Brasilien' },
+  { ...BRAZIL_GUIDES[6], title: 'PIX-QR scannen',           description: 'Mit Nubank, Itaú oder Mercado Pago scannen' },
+  { ...BRAZIL_GUIDES[7], title: 'PIX-Schlüssel erklärt',    description: 'CPF, CNPJ, Telefon, E-Mail und Zufallsschlüssel' },
+];
+
 const COMING_SOON = [
-  { flag: 'br', en: 'Brazil', de: 'Brasilien' },
   { flag: 'sg', en: 'Singapore', de: 'Singapur' },
   { flag: 'my', en: 'Malaysia', de: 'Malaysia' },
   { flag: 'hk', en: 'Hong Kong', de: 'Hongkong' },
@@ -136,6 +157,7 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
   const thailandGuides = locale === 'de' ? THAILAND_GUIDES_DE : THAILAND_GUIDES;
   const indonesiaGuides = locale === 'de' ? INDONESIA_GUIDES_DE : INDONESIA_GUIDES;
   const indiaGuides     = locale === 'de' ? INDIA_GUIDES_DE    : INDIA_GUIDES;
+  const brazilGuides    = locale === 'de' ? BRAZIL_GUIDES_DE   : BRAZIL_GUIDES;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
@@ -194,6 +216,20 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
           </span>
         </div>
         <SubPageGrid pages={indiaGuides} />
+      </section>
+
+      {/* Brazil — live */}
+      <section className="space-y-5">
+        <div className="flex items-center gap-2">
+          <Flag code="br" className="text-2xl" />
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
+            {locale === 'de' ? 'Brasilien' : 'Brazil'}
+          </h2>
+          <span className="text-xs font-medium bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-full">
+            {locale === 'de' ? 'Live' : 'Live'}
+          </span>
+        </div>
+        <SubPageGrid pages={brazilGuides} />
       </section>
 
       {/* Coming soon */}

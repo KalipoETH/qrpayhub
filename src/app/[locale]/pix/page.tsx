@@ -230,6 +230,19 @@ function PageContent() {
         <SubPageGrid pages={SUB_PAGES} />
       </section>
 
+      {/* ── Travel Guide Banner ──────────────────────────────────────────── */}
+      <section className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p className="text-emerald-800 font-medium text-sm">
+          ✈️ Traveling to Brazil? Read our complete tourist guide →
+        </p>
+        <Link
+          href="/guides/brazil"
+          className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl transition-colors"
+        >
+          Brazil Payment Guide →
+        </Link>
+      </section>
+
       {/* ── Related Standards ────────────────────────────────────────────── */}
       <RelatedStandards
         standards={[

@@ -305,6 +305,7 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
           {[
             { flag: 'th', name: locale === 'de' ? 'Bezahlen in Thailand' : 'Paying in Thailand', href: '/guides/thailand' },
             { flag: 'id', name: locale === 'de' ? 'Bezahlen in Indonesien' : 'Paying in Indonesia', href: '/guides/indonesia' },
+            { flag: 'br', name: locale === 'de' ? 'Bezahlen in Brasilien 🇧🇷' : 'Paying in Brazil 🇧🇷', href: '/guides/brazil' },
           ].map(({ flag, name, href }) => (
             <Link
               key={flag}

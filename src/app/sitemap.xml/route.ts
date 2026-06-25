@@ -107,6 +107,16 @@ const PAGES: PageDef[] = [
   { path: '/guides/india/scan-upi-qr-code',             priority: 0.7, changeFreq: 'weekly' },
   { path: '/guides/india/upi-apps-comparison',          priority: 0.7, changeFreq: 'weekly' },
 
+  // Travel Guides — Brazil (Phase 4 – live)
+  { path: '/guides/brazil',                          priority: 0.8, changeFreq: 'weekly' },
+  { path: '/guides/brazil/how-to-use-pix',           priority: 0.7, changeFreq: 'monthly' },
+  { path: '/guides/brazil/pix-tourist-guide',        priority: 0.7, changeFreq: 'monthly' },
+  { path: '/guides/brazil/pix-qr-code-explained',    priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/brazil/pix-for-foreigners',       priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/brazil/cashless-travel-brazil',   priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/brazil/scan-pix-qr-code',         priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/brazil/pix-keys-explained',        priority: 0.7, changeFreq: 'weekly' },
+
   // Travel Guides — Indonesia (Phase 1 – live)
   { path: '/guides/indonesia',                              priority: 0.8, changeFreq: 'weekly' },
   { path: '/guides/indonesia/how-to-use-qris',              priority: 0.7, changeFreq: 'weekly' },
