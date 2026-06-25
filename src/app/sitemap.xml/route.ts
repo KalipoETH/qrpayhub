@@ -86,6 +86,16 @@ const PAGES: PageDef[] = [
 
   // Legal / Contact (noindex pages excluded; contact is indexable)
   { path: '/contact',              priority: 0.3, changeFreq: 'monthly' },
+
+  // Travel Guides — Thailand (Phase 1 – live)
+  { path: '/guides',                                        priority: 0.8, changeFreq: 'weekly' },
+  { path: '/guides/thailand',                               priority: 0.8, changeFreq: 'weekly' },
+  { path: '/guides/thailand/how-to-use-promptpay',          priority: 0.7, changeFreq: 'monthly' },
+  { path: '/guides/thailand/promptpay-tourist-guide',       priority: 0.7, changeFreq: 'monthly' },
+  { path: '/guides/thailand/thai-qr-code-payment',          priority: 0.7, changeFreq: 'monthly' },
+  { path: '/guides/thailand/promptpay-for-foreigners',      priority: 0.7, changeFreq: 'monthly' },
+  { path: '/guides/thailand/cashless-travel-thailand',      priority: 0.7, changeFreq: 'monthly' },
+  { path: '/guides/thailand/scan-thai-qr-code',             priority: 0.7, changeFreq: 'monthly' },
 ];
 
 export async function GET() {
