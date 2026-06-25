@@ -57,8 +57,29 @@ const THAILAND_GUIDES_DE: SubPage[] = [
   { ...THAILAND_GUIDES[6], title: 'Thai QR scannen', description: 'Mit deiner heimischen Banking-App scannen' },
 ];
 
+const INDONESIA_GUIDES: SubPage[] = [
+  { icon: '🇮🇩', title: 'Indonesia Hub', description: 'Start here — everything about paying in Indonesia', href: '/guides/indonesia' },
+  { icon: '📖', title: 'How to Use QRIS', description: 'Step-by-step instructions', href: '/guides/indonesia/how-to-use-qris' },
+  { icon: '🗺️', title: 'Tourist Guide', description: 'Can tourists use QRIS?', href: '/guides/indonesia/qris-tourist-guide' },
+  { icon: '📱', title: 'Indonesia QR Payment', description: 'The technical QRIS standard explained', href: '/guides/indonesia/indonesia-qr-code-payment' },
+  { icon: '🌍', title: 'QRIS for Foreigners', description: 'Expats and long-term visitors', href: '/guides/indonesia/qris-for-foreigners' },
+  { icon: '✈️', title: 'Cashless Travel', description: 'Going cash-free across Indonesia', href: '/guides/indonesia/cashless-travel-indonesia' },
+  { icon: '🏖️', title: 'Cashless Bali Guide', description: 'Beach clubs, warungs and villas', href: '/guides/indonesia/cashless-travel-bali' },
+  { icon: '📷', title: 'How to Scan QRIS', description: 'Scan with your home banking app', href: '/guides/indonesia/scan-qris-qr-code' },
+];
+
+const INDONESIA_GUIDES_DE: SubPage[] = [
+  { ...INDONESIA_GUIDES[0], title: 'Indonesien Hub', description: 'Hier starten — alles über Bezahlen in Indonesien' },
+  { ...INDONESIA_GUIDES[1], title: 'Wie man QRIS benutzt', description: 'Schritt-für-Schritt-Anleitung' },
+  { ...INDONESIA_GUIDES[2], title: 'Touristen-Guide', description: 'Können Touristen QRIS nutzen?' },
+  { ...INDONESIA_GUIDES[3], title: 'Indonesien QR-Zahlung', description: 'Der technische QRIS-Standard erklärt' },
+  { ...INDONESIA_GUIDES[4], title: 'QRIS für Ausländer', description: 'Expats und Langzeitbesucher' },
+  { ...INDONESIA_GUIDES[5], title: 'Bargeldlos reisen', description: 'Bargeldlos durch Indonesien' },
+  { ...INDONESIA_GUIDES[6], title: 'Bargeldlos auf Bali', description: 'Beach Clubs, Warungs und Villen' },
+  { ...INDONESIA_GUIDES[7], title: 'QRIS scannen', description: 'Mit deiner heimischen Banking-App scannen' },
+];
+
 const COMING_SOON = [
-  { flag: 'id', en: 'Indonesia', de: 'Indonesien' },
   { flag: 'in', en: 'India', de: 'Indien' },
   { flag: 'br', en: 'Brazil', de: 'Brasilien' },
   { flag: 'sg', en: 'Singapore', de: 'Singapur' },
@@ -92,6 +113,7 @@ export default function GuidesHubPage({ params }: { params: { locale: string } }
 
 function PageContent({ locale }: { locale: 'en' | 'de' }) {
   const thailandGuides = locale === 'de' ? THAILAND_GUIDES_DE : THAILAND_GUIDES;
+  const indonesiaGuides = locale === 'de' ? INDONESIA_GUIDES_DE : INDONESIA_GUIDES;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
@@ -122,6 +144,20 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
           </span>
         </div>
         <SubPageGrid pages={thailandGuides} />
+      </section>
+
+      {/* Indonesia — live */}
+      <section className="space-y-5">
+        <div className="flex items-center gap-2">
+          <Flag code="id" className="text-2xl" />
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
+            {locale === 'de' ? 'Indonesien' : 'Indonesia'}
+          </h2>
+          <span className="text-xs font-medium bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-full">
+            {locale === 'de' ? 'Live' : 'Live'}
+          </span>
+        </div>
+        <SubPageGrid pages={indonesiaGuides} />
       </section>
 
       {/* Coming soon */}

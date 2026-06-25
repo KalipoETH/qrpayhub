@@ -340,10 +340,18 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
           {locale === 'de' ? 'Weitere Reiseguides' : 'Related Guides'}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <Link
+            href="/guides/indonesia"
+            className="relative bg-white border border-slate-100 rounded-2xl p-5 hover:shadow-md hover:border-blue-100 hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-3"
+          >
+            <Flag code="id" className="text-2xl flex-shrink-0" />
+            <span className="text-sm font-medium text-slate-700">
+              {locale === 'de' ? 'Bezahlen in Indonesien' : 'Paying in Indonesia'}
+            </span>
+          </Link>
           {[
             { flag: 'sg', name: locale === 'de' ? 'Bezahlen in Singapur' : 'Paying in Singapore' },
             { flag: 'my', name: locale === 'de' ? 'Bezahlen in Malaysia' : 'Paying in Malaysia' },
-            { flag: 'id', name: locale === 'de' ? 'Bezahlen in Indonesien' : 'Paying in Indonesia' },
           ].map(({ flag, name }) => (
             <div
               key={flag}

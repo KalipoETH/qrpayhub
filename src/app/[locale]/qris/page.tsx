@@ -73,6 +73,7 @@ const JSON_LD = {
 
 export default function QRISHubPage({ params }: { params: { locale: string } }) {
   setRequestLocale(params.locale);
+  const locale = params.locale === 'de' ? 'de' : 'en';
   return (
     <>
       <Script
@@ -80,12 +81,12 @@ export default function QRISHubPage({ params }: { params: { locale: string } }) 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />
-      <PageContent />
+      <PageContent locale={locale} />
     </>
   );
 }
 
-function PageContent() {
+function PageContent({ locale }: { locale: 'en' | 'de' }) {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
 
@@ -238,6 +239,20 @@ function PageContent() {
           QRIS Tools
         </h2>
         <SubPageGrid pages={SUB_PAGES} />
+      </section>
+
+      {/* ── Travel Guide CTA ─────────────────────────────────────────────── */}
+      <section className="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-center space-y-3">
+        <p className="font-semibold text-blue-900 text-lg">
+          {locale === 'de' ? 'Reist du nach Indonesien?' : 'Traveling to Indonesia?'}
+        </p>
+        <Link
+          href="/guides/indonesia"
+          className="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl shadow-sm transition-colors"
+          style={{ backgroundColor: '#1A56DB' }}
+        >
+          {locale === 'de' ? 'Lies unseren Touristen-Guide →' : 'Read our tourist guide →'}
+        </Link>
       </section>
 
       {/* ── Related Standards ────────────────────────────────────────────── */}

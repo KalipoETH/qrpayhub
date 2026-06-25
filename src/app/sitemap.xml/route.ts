@@ -96,6 +96,16 @@ const PAGES: PageDef[] = [
   { path: '/guides/thailand/promptpay-for-foreigners',      priority: 0.7, changeFreq: 'monthly' },
   { path: '/guides/thailand/cashless-travel-thailand',      priority: 0.7, changeFreq: 'monthly' },
   { path: '/guides/thailand/scan-thai-qr-code',             priority: 0.7, changeFreq: 'monthly' },
+
+  // Travel Guides — Indonesia (Phase 1 – live)
+  { path: '/guides/indonesia',                              priority: 0.8, changeFreq: 'weekly' },
+  { path: '/guides/indonesia/how-to-use-qris',              priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/indonesia/qris-tourist-guide',           priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/indonesia/indonesia-qr-code-payment',    priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/indonesia/qris-for-foreigners',          priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/indonesia/cashless-travel-indonesia',    priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/indonesia/cashless-travel-bali',         priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/indonesia/scan-qris-qr-code',            priority: 0.7, changeFreq: 'weekly' },
 ];
 
 export async function GET() {
