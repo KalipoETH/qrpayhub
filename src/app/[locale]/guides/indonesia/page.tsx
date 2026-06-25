@@ -363,16 +363,20 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
           {locale === 'de' ? 'Weitere Reiseguides' : 'Related Guides'}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <Link
-            href="/guides/thailand"
-            className="relative bg-white border border-slate-100 rounded-2xl p-5 hover:shadow-md hover:border-blue-100 hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-3"
-          >
-            <Flag code="th" className="text-2xl flex-shrink-0" />
-            <span className="text-sm font-medium text-slate-700">
-              {locale === 'de' ? 'Bezahlen in Thailand' : 'Paying in Thailand'}
-            </span>
-          </Link>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { flag: 'th', href: '/guides/thailand' as `/${string}`, name: locale === 'de' ? 'Bezahlen in Thailand' : 'Paying in Thailand' },
+            { flag: 'in', href: '/guides/india' as `/${string}`, name: locale === 'de' ? 'Bezahlen in Indien' : 'Paying in India' },
+          ].map(({ flag, href, name }) => (
+            <Link
+              key={flag}
+              href={href}
+              className="relative bg-white border border-slate-100 rounded-2xl p-5 hover:shadow-md hover:border-blue-100 hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-3"
+            >
+              <Flag code={flag} className="text-2xl flex-shrink-0" />
+              <span className="text-sm font-medium text-slate-700">{name}</span>
+            </Link>
+          ))}
           {[
             { flag: 'sg', name: locale === 'de' ? 'Bezahlen in Singapur' : 'Paying in Singapore' },
             { flag: 'my', name: locale === 'de' ? 'Bezahlen in Malaysia' : 'Paying in Malaysia' },

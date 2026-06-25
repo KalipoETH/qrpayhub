@@ -128,6 +128,19 @@ function PageContent() {
         ))}
       </section>
 
+      {/* ── India Travel Guide Banner ─────────────────────────────────────── */}
+      <section className="bg-orange-50 border border-orange-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p className="text-orange-900 font-medium text-sm sm:text-base">
+          ✈️ Traveling to India? Read our complete tourist payment guide
+        </p>
+        <Link
+          href="/guides/india"
+          className="flex-shrink-0 inline-flex items-center gap-1.5 px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl text-sm transition-colors"
+        >
+          India Payment Guide →
+        </Link>
+      </section>
+
       {/* ── What is UPI ──────────────────────────────────────────────────── */}
       <section id="what-is-upi" className="space-y-6 scroll-mt-20">
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">

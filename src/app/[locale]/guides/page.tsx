@@ -79,8 +79,29 @@ const INDONESIA_GUIDES_DE: SubPage[] = [
   { ...INDONESIA_GUIDES[7], title: 'QRIS scannen', description: 'Mit deiner heimischen Banking-App scannen' },
 ];
 
+const INDIA_GUIDES: SubPage[] = [
+  { icon: '🇮🇳', title: 'India Hub', description: 'Start here — everything about paying in India', href: '/guides/india' },
+  { icon: '📖', title: 'How to Use UPI', description: 'Step-by-step instructions', href: '/guides/india/how-to-use-upi' },
+  { icon: '🌍', title: 'UPI Tourist Guide', description: 'Can foreigners use UPI?', href: '/guides/india/upi-tourist-guide' },
+  { icon: '📱', title: 'India QR Payment', description: 'The technical UPI QR format explained', href: '/guides/india/india-qr-code-payment' },
+  { icon: '🤳', title: 'UPI for Foreigners', description: 'Expats and NRIs', href: '/guides/india/upi-for-foreigners' },
+  { icon: '✈️', title: 'Cashless Travel', description: 'Going cash-free across India', href: '/guides/india/cashless-travel-india' },
+  { icon: '📷', title: 'Scan UPI QR Code', description: 'Scan with PhonePe, GPay or Paytm', href: '/guides/india/scan-upi-qr-code' },
+  { icon: '📊', title: 'UPI Apps Comparison', description: 'PhonePe vs Google Pay vs Paytm vs BHIM', href: '/guides/india/upi-apps-comparison' },
+];
+
+const INDIA_GUIDES_DE: SubPage[] = [
+  { ...INDIA_GUIDES[0], title: 'Indien Hub', description: 'Hier starten — alles über Bezahlen in Indien' },
+  { ...INDIA_GUIDES[1], title: 'Wie man UPI benutzt', description: 'Schritt-für-Schritt-Anleitung' },
+  { ...INDIA_GUIDES[2], title: 'UPI Touristen-Guide', description: 'Können Ausländer UPI nutzen?' },
+  { ...INDIA_GUIDES[3], title: 'Indien QR-Zahlung', description: 'Das technische UPI-QR-Format erklärt' },
+  { ...INDIA_GUIDES[4], title: 'UPI für Ausländer', description: 'Expats und NRIs' },
+  { ...INDIA_GUIDES[5], title: 'Bargeldlos reisen', description: 'Bargeldlos durch Indien' },
+  { ...INDIA_GUIDES[6], title: 'UPI-QR scannen', description: 'Mit PhonePe, GPay oder Paytm scannen' },
+  { ...INDIA_GUIDES[7], title: 'UPI-Apps im Vergleich', description: 'PhonePe vs Google Pay vs Paytm vs BHIM' },
+];
+
 const COMING_SOON = [
-  { flag: 'in', en: 'India', de: 'Indien' },
   { flag: 'br', en: 'Brazil', de: 'Brasilien' },
   { flag: 'sg', en: 'Singapore', de: 'Singapur' },
   { flag: 'my', en: 'Malaysia', de: 'Malaysia' },
@@ -114,6 +135,7 @@ export default function GuidesHubPage({ params }: { params: { locale: string } }
 function PageContent({ locale }: { locale: 'en' | 'de' }) {
   const thailandGuides = locale === 'de' ? THAILAND_GUIDES_DE : THAILAND_GUIDES;
   const indonesiaGuides = locale === 'de' ? INDONESIA_GUIDES_DE : INDONESIA_GUIDES;
+  const indiaGuides     = locale === 'de' ? INDIA_GUIDES_DE    : INDIA_GUIDES;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
@@ -158,6 +180,20 @@ function PageContent({ locale }: { locale: 'en' | 'de' }) {
           </span>
         </div>
         <SubPageGrid pages={indonesiaGuides} />
+      </section>
+
+      {/* India — live */}
+      <section className="space-y-5">
+        <div className="flex items-center gap-2">
+          <Flag code="in" className="text-2xl" />
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
+            {locale === 'de' ? 'Indien' : 'India'}
+          </h2>
+          <span className="text-xs font-medium bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-full">
+            {locale === 'de' ? 'Live' : 'Live'}
+          </span>
+        </div>
+        <SubPageGrid pages={indiaGuides} />
       </section>
 
       {/* Coming soon */}

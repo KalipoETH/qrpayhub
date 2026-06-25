@@ -97,6 +97,16 @@ const PAGES: PageDef[] = [
   { path: '/guides/thailand/cashless-travel-thailand',      priority: 0.7, changeFreq: 'monthly' },
   { path: '/guides/thailand/scan-thai-qr-code',             priority: 0.7, changeFreq: 'monthly' },
 
+  // Travel Guides — India (Phase 3 – live)
+  { path: '/guides/india',                               priority: 0.8, changeFreq: 'weekly' },
+  { path: '/guides/india/how-to-use-upi',                priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/india/upi-tourist-guide',             priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/india/india-qr-code-payment',         priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/india/upi-for-foreigners',            priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/india/cashless-travel-india',         priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/india/scan-upi-qr-code',             priority: 0.7, changeFreq: 'weekly' },
+  { path: '/guides/india/upi-apps-comparison',          priority: 0.7, changeFreq: 'weekly' },
+
   // Travel Guides — Indonesia (Phase 1 – live)
   { path: '/guides/indonesia',                              priority: 0.8, changeFreq: 'weekly' },
   { path: '/guides/indonesia/how-to-use-qris',              priority: 0.7, changeFreq: 'weekly' },
